@@ -20,13 +20,13 @@ name: Set-Associate
 provides:
   Set::Associate:
     file: lib/Set/Associate.pm
-    version: v0.1.0
+    version: 0.001000
   Set::Associate::NewKey:
     file: lib/Set/Associate/NewKey.pm
-    version: v0.1.0
+    version: 0.001000
   Set::Associate::RefillItems:
     file: lib/Set/Associate/RefillItems.pm
-    version: v0.1.0
+    version: 0.001000
 requires:
   Digest::MD5: 0
   Digest::SHA1: 0
@@ -37,7 +37,7 @@ requires:
   bigint: 0
   perl: v5.16.0
   warnings: 0
-version: 0.1.0
+version: 0.001000
 x_BuiltWith:
   modules:
     Digest::MD5: 2.52

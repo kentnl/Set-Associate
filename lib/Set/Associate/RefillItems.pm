@@ -3,6 +3,8 @@ use warnings;
 
 package Set::Associate::RefillItems {
 
+    # ABSTRACT: Pool repopulation methods
+
     sub linear {
         return sub {
             my ( $self, ) = @_;
@@ -24,7 +26,7 @@ BEGIN {
   $Set::Associate::RefillItems::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $Set::Associate::RefillItems::VERSION = '0.1.0';
+  $Set::Associate::RefillItems::VERSION = '0.001000';
 }
 
 __END__
@@ -35,11 +37,21 @@ __END__
 
 =head1 NAME
 
-Set::Associate::RefillItems
+Set::Associate::RefillItems - Pool repopulation methods
 
 =head1 VERSION
 
-version 0.1.0
+version 0.001000
+
+=head1 METHODS
+
+=head2 linear
+
+Populate from C<items> each time.
+
+=head2 shuffle
+
+Populate with a shuffled version of C<items>
 
 =head1 AUTHOR
 

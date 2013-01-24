@@ -107,7 +107,7 @@ BEGIN {
   $Set::Associate::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $Set::Associate::VERSION = '0.1.0';
+  $Set::Associate::VERSION = '0.001000';
 }
 
 __END__
@@ -122,7 +122,7 @@ Set::Associate - Pick items from a dataset associatively
 
 =head1 VERSION
 
-version 0.1.0
+version 0.001000
 
 =head1 DESCRIPTION
 
