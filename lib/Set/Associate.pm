@@ -4,7 +4,6 @@ use warnings;
 package Set::Associate {
 
   # ABSTRACT: Pick items from a dataset associatively
-  
 
 
 
@@ -20,37 +19,34 @@ package Set::Associate {
     is       => rwp     =>,
     required => 1,
     traits   => [ Array => ],
-    handles => {
-        items_elements => elements =>,
+    handles  => {
+      items_elements => elements =>,
     }
   );
 
 
-
-
-
   has _items_cache => (
     isa => ArrayRef [Any],
-    is         => rwp     =>,
-    lazy       => 1,
-    default    => sub { [ ] },
-    traits     => [ Array => ],
-    handles    => {
+    is      => rwp     =>,
+    lazy    => 1,
+    default => sub     { [] },
+    traits  => [ Array => ],
+    handles => {
       _items_cache_empty => is_empty =>,
-      _items_cache_shift => shift =>,
-      _items_cache_push  => push  =>,
-      _items_cache_count => count =>,
-      _items_cache_get   => get =>,
+      _items_cache_shift => shift    =>,
+      _items_cache_push  => push     =>,
+      _items_cache_count => count    =>,
+      _items_cache_get   => get      =>,
     }
   );
 
 
   has _association_cache => (
     isa => HashRef [Any],
-    is      => rwp   =>,
+    is      => rwp    =>,
     traits  => [ Hash => ],
-    lazy => 1, 
-    default => sub  {{}},
+    lazy    => 1,
+    default => sub    { {} },
     handles => {
       _association_cache_has => exists =>,
       _association_cache_get => get    =>,
@@ -59,12 +55,11 @@ package Set::Associate {
   );
 
 
-
   has on_items_empty => (
     isa     => CodeRef,
     is      => rwp =>,
     traits  => [ Code => ],
-    lazy => 1,
+    lazy    => 1,
     default => \&Set::Associate::RefillItems::linear,
     handles => {
       run_on_items_empty => execute_method =>,
@@ -76,7 +71,7 @@ package Set::Associate {
     isa     => CodeRef,
     is      => rwp =>,
     traits  => [ Code => ],
-    lazy => 1,
+    lazy    => 1,
     default => \&Set::Associate::NewKey::linear_wrap,
     handles => {
       run_on_new_key => execute_method =>,
@@ -93,7 +88,6 @@ package Set::Associate {
     $self->_association_cache_set( $key, $self->run_on_new_key($key) );
     return 1;
   }
-
 
 
   sub get_associated {
@@ -242,37 +236,21 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
     Native::Array/elements
 
-=head2 _items_cache_empty 
+=head2 _items_cache_empty => Native::Array/is_empty
 
-    Native::Array/is_empty
+=head2 _items_cache_shift => Native::Array/shift
 
-=head2 _items_cache_shift
+=head2 _items_cache_push  => Native::Array/push
 
-    Native::Array/shift
+=head2 _items_cache_count => Native::Array/count
 
-=head2 _items_cache_push
+=head2 _items_cache_get   => Native::Array/get
 
-    Native::Array/push
+=head2 _association_cache_has =>   Native::Hash/exists
 
-=head2 _items_cache_count
+=head2 _association_cache_get =>   Native::Hash/get
 
-    Native::Array/count
-
-=head2 _items_cache_get
-
-    Native::Array/get
-
-=head2 _association_cache_has
-
-    Native::Hash/exists
-
-=head2 _association_cache_get
-
-    Native::Hash/get
-
-=head2 _association_cache_set
-
-    Native::Hash/set
+=head2 _association_cache_set =>   Native::Hash/set
 
 =head2 run_on_items_empty
 
