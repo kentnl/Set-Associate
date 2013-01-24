@@ -106,7 +106,7 @@
          "Test::CPAN::Meta" : "0.22",
          "Test::More" : "0.98",
          "Test::Pod" : "1.45",
-         "Test::Pod::Coverage" : "NA(possibly not installed)",
+         "Test::Pod::Coverage" : "1.08",
          "bigint" : "0.31",
          "perl" : "NA(skipped: perl)",
          "strict" : "1.07",
