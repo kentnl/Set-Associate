@@ -180,6 +180,8 @@ There are 2 Main phases that occur within this code
 
 =item * pool selection
 
+=back
+
 =head2 Pool Population
 
 The pool of available options ( C<_items_cache> ) is initialised as an empty list, and every time the pool is being detected as empty ( C<_items_cache_empty> ), the C<on_items_empty> method is called ( C<run_on_items_empty> ) and the results are pushed into the pool.
