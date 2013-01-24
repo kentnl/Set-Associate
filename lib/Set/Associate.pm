@@ -2,6 +2,14 @@ use v5.16;
 use warnings;
 
 package Set::Associate {
+BEGIN {
+  $Set::Associate::AUTHORITY = 'cpan:KENTNL';
+}
+
+{
+  $Set::Associate::VERSION = '0.001000';
+}
+
 
   # ABSTRACT: Pick items from a dataset associatively
 
@@ -103,12 +111,6 @@ package Set::Associate {
 }
 
 1;
-BEGIN {
-  $Set::Associate::AUTHORITY = 'cpan:KENTNL';
-}
-{
-  $Set::Associate::VERSION = '0.001000';
-}
 
 __END__
 

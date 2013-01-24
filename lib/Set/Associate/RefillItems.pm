@@ -2,6 +2,14 @@ use v5.16;
 use warnings;
 
 package Set::Associate::RefillItems {
+BEGIN {
+  $Set::Associate::RefillItems::AUTHORITY = 'cpan:KENTNL';
+}
+
+{
+  $Set::Associate::RefillItems::VERSION = '0.001000';
+}
+
 
     # ABSTRACT: Pool repopulation methods
 
@@ -22,12 +30,6 @@ package Set::Associate::RefillItems {
 }
 
 1;
-BEGIN {
-  $Set::Associate::RefillItems::AUTHORITY = 'cpan:KENTNL';
-}
-{
-  $Set::Associate::RefillItems::VERSION = '0.001000';
-}
 
 __END__
 
