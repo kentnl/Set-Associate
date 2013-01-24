@@ -100,9 +100,7 @@ ATTRIBUTES
   on_items_empty
   on_new_key
 ATTRIBUTE HANDLES
-  item_elements
-        Native::Array/elements
-
+  item_elements =>  Native::Array/elements
   _items_cache_empty => Native::Array/is_empty
   _items_cache_shift => Native::Array/shift
   _items_cache_push  => Native::Array/push
@@ -111,12 +109,8 @@ ATTRIBUTE HANDLES
   _association_cache_has =>   Native::Hash/exists
   _association_cache_get =>   Native::Hash/get
   _association_cache_set =>   Native::Hash/set
-  run_on_items_empty
-        Native::Code/execute_method
-
-  run_on_new_key
-        Native::Code/execute_method
-
+  run_on_items_empty => Native::Code/execute_method
+  run_on_new_key =>  Native::Code/execute_method
 AUTHOR
     Kent Fredric <kentfredric@gmail.com>
 

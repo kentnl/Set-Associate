@@ -232,9 +232,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =head1 ATTRIBUTE HANDLES
 
-=head2 item_elements
-
-    Native::Array/elements
+=head2 item_elements =>  Native::Array/elements
 
 =head2 _items_cache_empty => Native::Array/is_empty
 
@@ -252,13 +250,9 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =head2 _association_cache_set =>   Native::Hash/set
 
-=head2 run_on_items_empty
+=head2 run_on_items_empty => Native::Code/execute_method
 
-    Native::Code/execute_method
-
-=head2 run_on_new_key
-
-    Native::Code/execute_method
+=head2 run_on_new_key =>  Native::Code/execute_method
 
 =head1 AUTHOR
 
