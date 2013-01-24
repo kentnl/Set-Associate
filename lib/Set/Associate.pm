@@ -196,13 +196,23 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =head2 items
 
+    required ArrayRef[ Any ]
+
 =head2 _items_cache
+
+    lazy ArrayRef[ Any ] = [ ]
 
 =head2 _association_cache
 
+    lazy HashRef[ Any ] = { }
+
 =head2 on_items_empty
 
+    lazy CodeRef = Set::Associate::RefillItems::linear
+
 =head2 on_new_key
+
+    lazy CodeRef = Set::Associate::NewKey::linear_wrap
 
 =head1 METHODS
 
