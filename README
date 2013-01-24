@@ -76,6 +76,63 @@ IMPLEMENTATION DETAILS
     allowing the queue to be exhausted and requiring pool population to
     occur periodically to regenerate the source list.
 
+CONSTRUCTOR ARGUMENTS
+  items
+  _items_cache
+  _association_cache
+  on_items_empty
+  on_new_key
+METHODS
+  associate
+        if( $object->associate( $key ) ) {
+            say "already cached";
+        } else {
+            say "new value"
+        }
+
+  get_associated
+        my $result = $object->get_associated( $key );
+
+ATTRIBUTES
+  items
+  _items_cache
+  _association_cache
+  on_items_empty
+  on_new_key
+ATTRIBUTE HANDLES
+  item_elements
+        Native::Array/elements
+
+  _items_cache_empty
+        Native::Array/is_empty
+
+  _items_cache_shift
+        Native::Array/shift
+
+  _items_cache_push
+        Native::Array/push
+
+  _items_cache_count
+        Native::Array/count
+
+  _items_cache_get
+        Native::Array/get
+
+  _association_cache_has
+        Native::Hash/exists
+
+  _association_cache_get
+        Native::Hash/get
+
+  _association_cache_set
+        Native::Hash/set
+
+  run_on_items_empty
+        Native::Code/execute_method
+
+  run_on_new_key
+        Native::Code/execute_method
+
 AUTHOR
     Kent Fredric <kentfredric@gmail.com>
 
@@ -90,6 +147,6 @@ POD ERRORS
     Hey! The above document had some coding errors, which are explained
     below:
 
-    Around line 177:
+    Around line 189:
         You forgot a '=back' before '=head2'
 

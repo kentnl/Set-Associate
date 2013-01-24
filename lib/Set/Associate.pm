@@ -14,6 +14,7 @@ package Set::Associate {
   use Set::Associate::NewKey;
   use Set::Associate::RefillItems;
 
+
   has items => (
     isa => ArrayRef [Any],
     is       => rwp     =>,
@@ -23,6 +24,10 @@ package Set::Associate {
         items_elements => elements =>,
     }
   );
+
+
+
+
 
   has _items_cache => (
     isa => ArrayRef [Any],
@@ -39,6 +44,7 @@ package Set::Associate {
     }
   );
 
+
   has _association_cache => (
     isa => HashRef [Any],
     is      => rwp   =>,
@@ -52,6 +58,8 @@ package Set::Associate {
     }
   );
 
+
+
   has on_items_empty => (
     isa     => CodeRef,
     is      => rwp =>,
@@ -62,6 +70,7 @@ package Set::Associate {
       run_on_items_empty => execute_method =>,
     }
   );
+
 
   has on_new_key => (
     isa     => CodeRef,
@@ -74,6 +83,7 @@ package Set::Associate {
     },
   );
 
+
   sub associate {
     my ( $self, $key ) = @_;
     return if $self->_association_cache_has($key);
@@ -83,6 +93,8 @@ package Set::Associate {
     $self->_association_cache_set( $key, $self->run_on_new_key($key) );
     return 1;
   }
+
+
 
   sub get_associated {
     my ( $self, $key ) = @_;
@@ -185,6 +197,90 @@ The L<< default implementation|Set::Associate::RefillItems/linear >> copies item
 Pool selection can either be cherry-pick based, where the pool doesn't shrink, or can be destructive, so that the pool population phase is triggered to replenish the supply of items only when all values have been exhausted.
 
 The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s the first item off the queue, allowing the queue to be exhausted and requiring pool population to occur periodically to regenerate the source list.
+
+=head1 CONSTRUCTOR ARGUMENTS
+
+=head2 items
+
+=head2 _items_cache
+
+=head2 _association_cache
+
+=head2 on_items_empty
+
+=head2 on_new_key
+
+=head1 METHODS
+
+=head2 associate
+
+    if( $object->associate( $key ) ) {
+        say "already cached";
+    } else {
+        say "new value"
+    }
+
+=head2 get_associated
+
+    my $result = $object->get_associated( $key );
+
+=head1 ATTRIBUTES
+
+=head2 items
+
+=head2 _items_cache
+
+=head2 _association_cache
+
+=head2 on_items_empty
+
+=head2 on_new_key
+
+=head1 ATTRIBUTE HANDLES
+
+=head2 item_elements
+
+    Native::Array/elements
+
+=head2 _items_cache_empty 
+
+    Native::Array/is_empty
+
+=head2 _items_cache_shift
+
+    Native::Array/shift
+
+=head2 _items_cache_push
+
+    Native::Array/push
+
+=head2 _items_cache_count
+
+    Native::Array/count
+
+=head2 _items_cache_get
+
+    Native::Array/get
+
+=head2 _association_cache_has
+
+    Native::Hash/exists
+
+=head2 _association_cache_get
+
+    Native::Hash/get
+
+=head2 _association_cache_set
+
+    Native::Hash/set
+
+=head2 run_on_items_empty
+
+    Native::Code/execute_method
+
+=head2 run_on_new_key
+
+    Native::Code/execute_method
 
 =head1 AUTHOR
 
