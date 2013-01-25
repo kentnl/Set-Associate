@@ -93,6 +93,8 @@ CONSTRUCTOR ARGUMENTS
         lazy CodeRef = Set::Associate::NewKey::linear_wrap
 
 METHODS
+  run_on_items_empty
+  run_on_new_key
   associate
         if( $object->associate( $key ) ) {
             say "already cached";
@@ -119,7 +121,6 @@ ATTRIBUTE HANDLES
   _association_cache_has =>   Native::Hash/exists
   _association_cache_get =>   Native::Hash/get
   _association_cache_set =>   Native::Hash/set
-  run_on_new_key =>  Native::Code/execute_method
 AUTHOR
     Kent Fredric <kentfredric@gmail.com>
 

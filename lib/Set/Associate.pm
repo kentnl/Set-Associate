@@ -62,10 +62,8 @@ package Set::Associate {
         default => \&Set::Associate::RefillItems::linear,
     );
 
-    sub run_on_items_empty {
-        my ($self) = @_;
-        return $self->on_items_empty->run($self);
-    }
+
+    sub run_on_items_empty { $_[0]->on_items_empty->run(@_) }
 
 
     has on_new_key => (
@@ -75,10 +73,7 @@ package Set::Associate {
         default => \&Set::Associate::NewKey::linear_wrap,
     );
 
-    sub run_on_new_key {
-        my ( $self, $key ) = @_;
-        return $self->on_new_key->run( $self, $key );
-    }
+    sub run_on_new_key { $_[0]->on_new_key->run( @_ ) }
 
 
     sub associate {
@@ -220,6 +215,10 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =head1 METHODS
 
+=head2 run_on_items_empty
+
+=head2 run_on_new_key
+
 =head2 associate
 
     if( $object->associate( $key ) ) {
@@ -263,8 +262,6 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 =head2 _association_cache_get =>   Native::Hash/get
 
 =head2 _association_cache_set =>   Native::Hash/set
-
-=head2 run_on_new_key =>  Native::Code/execute_method
 
 =head1 AUTHOR
 
