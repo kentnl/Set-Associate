@@ -237,6 +237,8 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =head2 get_associated
 
+Generates an association automatically.
+
     my $result = $object->get_associated( $key );
 
 =head1 ATTRIBUTES
@@ -247,9 +249,20 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =head2 _association_cache
 
+    my $cache = $sa->_association_cache();
+    $cache->{ $key } = $value;
+
 =head2 on_items_empty
 
+    my $object = $sa->on_items_empty();
+    say "Running empty items mechanism " . $object->name;
+    push @items, $object->run( $sa  );
+
 =head2 on_new_key
+
+    my $object = $sa->on_new_key();
+    say "Running new key mechanism " . $object->name;
+    my $value = $object->run( $sa, $key );
 
 =head1 ATTRIBUTE HANDLES
 
@@ -267,9 +280,17 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =head2 _association_cache_has =>   Native::Hash/exists
 
+    if ( $sa->_assocition_cache_has( $key ) ){
+        return $sa->_association_cache_get( $key );
+    }
+
 =head2 _association_cache_get =>   Native::Hash/get
 
+    my $assocval = $sa->_association_cache_get( $key );
+
 =head2 _association_cache_set =>   Native::Hash/set
+
+    $sa->_association_cache_set( $key, $assocval );
 
 =head1 AUTHOR
 
