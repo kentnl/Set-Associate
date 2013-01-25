@@ -73,7 +73,7 @@ package Set::Associate::NewKey {
                 my ( $self, $key ) = @_;
                 use bigint;
                 return $pick_offset->run( $self,
-                    hex( Digest::SHA1::sha1_hex($key) ) );
+                    hex Digest::SHA1::sha1_hex($key) );
             }
         );
     }
@@ -88,7 +88,7 @@ package Set::Associate::NewKey {
                 my ( $self, $key ) = @_;
                 use bigint;
                 return $pick_offset->run( $self,
-                    hex( Digest::MD5::md5_hex($key) ) );
+                    hex Digest::MD5::md5_hex($key) );
             }
         );
     }
