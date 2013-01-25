@@ -87,6 +87,7 @@ CONSTRUCTOR ARGUMENTS
         lazy Set::Associate::NewKey = Set::Associate::NewKey::linear_wrap
 
 METHODS
+  item_elements
   run_on_items_empty
         if( not @items ){
             push @items, $sa->run_on_items_empty();
@@ -121,8 +122,6 @@ ATTRIBUTES
         say "Running new key mechanism " . $object->name;
         my $value = $object->run( $sa, $key );
 
-ATTRIBUTE HANDLES
-  item_elements =>  Native::Array/elements
 PRIVATE CONSTRUCTOR ARGUMENTS
   _items_cache
         lazy ArrayRef[ Any ] = [ ]

@@ -15,52 +15,45 @@ BEGIN {
 
 
 
-    use Moose;
-    use MooseX::AttributeShortcuts;
-    use MooseX::Types::Moose qw( ArrayRef HashRef Any CodeRef );
+    use Moo;
+    use Scalar::Util qw( blessed  );
     use Set::Associate::NewKey;
     use Set::Associate::RefillItems;
 
 
     has items => (
-        isa => ArrayRef [Any],
-        is       => rwp     =>,
-        required => 1,
-        traits   => [ Array => ],
-        handles  => {
-            items_elements => elements =>,
+        isa => sub {
+            die 'should be ArrayRef' unless ref $_[0] and ref $_[0] eq 'ARRAY';
         },
+        is       => rwp =>,
+        required => 1,
     );
+    sub items_elements { @{ $_[0]->items } }
 
 
     has _items_cache => (
-        isa => ArrayRef [Any],
-        is      => rwp     =>,
-        lazy    => 1,
-        default => sub     { [] },
-        traits  => [ Array => ],
-        handles => {
-            _items_cache_empty => is_empty =>,
-            _items_cache_shift => shift    =>,
-            _items_cache_push  => push     =>,
-            _items_cache_count => count    =>,
-            _items_cache_get   => get      =>,
+        isa => sub {
+            die 'should be ArrayRef' unless ref $_[0] and ref $_[0] eq 'ARRAY';
         },
+        is      => rwp =>,
+        lazy    => 1,
+        default => sub { [] },
     );
+    sub _items_cache_empty { scalar @{ $_[0]->_items_cache } == 0 }
+    sub _items_cache_shift { shift @{ $_[0]->_items_cache } }
+    sub _items_cache_push  { push @{ $_[0]->_items_cache }, splice @_, 1 }
+    sub _items_cache_count { scalar @{ $_[0]->_items_cache } }
+    sub _items_cache_get   { $_[0]->_items_cache->[ $_[1] ] }
 
 
     has _association_cache => (
-        isa => HashRef [Any],
+        isa => sub { die 'Should be HashRef' unless ref $_[0] and ref $_[0] eq 'HASH' },
         is      => rwp    =>,
-        traits  => [ Hash => ],
-        lazy    => 1,
-        default => sub    { {} },
-        handles => {
-            _association_cache_has => exists =>,
-            _association_cache_get => get    =>,
-            _association_cache_set => set    =>,
-        },
+        default => sub    { {} }
     );
+    sub _association_cache_has { exists $_[0]->_association_cache->{$_[1]} }
+    sub _association_cache_get { $_[0]->_association_cache->{$_[1]} }
+    sub _association_cache_set { $_[0]->_association_cache->{$_[1]} = $_[2] }
 
 
     has on_items_empty => (
@@ -100,10 +93,6 @@ BEGIN {
         $self->associate($key);
         return $self->_association_cache_get($key);
     }
-
-    __PACKAGE__->meta->make_immutable;
-
-    no Moose;
 
 };
 
@@ -209,6 +198,8 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =head1 METHODS
 
+=head2 item_elements
+
 =head2 run_on_items_empty
 
     if( not @items ){
@@ -250,10 +241,6 @@ Generates an association automatically.
     my $object = $sa->on_new_key();
     say "Running new key mechanism " . $object->name;
     my $value = $object->run( $sa, $key );
-
-=head1 ATTRIBUTE HANDLES
-
-=head2 item_elements =>  Native::Array/elements
 
 =head1 PRIVATE CONSTRUCTOR ARGUMENTS
 
