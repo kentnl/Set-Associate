@@ -15,7 +15,7 @@ DESCRIPTION
         my $set = Set::Associate->new(
             items => [qw( red blue yellow )],
         );
-        sub color_nick { 
+        sub color_nick {
             my $nick = shift;
             return colorize( $nick, $set->get_associated( $nick );
         }
@@ -29,7 +29,7 @@ DESCRIPTION
             items => [qw( red blue yellow )],
             on_new_key => Set::Associate::NewKey::hash_sha1,
         );
-        sub color_nick { 
+        sub color_nick {
             my $nick = shift;
             return colorize( $nick, $set->get_associated( $nick );
         }
@@ -81,10 +81,10 @@ CONSTRUCTOR ARGUMENTS
         required ArrayRef[ Any ]
 
   on_items_empty
-        lazy CodeRef = Set::Associate::RefillItems::linear
+        lazy Set::Associate::RefillItems = Set::Associate::RefillItems::linear
 
   on_new_key
-        lazy CodeRef = Set::Associate::NewKey::linear_wrap
+        lazy Set::Associate::NewKey = Set::Associate::NewKey::linear_wrap
 
 METHODS
   run_on_items_empty
@@ -93,7 +93,7 @@ METHODS
         }
 
   run_on_new_key
-        if ( not exists $cache{$key} ){ 
+        if ( not exists $cache{$key} ){
             $cache{$key} = $sa->run_on_new_key( $key );
         }
 

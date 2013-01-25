@@ -132,7 +132,7 @@ and persists them within the scope of the program, ie:
     my $set = Set::Associate->new(
         items => [qw( red blue yellow )],
     );
-    sub color_nick { 
+    sub color_nick {
         my $nick = shift;
         return colorize( $nick, $set->get_associated( $nick );
     }
@@ -145,7 +145,7 @@ And this is extensible to use some sort of persisting allocation method such as 
         items => [qw( red blue yellow )],
         on_new_key => Set::Associate::NewKey::hash_sha1,
     );
-    sub color_nick { 
+    sub color_nick {
         my $nick = shift;
         return colorize( $nick, $set->get_associated( $nick );
     }
@@ -199,11 +199,11 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =head2 on_items_empty
 
-    lazy CodeRef = Set::Associate::RefillItems::linear
+    lazy Set::Associate::RefillItems = Set::Associate::RefillItems::linear
 
 =head2 on_new_key
 
-    lazy CodeRef = Set::Associate::NewKey::linear_wrap
+    lazy Set::Associate::NewKey = Set::Associate::NewKey::linear_wrap
 
 =head1 METHODS
 
@@ -215,7 +215,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =head2 run_on_new_key
 
-    if ( not exists $cache{$key} ){ 
+    if ( not exists $cache{$key} ){
         $cache{$key} = $sa->run_on_new_key( $key );
     }
 
