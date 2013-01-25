@@ -30,6 +30,7 @@ my %module_build_args = (
     "Digest::MD5" => 0,
     "Digest::SHA1" => 0,
     "List::Util" => 0,
+    "Moo" => 0,
     "Moose" => 0,
     "MooseX::AttributeShortcuts" => 0,
     "MooseX::Types::Moose" => 0,

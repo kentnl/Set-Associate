@@ -13,27 +13,26 @@ BEGIN {
 
     # ABSTRACT: New Key assignment methods
 
-    use Moose;
-    use MooseX::AttributeShortcuts;
-    use MooseX::Types::Moose qw( CodeRef Str );
-
+    use Moo;
     has name => (
-        isa      => Str,
+        isa      => sub { die 'should be Str' if ref $_[0] },
         is       => rwp =>,
         required => 1,
     );
     has code => (
-        isa      => CodeRef,
+        isa      => sub { die 'should be CodeRef' unless ref $_[0] and ref $_[0] eq 'CODE' },
         is       => rwp =>,
         required => 1,
-        traits   => [qw( Code )],
-        handles  => {
-            run => execute =>,
-        },
     );
 
-    no Moose;
-    __PACKAGE__->meta->make_immutable;
+  
+    sub run { 
+        my ( $self, $sa, $key ) = @_ ;
+        die if not ref $sa;
+        $self->code->( $sa, $key );
+    }
+
+    no Moo;
 
 
     sub linear_wrap {
