@@ -21,7 +21,7 @@ package Set::Associate {
         traits   => [ Array => ],
         handles  => {
             items_elements => elements =>,
-        }
+        },
     );
 
 
@@ -37,7 +37,7 @@ package Set::Associate {
             _items_cache_push  => push     =>,
             _items_cache_count => count    =>,
             _items_cache_get   => get      =>,
-        }
+        },
     );
 
 
@@ -51,7 +51,7 @@ package Set::Associate {
             _association_cache_has => exists =>,
             _association_cache_get => get    =>,
             _association_cache_set => set    =>,
-        }
+        },
     );
 
 
@@ -73,7 +73,7 @@ package Set::Associate {
         default => \&Set::Associate::NewKey::linear_wrap,
     );
 
-    sub run_on_new_key { $_[0]->on_new_key->run( @_ ) }
+    sub run_on_new_key { $_[0]->on_new_key->run(@_) }
 
 
     sub associate {
