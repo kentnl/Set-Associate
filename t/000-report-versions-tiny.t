@@ -50,7 +50,7 @@ sub pmver {
 
 eval { $v .= pmver('Digest::MD5','any version') };
 eval { $v .= pmver('Digest::SHA1','any version') };
-eval { $v .= pmver('Dist::Zilla::PluginBundle::Author::KENTNL','v1.6.0') };
+eval { $v .= pmver('Dist::Zilla::PluginBundle::Author::KENTNL','v1.7.0') };
 eval { $v .= pmver('Dist::Zilla::PluginBundle::Author::KENTNL::Lite','v1.3.0') };
 eval { $v .= pmver('File::Find','any version') };
 eval { $v .= pmver('File::Temp','any version') };

@@ -46,7 +46,7 @@ x_BuiltWith:
   modules:
     Digest::MD5: 2.52
     Digest::SHA1: 2.13
-    Dist::Zilla::PluginBundle::Author::KENTNL: 1.6.0
+    Dist::Zilla::PluginBundle::Author::KENTNL: 1.7.0
     Dist::Zilla::PluginBundle::Author::KENTNL::Lite: 'NA(possibly not installed)'
     File::Find: 1.23
     File::Temp: 0.22
@@ -224,7 +224,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Author::KENTNL::MinimumPerl
       name: '@Author::KENTNL/Author::KENTNL::MinimumPerl'
-      version: 1.6.0
+      version: 1.7.0
     -
       class: Dist::Zilla::Plugin::Author::KENTNL::Prereqs::Latest::Selective
       name: '@Author::KENTNL/Author::KENTNL::Prereqs::Latest::Selective'
@@ -241,6 +241,10 @@ x_Dist_Zilla:
       class: Dist::Zilla::Plugin::ReadmeFromPod
       name: '@Author::KENTNL/ReadmeFromPod'
       version: 0.16
+    -
+      class: Dist::Zilla::Plugin::ReadmeAnyFromPod
+      name: '@Author::KENTNL/ReadmeAnyFromPod'
+      version: 0.120120
     -
       class: Dist::Zilla::Plugin::Test::CPAN::Changes
       name: '@Author::KENTNL/Test::CPAN::Changes'
