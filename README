@@ -129,28 +129,28 @@ PRIVATE CONSTRUCTOR ARGUMENTS
   _association_cache
         lazy HashRef[ Any ] = { }
 
+PRIVATE METHODS
+  _items_cache_empty
+  _items_cache_shift
+  _items_cache_push
+  _items_cache_count
+  _items_cache_get
+  _association_cache_has
+        if ( $sa->_assocition_cache_has( $key ) ){
+            return $sa->_association_cache_get( $key );
+        }
+
+  _association_cache_get
+        my $assocval = $sa->_association_cache_get( $key );
+
+  _association_cache_set
+        $sa->_association_cache_set( $key, $assocval );
+
 PRIVATE ATTRIBUTES
   _items_cache
   _association_cache
         my $cache = $sa->_association_cache();
         $cache->{ $key } = $value;
-
-PRIVATE ATTRIBUTE HANDLES
-  _items_cache_empty => Native::Array/is_empty
-  _items_cache_shift => Native::Array/shift
-  _items_cache_push  => Native::Array/push
-  _items_cache_count => Native::Array/count
-  _items_cache_get   => Native::Array/get
-  _association_cache_has =>   Native::Hash/exists
-        if ( $sa->_assocition_cache_has( $key ) ){
-            return $sa->_association_cache_get( $key );
-        }
-
-  _association_cache_get =>   Native::Hash/get
-        my $assocval = $sa->_association_cache_get( $key );
-
-  _association_cache_set =>   Native::Hash/set
-        $sa->_association_cache_set( $key, $assocval );
 
 AUTHOR
     Kent Fredric <kentfredric@gmail.com>

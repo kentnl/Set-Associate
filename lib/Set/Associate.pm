@@ -262,6 +262,32 @@ Generates an association automatically.
 
     lazy HashRef[ Any ] = { }
 
+=head1 PRIVATE METHODS
+
+=head2 _items_cache_empty
+
+=head2 _items_cache_shift
+
+=head2 _items_cache_push
+
+=head2 _items_cache_count
+
+=head2 _items_cache_get
+
+=head2 _association_cache_has
+
+    if ( $sa->_assocition_cache_has( $key ) ){
+        return $sa->_association_cache_get( $key );
+    }
+
+=head2 _association_cache_get
+
+    my $assocval = $sa->_association_cache_get( $key );
+
+=head2 _association_cache_set
+
+    $sa->_association_cache_set( $key, $assocval );
+
 =head1 PRIVATE ATTRIBUTES
 
 =head2 _items_cache
@@ -270,32 +296,6 @@ Generates an association automatically.
 
     my $cache = $sa->_association_cache();
     $cache->{ $key } = $value;
-
-=head1 PRIVATE ATTRIBUTE HANDLES
-
-=head2 _items_cache_empty => Native::Array/is_empty
-
-=head2 _items_cache_shift => Native::Array/shift
-
-=head2 _items_cache_push  => Native::Array/push
-
-=head2 _items_cache_count => Native::Array/count
-
-=head2 _items_cache_get   => Native::Array/get
-
-=head2 _association_cache_has =>   Native::Hash/exists
-
-    if ( $sa->_assocition_cache_has( $key ) ){
-        return $sa->_association_cache_get( $key );
-    }
-
-=head2 _association_cache_get =>   Native::Hash/get
-
-    my $assocval = $sa->_association_cache_get( $key );
-
-=head2 _association_cache_set =>   Native::Hash/set
-
-    $sa->_association_cache_set( $key, $assocval );
 
 =head1 AUTHOR
 
