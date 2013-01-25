@@ -80,12 +80,6 @@ CONSTRUCTOR ARGUMENTS
   items
         required ArrayRef[ Any ]
 
-  _items_cache
-        lazy ArrayRef[ Any ] = [ ]
-
-  _association_cache
-        lazy HashRef[ Any ] = { }
-
   on_items_empty
         lazy CodeRef = Set::Associate::RefillItems::linear
 
@@ -117,11 +111,6 @@ METHODS
 
 ATTRIBUTES
   items
-  _items_cache
-  _association_cache
-        my $cache = $sa->_association_cache();
-        $cache->{ $key } = $value;
-
   on_items_empty
         my $object = $sa->on_items_empty();
         say "Running empty items mechanism " . $object->name;
@@ -134,6 +123,20 @@ ATTRIBUTES
 
 ATTRIBUTE HANDLES
   item_elements =>  Native::Array/elements
+PRIVATE CONSTRUCTOR ARGUMENTS
+  _items_cache
+        lazy ArrayRef[ Any ] = [ ]
+
+  _association_cache
+        lazy HashRef[ Any ] = { }
+
+PRIVATE ATTRIBUTES
+  _items_cache
+  _association_cache
+        my $cache = $sa->_association_cache();
+        $cache->{ $key } = $value;
+
+PRIVATE ATTRIBUTE HANDLES
   _items_cache_empty => Native::Array/is_empty
   _items_cache_shift => Native::Array/shift
   _items_cache_push  => Native::Array/push

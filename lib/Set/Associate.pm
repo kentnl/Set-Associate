@@ -197,14 +197,6 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
     required ArrayRef[ Any ]
 
-=head2 _items_cache
-
-    lazy ArrayRef[ Any ] = [ ]
-
-=head2 _association_cache
-
-    lazy HashRef[ Any ] = { }
-
 =head2 on_items_empty
 
     lazy CodeRef = Set::Associate::RefillItems::linear
@@ -245,13 +237,6 @@ Generates an association automatically.
 
 =head2 items
 
-=head2 _items_cache
-
-=head2 _association_cache
-
-    my $cache = $sa->_association_cache();
-    $cache->{ $key } = $value;
-
 =head2 on_items_empty
 
     my $object = $sa->on_items_empty();
@@ -267,6 +252,27 @@ Generates an association automatically.
 =head1 ATTRIBUTE HANDLES
 
 =head2 item_elements =>  Native::Array/elements
+
+=head1 PRIVATE CONSTRUCTOR ARGUMENTS
+
+=head2 _items_cache
+
+    lazy ArrayRef[ Any ] = [ ]
+
+=head2 _association_cache
+
+    lazy HashRef[ Any ] = { }
+
+=head1 PRIVATE ATTRIBUTES
+
+=head2 _items_cache
+
+=head2 _association_cache
+
+    my $cache = $sa->_association_cache();
+    $cache->{ $key } = $value;
+
+=head1 PRIVATE ATTRIBUTE HANDLES
 
 =head2 _items_cache_empty => Native::Array/is_empty
 
