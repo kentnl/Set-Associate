@@ -57,7 +57,7 @@ BEGIN {
 
 
     has on_items_empty => (
-        isa     => 'Set::Associate::RefillItems',
+        isa     => sub { die 'Should be a ::RefillItems' unless blessed($_[0]) and $_[0]->isa('Set::Associate::RefillItems') }
         is      => rwp =>,
         lazy    => 1,
         default => \&Set::Associate::RefillItems::linear,
@@ -68,7 +68,7 @@ BEGIN {
 
 
     has on_new_key => (
-        isa     => 'Set::Associate::NewKey',
+        isa     => sub { die 'Should be a ::NewKey' unless blessed($_[0]) and $_[0]->isa('Set::Associate::NewKey') }
         is      => rwp =>,
         lazy    => 1,
         default => \&Set::Associate::NewKey::linear_wrap,
