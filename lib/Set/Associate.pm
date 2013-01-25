@@ -47,17 +47,23 @@ BEGIN {
 
 
     has _association_cache => (
-        isa => sub { die 'Should be HashRef' unless ref $_[0] and ref $_[0] eq 'HASH' },
-        is      => rwp    =>,
-        default => sub    { {} }
+        isa => sub {
+            die 'Should be HashRef' unless ref $_[0] and ref $_[0] eq 'HASH';
+        },
+        is      => rwp =>,
+        default => sub { {} }
     );
-    sub _association_cache_has { exists $_[0]->_association_cache->{$_[1]} }
-    sub _association_cache_get { $_[0]->_association_cache->{$_[1]} }
-    sub _association_cache_set { $_[0]->_association_cache->{$_[1]} = $_[2] }
+    sub _association_cache_has { exists $_[0]->_association_cache->{ $_[1] } }
+    sub _association_cache_get { $_[0]->_association_cache->{ $_[1] } }
+    sub _association_cache_set { $_[0]->_association_cache->{ $_[1] } = $_[2] }
 
 
     has on_items_empty => (
-        isa     => sub { die 'Should be a ::RefillItems' unless blessed($_[0]) and $_[0]->isa('Set::Associate::RefillItems') }
+        isa => sub {
+            die 'Should be a ::RefillItems'
+              unless blessed( $_[0] )
+              and $_[0]->isa('Set::Associate::RefillItems');
+        },
         is      => rwp =>,
         lazy    => 1,
         default => \&Set::Associate::RefillItems::linear,
@@ -68,7 +74,11 @@ BEGIN {
 
 
     has on_new_key => (
-        isa     => sub { die 'Should be a ::NewKey' unless blessed($_[0]) and $_[0]->isa('Set::Associate::NewKey') }
+        isa => sub {
+            die 'Should be a ::NewKey'
+              unless blessed( $_[0] )
+              and $_[0]->isa('Set::Associate::NewKey');
+        },
         is      => rwp =>,
         lazy    => 1,
         default => \&Set::Associate::NewKey::linear_wrap,
