@@ -3,7 +3,7 @@ use warnings;
 
 package Set::Associate {
 
-    # ABSTRACT: Pick items from a dataset associatively
+  # ABSTRACT: Pick items from a dataset associatively
 
 =head1 DESCRIPTION
 
@@ -82,11 +82,27 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
-    use Moose;
-    use MooseX::AttributeShortcuts;
-    use MooseX::Types::Moose qw( ArrayRef HashRef Any CodeRef );
-    use Set::Associate::NewKey;
-    use Set::Associate::RefillItems;
+  use Moo;
+  use Scalar::Util qw( blessed  );
+  use Set::Associate::NewKey;
+  use Set::Associate::RefillItems;
+
+  sub _tc_arrayref {
+    die 'should be ArrayRef' unless ref $_[0] and ref $_[0] eq 'ARRAY';
+  }
+
+  sub _tc_hashref {
+    die 'Should be HashRef' unless ref $_[0] and ref $_[0] eq 'HASH';
+  }
+
+  sub _tc_bless {
+    my ($class) = @_;
+    return sub {
+      die 'Should be a ' . $class
+        unless blessed( $_[0] )
+        and $_[0]->isa($class);
+    };
+  }
 
 =carg items
 
@@ -94,19 +110,12 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =attr items
 
-=ahandle item_elements =>  Native::Array/elements
+=method item_elements
 
 =cut
 
-    has items => (
-        isa => ArrayRef [Any],
-        is       => rwp     =>,
-        required => 1,
-        traits   => [ Array => ],
-        handles  => {
-            items_elements => elements =>,
-        },
-    );
+  has items => ( isa => \&_tc_arrayref, is => rwp =>, required => 1, );
+  sub items_elements { @{ $_[0]->items } }
 
 =pcarg _items_cache
 
@@ -114,32 +123,29 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =pattr _items_cache
 
-=pahandle _items_cache_empty => Native::Array/is_empty
+=pmethod _items_cache_empty
 
-=pahandle _items_cache_shift => Native::Array/shift
+=pmethod _items_cache_shift
 
-=pahandle _items_cache_push  => Native::Array/push
+=pmethod _items_cache_push
 
-=pahandle _items_cache_count => Native::Array/count
+=pmethod _items_cache_count
 
-=pahandle _items_cache_get   => Native::Array/get
+=pmethod _items_cache_get
 
 =cut
 
-    has _items_cache => (
-        isa => ArrayRef [Any],
-        is      => rwp     =>,
-        lazy    => 1,
-        default => sub     { [] },
-        traits  => [ Array => ],
-        handles => {
-            _items_cache_empty => is_empty =>,
-            _items_cache_shift => shift    =>,
-            _items_cache_push  => push     =>,
-            _items_cache_count => count    =>,
-            _items_cache_get   => get      =>,
-        },
-    );
+  has _items_cache => (
+    isa     => \&_tc_arrayref,
+    is      => rwp =>,
+    lazy    => 1,
+    default => sub { [] },
+  );
+  sub _items_cache_empty { scalar @{ $_[0]->_items_cache } == 0 }
+  sub _items_cache_shift { shift @{ $_[0]->_items_cache } }
+  sub _items_cache_push  { push @{ $_[0]->_items_cache }, splice @_, 1 }
+  sub _items_cache_count { scalar @{ $_[0]->_items_cache } }
+  sub _items_cache_get   { $_[0]->_items_cache->[ $_[1] ] }
 
 =pcarg _association_cache
 
@@ -150,34 +156,30 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
     my $cache = $sa->_association_cache();
     $cache->{ $key } = $value;
 
-=pahandle _association_cache_has =>   Native::Hash/exists
+=pmethod _association_cache_has
 
     if ( $sa->_assocition_cache_has( $key ) ){
         return $sa->_association_cache_get( $key );
     }
 
-=pahandle _association_cache_get =>   Native::Hash/get
+=pmethod _association_cache_get
 
     my $assocval = $sa->_association_cache_get( $key );
 
-=pahandle _association_cache_set =>   Native::Hash/set
+=pmethod _association_cache_set
 
     $sa->_association_cache_set( $key, $assocval );
 
 =cut
 
-    has _association_cache => (
-        isa => HashRef [Any],
-        is      => rwp    =>,
-        traits  => [ Hash => ],
-        lazy    => 1,
-        default => sub    { {} },
-        handles => {
-            _association_cache_has => exists =>,
-            _association_cache_get => get    =>,
-            _association_cache_set => set    =>,
-        },
-    );
+  has _association_cache => (
+    isa     => \&_tc_hashref,
+    is      => rwp =>,
+    default => sub { {} }
+  );
+  sub _association_cache_has { exists $_[0]->_association_cache->{ $_[1] } }
+  sub _association_cache_get { $_[0]->_association_cache->{ $_[1] } }
+  sub _association_cache_set { $_[0]->_association_cache->{ $_[1] } = $_[2] }
 
 =carg on_items_empty
 
@@ -192,12 +194,12 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
-    has on_items_empty => (
-        isa     => 'Set::Associate::RefillItems',
-        is      => rwp =>,
-        lazy    => 1,
-        default => \&Set::Associate::RefillItems::linear,
-    );
+  has on_items_empty => (
+    isa     => _tc_bless('Set::Associate::RefillItems'),
+    is      => rwp =>,
+    lazy    => 1,
+    default => \&Set::Associate::RefillItems::linear,
+  );
 
 =method run_on_items_empty
 
@@ -207,7 +209,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
-    sub run_on_items_empty { $_[0]->on_items_empty->run(@_) }
+  sub run_on_items_empty { $_[0]->on_items_empty->run(@_) }
 
 =carg on_new_key
 
@@ -227,14 +229,14 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
-    has on_new_key => (
-        isa     => 'Set::Associate::NewKey',
-        is      => rwp =>,
-        lazy    => 1,
-        default => \&Set::Associate::NewKey::linear_wrap,
-    );
+  has on_new_key => (
+    isa     => _tc_bless('Set::Associate::NewKey'),
+    is      => rwp =>,
+    lazy    => 1,
+    default => \&Set::Associate::NewKey::linear_wrap,
+  );
 
-    sub run_on_new_key { $_[0]->on_new_key->run(@_) }
+  sub run_on_new_key { $_[0]->on_new_key->run(@_) }
 
 =method associate
 
@@ -246,15 +248,15 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
-    sub associate {
-        my ( $self, $key ) = @_;
-        return if $self->_association_cache_has($key);
-        if ( $self->_items_cache_empty ) {
-            $self->_items_cache_push( $self->run_on_items_empty );
-        }
-        $self->_association_cache_set( $key, $self->run_on_new_key($key) );
-        return 1;
+  sub associate {
+    my ( $self, $key ) = @_;
+    return if $self->_association_cache_has($key);
+    if ( $self->_items_cache_empty ) {
+      $self->_items_cache_push( $self->run_on_items_empty );
     }
+    $self->_association_cache_set( $key, $self->run_on_new_key($key) );
+    return 1;
+  }
 
 =method get_associated
 
@@ -264,15 +266,11 @@ Generates an association automatically.
 
 =cut
 
-    sub get_associated {
-        my ( $self, $key ) = @_;
-        $self->associate($key);
-        return $self->_association_cache_get($key);
-    }
-
-    __PACKAGE__->meta->make_immutable;
-
-    no Moose;
+  sub get_associated {
+    my ( $self, $key ) = @_;
+    $self->associate($key);
+    return $self->_association_cache_get($key);
+  }
 
 };
 

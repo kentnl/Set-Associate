@@ -87,6 +87,8 @@ The [default implementation](http://search.cpan.org/perldoc?Set::Associate::NewK
 
 # METHODS
 
+## item\_elements
+
 ## run\_on\_items\_empty
 
     if( not @items ){
@@ -129,10 +131,6 @@ Generates an association automatically.
     say "Running new key mechanism " . $object->name;
     my $value = $object->run( $sa, $key );
 
-# ATTRIBUTE HANDLES
-
-## item\_elements =>  Native::Array/elements
-
 # PRIVATE CONSTRUCTOR ARGUMENTS
 
 ## \_items\_cache
@@ -143,6 +141,32 @@ Generates an association automatically.
 
     lazy HashRef[ Any ] = { }
 
+# PRIVATE METHODS
+
+## \_items\_cache\_empty
+
+## \_items\_cache\_shift
+
+## \_items\_cache\_push
+
+## \_items\_cache\_count
+
+## \_items\_cache\_get
+
+## \_association\_cache\_has
+
+    if ( $sa->_assocition_cache_has( $key ) ){
+        return $sa->_association_cache_get( $key );
+    }
+
+## \_association\_cache\_get
+
+    my $assocval = $sa->_association_cache_get( $key );
+
+## \_association\_cache\_set
+
+    $sa->_association_cache_set( $key, $assocval );
+
 # PRIVATE ATTRIBUTES
 
 ## \_items\_cache
@@ -151,32 +175,6 @@ Generates an association automatically.
 
     my $cache = $sa->_association_cache();
     $cache->{ $key } = $value;
-
-# PRIVATE ATTRIBUTE HANDLES
-
-## \_items\_cache\_empty => Native::Array/is\_empty
-
-## \_items\_cache\_shift => Native::Array/shift
-
-## \_items\_cache\_push  => Native::Array/push
-
-## \_items\_cache\_count => Native::Array/count
-
-## \_items\_cache\_get   => Native::Array/get
-
-## \_association\_cache\_has =>   Native::Hash/exists
-
-    if ( $sa->_assocition_cache_has( $key ) ){
-        return $sa->_association_cache_get( $key );
-    }
-
-## \_association\_cache\_get =>   Native::Hash/get
-
-    my $assocval = $sa->_association_cache_get( $key );
-
-## \_association\_cache\_set =>   Native::Hash/set
-
-    $sa->_association_cache_set( $key, $assocval );
 
 # AUTHOR
 
