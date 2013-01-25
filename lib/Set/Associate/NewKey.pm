@@ -109,7 +109,7 @@ Determines the offset for L</pick_offset> from taking the numeric value of the S
                 my ( $self, $key ) = @_;
                 use bigint;
                 return $pick_offset->run( $self,
-                    hex( Digest::SHA1::sha1_hex($key) ) );
+                    hex Digest::SHA1::sha1_hex($key) );
             }
         );
     }
@@ -134,10 +134,10 @@ Determines the offset for L</pick_offset> from taking the numeric value of the M
                 my ( $self, $key ) = @_;
                 use bigint;
                 return $pick_offset->run( $self,
-                    hex( Digest::MD5::md5_hex($key) ) );
+                    hex Digest::MD5::md5_hex($key) );
             }
         );
     }
-}
+};
 
 1;

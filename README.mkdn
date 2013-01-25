@@ -17,7 +17,7 @@ and persists them within the scope of the program, ie:
     my $set = Set::Associate->new(
         items => [qw( red blue yellow )],
     );
-    sub color_nick { 
+    sub color_nick {
         my $nick = shift;
         return colorize( $nick, $set->get_associated( $nick );
     }
@@ -30,7 +30,7 @@ And this is extensible to use some sort of persisting allocation method such as 
         items => [qw( red blue yellow )],
         on_new_key => Set::Associate::NewKey::hash_sha1,
     );
-    sub color_nick { 
+    sub color_nick {
         my $nick = shift;
         return colorize( $nick, $set->get_associated( $nick );
     }
@@ -77,23 +77,27 @@ The [default implementation](http://search.cpan.org/perldoc?Set::Associate::NewK
 
     required ArrayRef[ Any ]
 
-## \_items\_cache
-
-    lazy ArrayRef[ Any ] = [ ]
-
-## \_association\_cache
-
-    lazy HashRef[ Any ] = { }
-
 ## on\_items\_empty
 
-    lazy CodeRef = Set::Associate::RefillItems::linear
+    lazy Set::Associate::RefillItems = Set::Associate::RefillItems::linear
 
 ## on\_new\_key
 
-    lazy CodeRef = Set::Associate::NewKey::linear_wrap
+    lazy Set::Associate::NewKey = Set::Associate::NewKey::linear_wrap
 
 # METHODS
+
+## run\_on\_items\_empty
+
+    if( not @items ){
+        push @items, $sa->run_on_items_empty();
+    }
+
+## run\_on\_new\_key
+
+    if ( not exists $cache{$key} ){
+        $cache{$key} = $sa->run_on_new_key( $key );
+    }
 
 ## associate
 
@@ -105,23 +109,50 @@ The [default implementation](http://search.cpan.org/perldoc?Set::Associate::NewK
 
 ## get\_associated
 
+Generates an association automatically.
+
     my $result = $object->get_associated( $key );
 
 # ATTRIBUTES
 
 ## items
 
-## \_items\_cache
-
-## \_association\_cache
-
 ## on\_items\_empty
 
+    my $object = $sa->on_items_empty();
+    say "Running empty items mechanism " . $object->name;
+    push @items, $object->run( $sa  );
+
 ## on\_new\_key
+
+    my $object = $sa->on_new_key();
+    say "Running new key mechanism " . $object->name;
+    my $value = $object->run( $sa, $key );
 
 # ATTRIBUTE HANDLES
 
 ## item\_elements =>  Native::Array/elements
+
+# PRIVATE CONSTRUCTOR ARGUMENTS
+
+## \_items\_cache
+
+    lazy ArrayRef[ Any ] = [ ]
+
+## \_association\_cache
+
+    lazy HashRef[ Any ] = { }
+
+# PRIVATE ATTRIBUTES
+
+## \_items\_cache
+
+## \_association\_cache
+
+    my $cache = $sa->_association_cache();
+    $cache->{ $key } = $value;
+
+# PRIVATE ATTRIBUTE HANDLES
 
 ## \_items\_cache\_empty => Native::Array/is\_empty
 
@@ -135,13 +166,17 @@ The [default implementation](http://search.cpan.org/perldoc?Set::Associate::NewK
 
 ## \_association\_cache\_has =>   Native::Hash/exists
 
+    if ( $sa->_assocition_cache_has( $key ) ){
+        return $sa->_association_cache_get( $key );
+    }
+
 ## \_association\_cache\_get =>   Native::Hash/get
+
+    my $assocval = $sa->_association_cache_get( $key );
 
 ## \_association\_cache\_set =>   Native::Hash/set
 
-## run\_on\_items\_empty => Native::Code/execute\_method
-
-## run\_on\_new\_key =>  Native::Code/execute\_method
+    $sa->_association_cache_set( $key, $assocval );
 
 # AUTHOR
 

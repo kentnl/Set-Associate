@@ -16,7 +16,7 @@ and persists them within the scope of the program, ie:
     my $set = Set::Associate->new(
         items => [qw( red blue yellow )],
     );
-    sub color_nick { 
+    sub color_nick {
         my $nick = shift;
         return colorize( $nick, $set->get_associated( $nick );
     }
@@ -29,7 +29,7 @@ And this is extensible to use some sort of persisting allocation method such as 
         items => [qw( red blue yellow )],
         on_new_key => Set::Associate::NewKey::hash_sha1,
     );
-    sub color_nick { 
+    sub color_nick {
         my $nick = shift;
         return colorize( $nick, $set->get_associated( $nick );
     }
@@ -105,24 +105,24 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
         traits   => [ Array => ],
         handles  => {
             items_elements => elements =>,
-        }
+        },
     );
 
-=carg _items_cache
+=pcarg _items_cache
 
     lazy ArrayRef[ Any ] = [ ]
 
-=attr _items_cache
+=pattr _items_cache
 
-=ahandle _items_cache_empty => Native::Array/is_empty
+=pahandle _items_cache_empty => Native::Array/is_empty
 
-=ahandle _items_cache_shift => Native::Array/shift
+=pahandle _items_cache_shift => Native::Array/shift
 
-=ahandle _items_cache_push  => Native::Array/push
+=pahandle _items_cache_push  => Native::Array/push
 
-=ahandle _items_cache_count => Native::Array/count
+=pahandle _items_cache_count => Native::Array/count
 
-=ahandle _items_cache_get   => Native::Array/get
+=pahandle _items_cache_get   => Native::Array/get
 
 =cut
 
@@ -138,20 +138,31 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
             _items_cache_push  => push     =>,
             _items_cache_count => count    =>,
             _items_cache_get   => get      =>,
-        }
+        },
     );
 
-=carg _association_cache
+=pcarg _association_cache
 
     lazy HashRef[ Any ] = { }
 
-=attr _association_cache
+=pattr _association_cache
 
-=ahandle _association_cache_has =>   Native::Hash/exists
+    my $cache = $sa->_association_cache();
+    $cache->{ $key } = $value;
 
-=ahandle _association_cache_get =>   Native::Hash/get
+=pahandle _association_cache_has =>   Native::Hash/exists
 
-=ahandle _association_cache_set =>   Native::Hash/set
+    if ( $sa->_assocition_cache_has( $key ) ){
+        return $sa->_association_cache_get( $key );
+    }
+
+=pahandle _association_cache_get =>   Native::Hash/get
+
+    my $assocval = $sa->_association_cache_get( $key );
+
+=pahandle _association_cache_set =>   Native::Hash/set
+
+    $sa->_association_cache_set( $key, $assocval );
 
 =cut
 
@@ -165,14 +176,19 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
             _association_cache_has => exists =>,
             _association_cache_get => get    =>,
             _association_cache_set => set    =>,
-        }
+        },
     );
 
 =carg on_items_empty
 
-    lazy CodeRef = Set::Associate::RefillItems::linear
+    lazy Set::Associate::RefillItems = Set::Associate::RefillItems::linear
 
 =attr on_items_empty
+
+    my $object = $sa->on_items_empty();
+    say "Running empty items mechanism " . $object->name;
+    push @items, $object->run( $sa  );
+
 
 =cut
 
@@ -183,18 +199,31 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
         default => \&Set::Associate::RefillItems::linear,
     );
 
-    sub run_on_items_empty {
-        my ($self) = @_;
-        return $self->on_items_empty->run($self);
+=method run_on_items_empty
+
+    if( not @items ){
+        push @items, $sa->run_on_items_empty();
     }
+
+=cut
+
+    sub run_on_items_empty { $_[0]->on_items_empty->run(@_) }
 
 =carg on_new_key
 
-    lazy CodeRef = Set::Associate::NewKey::linear_wrap
+    lazy Set::Associate::NewKey = Set::Associate::NewKey::linear_wrap
 
 =attr on_new_key
 
-=ahandle run_on_new_key =>  Native::Code/execute_method
+    my $object = $sa->on_new_key();
+    say "Running new key mechanism " . $object->name;
+    my $value = $object->run( $sa, $key );
+
+=method run_on_new_key
+
+    if ( not exists $cache{$key} ){
+        $cache{$key} = $sa->run_on_new_key( $key );
+    }
 
 =cut
 
@@ -205,10 +234,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
         default => \&Set::Associate::NewKey::linear_wrap,
     );
 
-    sub run_on_new_key {
-        my ( $self, $key ) = @_;
-        return $self->on_new_key->run( $self, $key );
-    }
+    sub run_on_new_key { $_[0]->on_new_key->run(@_) }
 
 =method associate
 
@@ -232,6 +258,8 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =method get_associated
 
+Generates an association automatically.
+
     my $result = $object->get_associated( $key );
 
 =cut
@@ -246,6 +274,6 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
     no Moose;
 
-}
+};
 
 1;

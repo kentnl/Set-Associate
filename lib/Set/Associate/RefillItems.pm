@@ -58,6 +58,6 @@ Populate with a shuffled version of C<items>
             }
         );
     }
-}
+};
 
 1;
