@@ -217,7 +217,15 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =head2 run_on_items_empty
 
+    if( not @items ){
+        push @items, $sa->run_on_items_empty();
+    }
+
 =head2 run_on_new_key
+
+    if ( not exists $cache{$key} ){ 
+        $cache{$key} = $sa->run_on_new_key( $key );
+    }
 
 =head2 associate
 

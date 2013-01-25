@@ -94,7 +94,15 @@ CONSTRUCTOR ARGUMENTS
 
 METHODS
   run_on_items_empty
+        if( not @items ){
+            push @items, $sa->run_on_items_empty();
+        }
+
   run_on_new_key
+        if ( not exists $cache{$key} ){ 
+            $cache{$key} = $sa->run_on_new_key( $key );
+        }
+
   associate
         if( $object->associate( $key ) ) {
             say "already cached";
