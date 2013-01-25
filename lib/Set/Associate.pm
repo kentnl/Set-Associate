@@ -97,15 +97,15 @@ package Set::Associate {
 
     no Moose;
 
-}
-
-1;
+};
 BEGIN {
   $Set::Associate::AUTHORITY = 'cpan:KENTNL';
 }
 {
   $Set::Associate::VERSION = '0.001000';
 }
+
+1;
 
 __END__
 
