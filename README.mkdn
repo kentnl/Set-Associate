@@ -1,0 +1,155 @@
+# NAME
+
+Set::Associate - Pick items from a dataset associatively
+
+# VERSION
+
+version 0.001000
+
+# DESCRIPTION
+
+Essentially, this is a simple toolkit to map an infinite-many items to a corresponding finite-many values,
+ie: A nick coloring algorithm.
+
+The most simple usage of this code gives out values from `items` seqeuntially, and remembers seen values
+and persists them within the scope of the program, ie:
+
+    my $set = Set::Associate->new(
+        items => [qw( red blue yellow )],
+    );
+    sub color_nick { 
+        my $nick = shift;
+        return colorize( $nick, $set->get_associated( $nick );
+    }
+    ...
+    printf '<< %s >> %s', color_nick( $nick ), $message;
+
+And this is extensible to use some sort of persisting allocation method such as a hash
+
+    my $set = Set::Associate->new(
+        items => [qw( red blue yellow )],
+        on_new_key => Set::Associate::NewKey::hash_sha1,
+    );
+    sub color_nick { 
+        my $nick = shift;
+        return colorize( $nick, $set->get_associated( $nick );
+    }
+    ...
+    printf '<< %s >> %s', color_nick( $nick ), $message;
+
+Alternatively, you could use 1 of 2 random forms:
+
+    # Can produce colour runs if you're unlucky
+
+    my $set = Set::Associate->new(
+        items => [qw( red blue yellow )],
+        on_new_key => Set::Associate::NewKey::random_pick,
+    );
+
+    # Will exhaust the colour variation before giving out the same colour twice
+    my $set = Set::Associate->new(
+        items => [qw( red blue yellow )],
+        on_items_empty => Set::Associate::RefillItems::shuffle,
+    );
+
+# IMPLEMENTATION DETAILS
+
+There are 2 Main phases that occur within this code
+
+- pool population
+- pool selection
+
+## Pool Population
+
+The pool of available options ( `_items_cache` ) is initialised as an empty list, and every time the pool is being detected as empty ( `_items_cache_empty` ), the `on_items_empty` method is called ( `run_on_items_empty` ) and the results are pushed into the pool.
+
+The [default implementation](http://search.cpan.org/perldoc?Set::Associate::RefillItems#linear) copies items from `items` into the pool.
+
+## Pool Selection
+
+Pool selection can either be cherry-pick based, where the pool doesn't shrink, or can be destructive, so that the pool population phase is triggered to replenish the supply of items only when all values have been exhausted.
+
+The [default implementation](http://search.cpan.org/perldoc?Set::Associate::NewKey#linear\_wrap) `shift`'s the first item off the queue, allowing the queue to be exhausted and requiring pool population to occur periodically to regenerate the source list.
+
+# CONSTRUCTOR ARGUMENTS
+
+## items
+
+    required ArrayRef[ Any ]
+
+## \_items\_cache
+
+    lazy ArrayRef[ Any ] = [ ]
+
+## \_association\_cache
+
+    lazy HashRef[ Any ] = { }
+
+## on\_items\_empty
+
+    lazy CodeRef = Set::Associate::RefillItems::linear
+
+## on\_new\_key
+
+    lazy CodeRef = Set::Associate::NewKey::linear_wrap
+
+# METHODS
+
+## associate
+
+    if( $object->associate( $key ) ) {
+        say "already cached";
+    } else {
+        say "new value"
+    }
+
+## get\_associated
+
+    my $result = $object->get_associated( $key );
+
+# ATTRIBUTES
+
+## items
+
+## \_items\_cache
+
+## \_association\_cache
+
+## on\_items\_empty
+
+## on\_new\_key
+
+# ATTRIBUTE HANDLES
+
+## item\_elements =>  Native::Array/elements
+
+## \_items\_cache\_empty => Native::Array/is\_empty
+
+## \_items\_cache\_shift => Native::Array/shift
+
+## \_items\_cache\_push  => Native::Array/push
+
+## \_items\_cache\_count => Native::Array/count
+
+## \_items\_cache\_get   => Native::Array/get
+
+## \_association\_cache\_has =>   Native::Hash/exists
+
+## \_association\_cache\_get =>   Native::Hash/get
+
+## \_association\_cache\_set =>   Native::Hash/set
+
+## run\_on\_items\_empty => Native::Code/execute\_method
+
+## run\_on\_new\_key =>  Native::Code/execute\_method
+
+# AUTHOR
+
+Kent Fredric <kentfredric@gmail.com>
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2013 by Kent Fredric <kentfredric@gmail.com>.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
