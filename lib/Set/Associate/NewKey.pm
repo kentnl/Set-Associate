@@ -92,15 +92,15 @@ package Set::Associate::NewKey {
             }
         );
     }
-}
-
-1;
+};
 BEGIN {
   $Set::Associate::NewKey::AUTHORITY = 'cpan:KENTNL';
 }
 {
   $Set::Associate::NewKey::VERSION = '0.001000';
 }
+
+1;
 
 __END__
 

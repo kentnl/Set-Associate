@@ -48,15 +48,15 @@ package Set::Associate::RefillItems {
             }
         );
     }
-}
-
-1;
+};
 BEGIN {
   $Set::Associate::RefillItems::AUTHORITY = 'cpan:KENTNL';
 }
 {
   $Set::Associate::RefillItems::VERSION = '0.001000';
 }
+
+1;
 
 __END__
 
