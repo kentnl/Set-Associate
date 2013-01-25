@@ -11,49 +11,50 @@ BEGIN {
 }
 
 
-    # ABSTRACT: Pool repopulation methods
-    use Moo;
+  # ABSTRACT: Pool repopulation methods
+  use Moo;
 
-    has name => (
-        isa      => sub { die 'should be Str' if ref $_[0] },
-        is       => rwp =>,
-        required => 1,
+  has name => (
+    isa => sub { die 'should be Str' if ref $_[0] },
+    is       => rwp =>,
+    required => 1,
+  );
+  has code => (
+    isa => sub { die 'should be CodeRef' unless ref $_[0] and ref $_[0] eq 'CODE' },
+    is       => rwp =>,
+    required => 1,
+  );
+
+  sub run {
+    my ( $self, $sa ) = @_;
+    die if not ref $sa;
+    $self->code->($sa);
+  }
+
+  no Moo;
+
+
+  sub linear {
+    return __PACKAGE__->new(
+      name => 'linear',
+      code => sub {
+        my ( $self, ) = @_;
+        return @{ $self->items };
+      }
     );
-    has code => (
-        isa      => sub { die 'should be CodeRef' unless ref $_[0] and ref $_[0] eq 'CODE' },
-        is       => rwp =>,
-        required => 1,
+  }
+
+
+  sub shuffle {
+    return __PACKAGE__->new(
+      name => 'shuffle',
+      code => sub {
+        my ( $self, ) = @_;
+        require List::Util;
+        return List::Util::shuffle @{ $self->items };
+      }
     );
-
-    sub run { 
-        my ( $self, $sa ) = @_ ;
-        die if not ref $sa;
-        $self->code->( $sa );
-    }
-
-    no Moo;
-
-    sub linear {
-        return __PACKAGE__->new(
-            name => 'linear',
-            code => sub {
-                my ( $self, ) = @_;
-                return @{ $self->items };
-            }
-        );
-    }
-
-
-    sub shuffle {
-        return __PACKAGE__->new(
-            name => 'shuffle',
-            code => sub {
-                my ( $self, ) = @_;
-                require List::Util;
-                return List::Util::shuffle @{ $self->items };
-            }
-        );
-    }
+  }
 };
 
 1;
