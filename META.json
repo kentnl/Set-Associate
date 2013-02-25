@@ -42,6 +42,7 @@
       },
       "runtime" : {
          "requires" : {
+            "Carp" : "0",
             "Digest::MD5" : "0",
             "Digest::SHA1" : "0",
             "List::Util" : "0",
@@ -90,6 +91,7 @@
    "version" : "0.001000",
    "x_BuiltWith" : {
       "modules" : {
+         "Carp" : "1.28",
          "Digest::MD5" : "2.52",
          "Digest::SHA1" : "2.13",
          "Dist::Zilla::PluginBundle::Author::KENTNL" : "1.7.0",

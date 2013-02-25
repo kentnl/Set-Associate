@@ -27,6 +27,7 @@ my %module_build_args = (
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
+    "Carp" => 0,
     "Digest::MD5" => 0,
     "Digest::SHA1" => 0,
     "List::Util" => 0,

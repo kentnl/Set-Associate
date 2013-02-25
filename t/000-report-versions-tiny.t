@@ -48,6 +48,7 @@ sub pmver {
     return sprintf('%-45s => %-10s%-15s%s', $module, $pmver, $wanted, "\n");
 }
 
+eval { $v .= pmver('Carp','any version') };
 eval { $v .= pmver('Digest::MD5','any version') };
 eval { $v .= pmver('Digest::SHA1','any version') };
 eval { $v .= pmver('Dist::Zilla::PluginBundle::Author::KENTNL','v1.7.0') };

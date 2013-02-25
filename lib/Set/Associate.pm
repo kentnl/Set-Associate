@@ -16,18 +16,23 @@ BEGIN {
   use Set::Associate::NewKey;
   use Set::Associate::RefillItems;
 
+  sub _croak {
+    require Carp;
+    goto \&Carp::croak;
+  }
+
   sub _tc_arrayref {
-    die 'should be ArrayRef' unless ref $_[0] and ref $_[0] eq 'ARRAY';
+    _croak('should be ArrayRef') unless ref $_[0] and ref $_[0] eq 'ARRAY';
   }
 
   sub _tc_hashref {
-    die 'Should be HashRef' unless ref $_[0] and ref $_[0] eq 'HASH';
+    _croak('Should be HashRef') unless ref $_[0] and ref $_[0] eq 'HASH';
   }
 
   sub _tc_bless {
     my ($class) = @_;
     return sub {
-      die 'Should be a ' . $class
+      _croak('Should be a ' . $class)
         unless blessed( $_[0] )
         and $_[0]->isa($class);
     };
