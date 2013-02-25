@@ -211,7 +211,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =head1 METHODS
 
-=head2 item_elements
+=head2 items_elements
 
 =head2 run_on_items_empty
 

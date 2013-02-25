@@ -87,7 +87,7 @@ CONSTRUCTOR ARGUMENTS
         lazy Set::Associate::NewKey = Set::Associate::NewKey::linear_wrap
 
 METHODS
-  item_elements
+  items_elements
   run_on_items_empty
         if( not @items ){
             push @items, $sa->run_on_items_empty();

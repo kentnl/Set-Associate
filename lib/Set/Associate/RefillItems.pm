@@ -10,21 +10,28 @@ BEGIN {
   # ABSTRACT: Pool repopulation methods
   use Moo;
 
+
   sub _croak {
     require Carp;
     goto \&Carp::croak;
   }
+
 
   has name => (
     isa => sub { _croak('should be Str') if ref $_[0] },
     is       => rwp =>,
     required => 1,
   );
+
+
   has code => (
     isa => sub { _croak('should be CodeRef') unless ref $_[0] and ref $_[0] eq 'CODE' },
     is       => rwp =>,
     required => 1,
   );
+
+
+
 
   sub run {
     my ( $self, $sa ) = @_;
@@ -77,15 +84,73 @@ Set::Associate::RefillItems - Pool repopulation methods
 
 version 0.001000
 
-=head1 METHODS
+=head1 DESCRIPTION
+
+This class implements the mechanism which controls how the main pool populates.
+
+The part you're mostly interested in are the L</CLASS METHODS>, which return the right populator.
+
+This is more or less a wrapper for passing around subs with an implict interface.
+
+    my $populator = Set::Associate::RefillItems->new( 
+        name => 'linear', 
+        code => sub { 
+            my ( $self, $sa ) = @_;
+            ....
+        },
+    );
+
+    my ( @new_pool ) = $populator->run( $set_associate_object );
+
+=head1 CONSTRUCTOR ARGUMENTS
+
+=head2 name
+
+    required Str
+
+=head2 code
+
+    required CodeRef
+
+=head1 CLASS METHODS
 
 =head2 linear
 
 Populate from C<items> each time.
 
+    my $sa = Set::Associate->new(
+        ...
+        on_items_empty => Set::Associate::RefillItems::linear
+    );
+
+You can use C<< -> >> or not if you want, nothing under the hood cares.
+
 =head2 shuffle
 
 Populate with a shuffled version of C<items>
+
+    my $sa = Set::Associate->new(
+        ...
+        on_items_empty => Set::Associate::RefillItems::shuffle
+    );
+
+You can use C<< -> >> or not if you want, nothing under the hood cares.
+
+=head1 METHODS
+
+=head2 run
+
+runs code attached via L</code>
+
+    my ( @list ) = $object->run( $set_associate_object ); 
+
+Where <@list> is the new pool contents.
+
+=head1 ATTRIBUTES
+
+=head2 name
+
+=head2 code
 
 =head1 AUTHOR
 
