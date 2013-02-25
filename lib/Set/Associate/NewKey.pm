@@ -130,9 +130,9 @@ The part you're mostly interested in are the L</CLASS METHODS>, which return the
 
 This is more or less a wrapper for passing around subs with an implict interface.
 
-    my $assigner = Set::Associate::NewKey->new( 
-        name => 'linear_wrap', 
-        code => sub { 
+    my $assigner = Set::Associate::NewKey->new(
+        name => 'linear_wrap',
+        code => sub {
             my ( $self, $sa , $key ) = @_;
             ....
         },
@@ -247,7 +247,7 @@ You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 runs code attached via L</code>
 
-    my $value = $object->run( $set_associate_object , $key ); 
+    my $value = $object->run( $set_associate_object , $key );
 
 And C<$value> is the newly formed associaiton value.
 

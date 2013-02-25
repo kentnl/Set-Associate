@@ -31,8 +31,6 @@ BEGIN {
   );
 
 
-
-
   sub run {
     my ( $self, $sa ) = @_;
     _croak('->run(x) should be a ref') if not ref $sa;
@@ -92,9 +90,9 @@ The part you're mostly interested in are the L</CLASS METHODS>, which return the
 
 This is more or less a wrapper for passing around subs with an implict interface.
 
-    my $populator = Set::Associate::RefillItems->new( 
-        name => 'linear', 
-        code => sub { 
+    my $populator = Set::Associate::RefillItems->new(
+        name => 'linear',
+        code => sub {
             my ( $self, $sa ) = @_;
             ....
         },
@@ -142,7 +140,7 @@ You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 runs code attached via L</code>
 
-    my ( @list ) = $object->run( $set_associate_object ); 
+    my ( @list ) = $object->run( $set_associate_object );
 
 Where <@list> is the new pool contents.
 
