@@ -115,7 +115,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =attr items
 
-=method item_elements
+=method items_elements
 
 =cut
 

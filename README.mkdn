@@ -87,7 +87,7 @@ The [default implementation](http://search.cpan.org/perldoc?Set::Associate::NewK
 
 # METHODS
 
-## item\_elements
+## items\_elements
 
 ## run\_on\_items\_empty
 
