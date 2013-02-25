@@ -87,18 +87,23 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
   use Set::Associate::NewKey;
   use Set::Associate::RefillItems;
 
+  sub _croak {
+    require Carp;
+    goto \&Carp::croak;
+  }
+
   sub _tc_arrayref {
-    die 'should be ArrayRef' unless ref $_[0] and ref $_[0] eq 'ARRAY';
+    _croak('should be ArrayRef') unless ref $_[0] and ref $_[0] eq 'ARRAY';
   }
 
   sub _tc_hashref {
-    die 'Should be HashRef' unless ref $_[0] and ref $_[0] eq 'HASH';
+    _croak('Should be HashRef') unless ref $_[0] and ref $_[0] eq 'HASH';
   }
 
   sub _tc_bless {
     my ($class) = @_;
     return sub {
-      die 'Should be a ' . $class
+      _croak( 'Should be a ' . $class )
         unless blessed( $_[0] )
         and $_[0]->isa($class);
     };
@@ -175,7 +180,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
   has _association_cache => (
     isa     => \&_tc_hashref,
     is      => rwp =>,
-    default => sub { {} }
+    default => sub { {} },
   );
   sub _association_cache_has { exists $_[0]->_association_cache->{ $_[1] } }
   sub _association_cache_get { $_[0]->_association_cache->{ $_[1] } }

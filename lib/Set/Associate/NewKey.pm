@@ -6,20 +6,26 @@ package Set::Associate::NewKey {
   # ABSTRACT: New Key assignment methods
 
   use Moo;
+
+  sub _croak {
+    require Carp;
+    goto \&Carp::croak;
+  }
+
   has name => (
-    isa => sub { die 'should be Str' if ref $_[0] },
+    isa => sub { _croak('should be Str') if ref $_[0] },
     is       => rwp =>,
     required => 1,
   );
   has code => (
-    isa => sub { die 'should be CodeRef' unless ref $_[0] and ref $_[0] eq 'CODE' },
+    isa => sub { _croak('should be CodeRef') unless ref $_[0] and ref $_[0] eq 'CODE' },
     is       => rwp =>,
     required => 1,
   );
 
   sub run {
     my ( $self, $sa, $key ) = @_;
-    die if not ref $sa;
+    _croak('->run(x,y), x should be a ref') if not ref $sa;
     $self->code->( $sa, $key );
   }
 
