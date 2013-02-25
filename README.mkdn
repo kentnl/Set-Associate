@@ -4,7 +4,7 @@ Set::Associate - Pick items from a dataset associatively
 
 # VERSION
 
-version 0.001000
+version 0.001001
 
 # DESCRIPTION
 
