@@ -6,6 +6,10 @@ BEGIN {
   $Set::Associate::RefillItems::AUTHORITY = 'cpan:KENTNL';
 }
 
+{
+  $Set::Associate::RefillItems::VERSION = '0.001001';
+}
+
 
   # ABSTRACT: Pool repopulation methods
   use Moo;
@@ -62,9 +66,6 @@ BEGIN {
     );
   }
 };
-{
-  $Set::Associate::RefillItems::VERSION = '0.001000';
-}
 
 1;
 
@@ -80,7 +81,7 @@ Set::Associate::RefillItems - Pool repopulation methods
 
 =head1 VERSION
 
-version 0.001000
+version 0.001001
 
 =head1 DESCRIPTION
 

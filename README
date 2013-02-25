@@ -2,7 +2,7 @@ NAME
     Set::Associate - Pick items from a dataset associatively
 
 VERSION
-    version 0.001000
+    version 0.001001
 
 DESCRIPTION
     Essentially, this is a simple toolkit to map an infinite-many items to a

@@ -1,23 +1,23 @@
 do{ my $x = {
-       'conflicts' => {},
-       'recommends' => {},
-       'build_requires' => {
-                             'File::Temp' => 0,
-                             'File::Find' => 0,
-                             'strict' => 0,
-                             'Module::Build' => '0.4003',
-                             'Test::More' => '0.98'
-                           },
        'requires' => {
-                       'Moo' => 0,
+                       'Carp' => 0,
                        'Digest::MD5' => 0,
+                       'bigint' => 0,
                        'List::Util' => 0,
-                       'perl' => 'v5.16.0',
+                       'Moo' => 0,
                        'warnings' => 0,
                        'Scalar::Util' => 0,
-                       'Carp' => 0,
-                       'Digest::SHA1' => 0,
-                       'bigint' => 0
-                     }
+                       'perl' => 'v5.16.0',
+                       'Digest::SHA1' => 0
+                     },
+       'recommends' => {},
+       'build_requires' => {
+                             'Test::More' => '0.98',
+                             'Module::Build' => '0.4003',
+                             'File::Temp' => 0,
+                             'File::Find' => 0,
+                             'strict' => 0
+                           },
+       'conflicts' => {}
      };
 $x; }
