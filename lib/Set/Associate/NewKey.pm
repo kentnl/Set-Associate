@@ -6,10 +6,6 @@ BEGIN {
   $Set::Associate::NewKey::AUTHORITY = 'cpan:KENTNL';
 }
 
-{
-  $Set::Associate::NewKey::VERSION = '0.001000';
-}
-
 
   # ABSTRACT: New Key assignment methods
 
@@ -95,6 +91,9 @@ BEGIN {
     );
   }
 };
+{
+  $Set::Associate::NewKey::VERSION = '0.001000';
+}
 
 1;
 

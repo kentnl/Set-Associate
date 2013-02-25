@@ -48,17 +48,17 @@ x_BuiltWith:
     Dist::Zilla::PluginBundle::Author::KENTNL: 1.7.0
     Dist::Zilla::PluginBundle::Author::KENTNL::Lite: 'NA(possibly not installed)'
     File::Find: 1.23
-    File::Temp: 0.22
+    File::Temp: 0.22_90
     List::Util: 1.27
     Module::Build: 0.4003
-    Moo: 1.000007
+    Moo: 1.000008
     Pod::Coverage::TrustPod: 0.100002
     Scalar::Util: 1.27
     Test::CPAN::Meta: 0.22
     Test::More: 0.98
-    Test::Pod: 1.45
+    Test::Pod: 1.46
     Test::Pod::Coverage: 1.08
-    bigint: 0.31
+    bigint: 0.32
     perl: 'NA(skipped: perl)'
     strict: 1.07
     version: 0.9901
@@ -72,12 +72,12 @@ x_BuiltWith:
       - 9
   perl-config:
     gccversion: 4.7.2
-    git_commit_id: d7958bf2007aed537530ea726e902a912430ce2e
-    git_describe: v5.17.8-35-gd7958bf
+    git_commit_id: 012528a99df1906d6feaaaf05657a53374aebc46
+    git_describe: v5.17.8-156-g012528a
     myarchname: x86_64-linux
     osname: linux
   platform: linux
-  uname: 'Linux 3.7.3-gentoo x86_64 GenuineIntel GNU/Linux'
+  uname: 'Linux 3.8.0-gentoo x86_64 GenuineIntel GNU/Linux'
 x_Dist_Zilla:
   perl:
     version: 5.017009
@@ -85,7 +85,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Git::NextVersion
       name: '@Author::KENTNL/Git::NextVersion'
-      version: 2.006
+      version: 2.009
     -
       class: Dist::Zilla::Plugin::MetaConfig
       name: '@Author::KENTNL/MetaConfig'
@@ -118,7 +118,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Git::GatherDir
       name: '@Author::KENTNL/Git::GatherDir'
-      version: 2.006
+      version: 2.009
     -
       class: Dist::Zilla::Plugin::License
       name: '@Author::KENTNL/License'
@@ -166,7 +166,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Test::Compile
       name: '@Author::KENTNL/Test::Compile'
-      version: 1.112820
+      version: 2.001
     -
       class: Dist::Zilla::Plugin::Test::Perl::Critic
       name: '@Author::KENTNL/Test::Perl::Critic'
@@ -238,7 +238,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::ReadmeFromPod
       name: '@Author::KENTNL/ReadmeFromPod'
-      version: 0.16
+      version: 0.18
     -
       class: Dist::Zilla::Plugin::ReadmeAnyFromPod
       name: '@Author::KENTNL/ReadmeAnyFromPod'
@@ -250,7 +250,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::CheckExtraTests
       name: '@Author::KENTNL/CheckExtraTests'
-      version: 0.007
+      version: 0.011
     -
       class: Dist::Zilla::Plugin::TestRelease
       name: '@Author::KENTNL/TestRelease'
@@ -262,23 +262,23 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Git::Check
       name: '@Author::KENTNL/Git::Check'
-      version: 2.006
+      version: 2.009
     -
       class: Dist::Zilla::Plugin::Git::Tag
       name: '@Author::KENTNL/Git::Tag/tag_master'
-      version: 2.006
+      version: 2.009
     -
       class: Dist::Zilla::Plugin::Git::Commit
       name: '@Author::KENTNL/Git::Commit'
-      version: 2.006
+      version: 2.009
     -
       class: Dist::Zilla::Plugin::Git::CommitBuild
       name: '@Author::KENTNL/Git::CommitBuild'
-      version: 2.006
+      version: 2.009
     -
       class: Dist::Zilla::Plugin::Git::Tag
       name: '@Author::KENTNL/Git::Tag/tag_release'
-      version: 2.006
+      version: 2.009
     -
       class: Dist::Zilla::Plugin::UploadToCPAN
       name: '@Author::KENTNL/UploadToCPAN'
@@ -286,7 +286,7 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::Twitter
       name: '@Author::KENTNL/Twitter'
-      version: 0.017
+      version: 0.020
     -
       class: Dist::Zilla::Plugin::Prereqs
       config:

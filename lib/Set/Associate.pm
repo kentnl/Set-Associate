@@ -6,10 +6,6 @@ BEGIN {
   $Set::Associate::AUTHORITY = 'cpan:KENTNL';
 }
 
-{
-  $Set::Associate::VERSION = '0.001000';
-}
-
 
   # ABSTRACT: Pick items from a dataset associatively
 
@@ -38,11 +34,7 @@ BEGIN {
   }
 
 
-  has items => (
-    isa      => \&_tc_arrayref,
-    is       => rwp =>,
-    required => 1,
-  );
+  has items => ( isa => \&_tc_arrayref, is => rwp =>, required => 1, );
   sub items_elements { @{ $_[0]->items } }
 
 
@@ -108,6 +100,9 @@ BEGIN {
   }
 
 };
+{
+  $Set::Associate::VERSION = '0.001000';
+}
 
 1;
 
