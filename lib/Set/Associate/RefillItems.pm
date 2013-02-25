@@ -11,8 +11,8 @@ BEGIN {
   use Moo;
 
   sub _croak {
-      require Carp;
-      goto \&Carp::croak;
+    require Carp;
+    goto \&Carp::croak;
   }
 
   has name => (

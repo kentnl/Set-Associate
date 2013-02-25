@@ -32,7 +32,7 @@ BEGIN {
   sub _tc_bless {
     my ($class) = @_;
     return sub {
-      _croak('Should be a ' . $class)
+      _croak( 'Should be a ' . $class )
         unless blessed( $_[0] )
         and $_[0]->isa($class);
     };
@@ -59,7 +59,7 @@ BEGIN {
   has _association_cache => (
     isa     => \&_tc_hashref,
     is      => rwp =>,
-    default => sub { {} }
+    default => sub { {} },
   );
   sub _association_cache_has { exists $_[0]->_association_cache->{ $_[1] } }
   sub _association_cache_get { $_[0]->_association_cache->{ $_[1] } }
