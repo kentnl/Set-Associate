@@ -1,6 +1,11 @@
 Release history for Set-Associate
 
-0.001001 2013-02-25T15:20:38Z
+0.001001 2013-02-25T15:23:51Z
+ [minor bugfix]
+ - I accidentally released the previous version with a version of
+   Dist::Zilla that *wasn't* immune to v5.16 package declarations.
+   Unfortunately, my patches haven't landed upstream yet, so working on a
+   local build.
 
 0.001000 2013-02-25T11:47:01Z
  - First version.
