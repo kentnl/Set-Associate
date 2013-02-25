@@ -1,0 +1,134 @@
+do{ my $x = [
+       {
+         'ARGV' => []
+       },
+       {},
+       {
+         'install_sets' => {},
+         'use_rcfile' => 1,
+         'PL_files' => undef,
+         'needs_compiler' => '',
+         'installdirs' => 'site',
+         'dist_abstract' => 'Pick items from a dataset associatively',
+         'configure_requires' => {
+                                   'Module::Build' => '0.4003'
+                                 },
+         'dynamic_config' => 1,
+         'test_file_exts' => [
+                               '.t'
+                             ],
+         'config_dir' => '_build',
+         'build_requires' => {
+                               'File::Temp' => 0,
+                               'File::Find' => 0,
+                               'strict' => 0,
+                               'Module::Build' => '0.4003',
+                               'Test::More' => '0.98'
+                             },
+         'prefix' => undef,
+         'conflicts' => {},
+         'libdoc_dirs' => [
+                            'blib/lib',
+                            'blib/arch'
+                          ],
+         'has_config_data' => undef,
+         'c_source' => undef,
+         'build_elements' => [
+                               'PL',
+                               'support',
+                               'pm',
+                               'xs',
+                               'share_dir',
+                               'pod',
+                               'script'
+                             ],
+         'debug' => undef,
+         'bundle_inc' => [],
+         'autosplit' => undef,
+         'cpan_client' => 'cpan',
+         'auto_configure_requires' => 1,
+         'extra_linker_flags' => [],
+         'share_dir' => undef,
+         'perl' => '/home/kent/perl5/perlbrew/perls/perl-blead/bin/perl5.17.9',
+         'release_status' => 'stable',
+         'allow_mb_mismatch' => 0,
+         'prereq_action_types' => [
+                                    'requires',
+                                    'build_requires',
+                                    'conflicts',
+                                    'recommends'
+                                  ],
+         'html_css' => '',
+         'mymetafile' => 'MYMETA.yml',
+         'pollute' => undef,
+         'program_name' => undef,
+         'test_files' => undef,
+         'install_base' => undef,
+         'destdir' => undef,
+         'install_base_relpaths' => {},
+         'verbose' => undef,
+         'requires' => {
+                         'Moo' => 0,
+                         'Digest::MD5' => 0,
+                         'List::Util' => 0,
+                         'perl' => 'v5.16.0',
+                         'warnings' => 0,
+                         'Scalar::Util' => 0,
+                         'Carp' => 0,
+                         'Digest::SHA1' => 0,
+                         'bigint' => 0
+                       },
+         'dist_version_from' => undef,
+         'prefix_relpaths' => {},
+         'license' => 'perl',
+         'orig_dir' => '/home/kent/perl/Set-Associate/Set-Associate-0.001000',
+         'metafile2' => 'META.json',
+         'metafile' => 'META.yml',
+         'extra_compiler_flags' => [],
+         'create_license' => undef,
+         'blib' => 'blib',
+         'bundle_inc_preload' => [],
+         'bindoc_dirs' => [
+                            'blib/script'
+                          ],
+         'install_path' => {},
+         'module_name' => 'Set::Associate',
+         'base_dir' => '/home/kent/perl/Set-Associate/Set-Associate-0.001000',
+         'original_prefix' => {},
+         'quiet' => undef,
+         'config' => undef,
+         'get_options' => {},
+         'pod_files' => undef,
+         'script_files' => [],
+         'create_readme' => undef,
+         'build_class' => 'Module::Build',
+         'create_makefile_pl' => undef,
+         'recursive_test_files' => 1,
+         'use_tap_harness' => 0,
+         'build_script' => 'Build',
+         'meta_merge' => {},
+         'scripts' => undef,
+         'tap_harness_args' => {},
+         'build_bat' => 0,
+         'debugger' => undef,
+         'dist_version' => '0.001000',
+         'pm_files' => undef,
+         'meta_add' => {},
+         'dist_name' => 'Set-Associate',
+         'include_dirs' => [],
+         'mymetafile2' => 'MYMETA.json',
+         'sign' => undef,
+         'dist_author' => [
+                            'Kent Fredric <kentfredric@gmail.com>'
+                          ],
+         'xs_files' => undef,
+         'recurse_into' => [],
+         'dist_suffix' => undef,
+         'magic_number' => undef,
+         '_added_to_INC' => [],
+         'create_packlist' => 1,
+         'mb_version' => '0.4003',
+         'recommends' => {}
+       }
+     ];
+$x; }
