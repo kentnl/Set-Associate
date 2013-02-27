@@ -5,6 +5,8 @@ package Set::Associate::Utils {
 
   # ABSTRACT: Shared Guts between Set::Associate modules
 
+  use strict;
+
   sub _croak {
     require Carp;
     goto \&Carp::croak;
@@ -58,6 +60,6 @@ package Set::Associate::Utils {
       _croak( 'Should be a ' . $class );
     };
   }
-}
+};
 
 1;

@@ -101,6 +101,12 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
   *_tc_hashref  = *Set::Associate::Utils::_tc_hashref;
   *_tc_bless    = *Set::Associate::Utils::_tc_bless;
 
+=begin Pod::Coverage
+
+    BUILD
+
+=end Pod::Coverage
+
 =carg items
 
     required ArrayRef[ Any ]
@@ -117,7 +123,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
   sub BUILD {
     my ($self) = @_;
     if ( $self->has_items ) {
-      warn "SA->items is deprecated, pass them to the C<on_items_empty> constructor instead";
+      _croak(q[SA->items is deprecated, pass them to the C<on_items_empty> constructor instead]);
       $self->on_items_empty->_set_items( $self->items );
     }
   }
@@ -211,7 +217,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
         @args = ( items => $self->items );
       }
       Set::Associate::RefillItems->linear(@args);
-    }
+    },
   );
 
 =method run_on_items_empty
