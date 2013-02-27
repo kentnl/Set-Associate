@@ -11,6 +11,8 @@ BEGIN {
 }
 
 
+  # ABSTRACT: Shared Guts between Set::Associate modules
+
   sub _croak {
     require Carp;
     goto \&Carp::croak;
@@ -60,7 +62,7 @@ __END__
 
 =head1 NAME
 
-Set::Associate::Utils
+Set::Associate::Utils - Shared Guts between Set::Associate modules
 
 =head1 VERSION
 

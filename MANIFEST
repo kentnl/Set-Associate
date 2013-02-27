@@ -19,6 +19,11 @@ t/01_assoc/02_random_shuffle.t
 t/01_assoc/03_random_pick.t
 t/01_assoc/04_hash_sha1.t
 t/01_assoc/05_hash_md5.t
+t/02_assoc_new/01_linear.t
+t/02_assoc_new/02_random_shuffle.t
+t/02_assoc_new/03_random_pick.t
+t/02_assoc_new/04_hash_sha1.t
+t/02_assoc_new/05_hash_md5.t
 weaver.ini
 xt/author/critic.t
 xt/release/cpan-changes.t

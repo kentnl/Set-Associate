@@ -27,15 +27,16 @@ BEGIN {
   *_tc_bless    = *Set::Associate::Utils::_tc_bless;
 
 
-  has items => ( isa => \&_tc_arrayref, is => rwp =>, required => 0, predicate => has_items  =>, );
+  has items => ( isa => \&_tc_arrayref, is => rwp =>, required => 0, predicate => has_items =>, );
   sub items_elements { @{ $_[0]->items } }
 
   sub BUILD {
-      my ( $self ) = @_; 
-      if ( $self->has_items ) { 
-          $self->on_items_empty->items( $self->items );
-      }
+    my ($self) = @_;
+    if ( $self->has_items ) {
+      $self->on_items_empty->_set_items( $self->items );
+    }
   }
+
 
   has _items_cache => (
     isa     => \&_tc_arrayref,
