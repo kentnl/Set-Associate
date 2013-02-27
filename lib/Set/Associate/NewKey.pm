@@ -17,9 +17,10 @@ BEGIN {
   use Moo;
   use Set::Associate::Utils;
 
-  *_croak      = *Set::Associate::Utils::_croak;
-  *_tc_str     = *Set::Associate::Utils::_tc_str;
-  *_tc_coderef = *Set::Associate::Utils::_tc_coderef;
+  *_croak          = *Set::Associate::Utils::_croak;
+  *_tc_str         = *Set::Associate::Utils::_tc_str;
+  *_tc_coderef     = *Set::Associate::Utils::_tc_coderef;
+  *_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
 
 
   has name => (
@@ -46,6 +47,7 @@ BEGIN {
 
 
   sub linear_wrap {
+    _warn_nonmethod( $_[0], __PACKAGE__, 'linear_wrap' );
     return __PACKAGE__->new(
       name => 'linear_wrap',
       code => sub {
@@ -57,6 +59,8 @@ BEGIN {
 
 
   sub random_pick {
+    _warn_nonmethod( $_[0], __PACKAGE__, 'random_pick' );
+
     return __PACKAGE__->new(
       name => 'random_pick',
       code => sub {
@@ -68,6 +72,8 @@ BEGIN {
 
 
   sub pick_offset {
+    _warn_nonmethod( $_[0], __PACKAGE__, 'pick_offset' );
+
     return __PACKAGE__->new(
       name => 'pick_offset',
       code => sub {
@@ -80,8 +86,11 @@ BEGIN {
 
 
   sub hash_sha1 {
+    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'hash_sha1' ) ) {
+      unshift @_, __PACKAGE__;
+    }
     require Digest::SHA1;
-    my $pick_offset = pick_offset();
+    my $pick_offset = $_[0]->pick_offset();
     return __PACKAGE__->new(
       name => 'hash_sha1',
       code => sub {
@@ -94,8 +103,11 @@ BEGIN {
 
 
   sub hash_md5 {
+    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'hash_md5' ) ) {
+      unshift @_, __PACKAGE__;
+    }
     require Digest::MD5;
-    my $pick_offset = pick_offset();
+    my $pick_offset = $_[0]->pick_offset();
     return __PACKAGE__->new(
       name => 'hash_md5',
       code => sub {
