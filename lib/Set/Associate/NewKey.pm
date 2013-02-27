@@ -85,16 +85,13 @@ C<shift>'s the first item off the internal C<_items_cache>
 
     my $sa = Set::Associate->new(
         ...
-        on_new_key => Set::Associate::NewKey::linear_wrap
+        on_new_key => Set::Associate::NewKey->linear_wrap
     );
 
 or alternatively
 
-    my $code = Set::Associate::NewKey::linear_wrap
+    my $code = Set::Associate::NewKey->linear_wrap
     my $newval = $code->run( $set, $key_which_will_be_ignored );
-
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =cut
 
@@ -114,15 +111,13 @@ non-destructively picks an element from C<_items_cache> at random.
 
     my $sa = Set::Associate->new(
         ...
-        on_new_key => Set::Associate::NewKey::random_pick
+        on_new_key => Set::Associate::NewKey->random_pick
     );
 
 or alternatively
 
-    my $code = Set::Associate::NewKey::random_pick
+    my $code = Set::Associate::NewKey->random_pick
     my $newval = $code->run( $set, $key_which_will_be_ignored );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =cut
 
@@ -146,17 +141,15 @@ If you're using anything else, the hash_sha1 or hash_md5 methods are suggested.
 
     my $sa = Set::Associate->new(
         ...
-        on_new_key => Set::Associate::NewKey::pick_offset
+        on_new_key => Set::Associate::NewKey->pick_offset
     );
 
 or alternatively
 
-    my $code = Set::Associate::NewKey::pick_offset
+    my $code = Set::Associate::NewKey->pick_offset
     my $newval = $code->run( $set, 9001 ); # despite picking numbers OVER NINE THOUSAND
                                            # will still return items in the array
 
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =cut
 
@@ -179,15 +172,13 @@ Determines the offset for L</pick_offset> from taking the numeric value of the S
 
     my $sa = Set::Associate->new(
         ...
-        on_new_key => Set::Associate::NewKey::hash_sha1
+        on_new_key => Set::Associate::NewKey->hash_sha1
     );
 
 or alternatively
 
-    my $code = Set::Associate::NewKey::hash_sha1();
+    my $code = Set::Associate::NewKey->hash_sha1();
     my $newval = $code->run( $set, "Some String" );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =cut
 
@@ -212,15 +203,13 @@ Determines the offset for L</pick_offset> from taking the numeric value of the M
 
     my $sa = Set::Associate->new(
         ...
-        on_new_key => Set::Associate::NewKey::hash_md5
+        on_new_key => Set::Associate::NewKey->hash_md5
     );
 
 or alternatively
 
-    my $code = Set::Associate::NewKey::hash_md5();
+    my $code = Set::Associate::NewKey->hash_md5();
     my $newval = $code->run( $set, "Some String" );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =cut
 

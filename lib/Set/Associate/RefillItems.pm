@@ -85,10 +85,8 @@ Populate from C<items> each time.
 
     my $sa = Set::Associate->new(
         ...
-        on_items_empty => Set::Associate::RefillItems::linear
+        on_items_empty => Set::Associate::RefillItems->linear( items => [ ... ])
     );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =cut
 
@@ -108,11 +106,8 @@ Populate with a shuffled version of C<items>
 
     my $sa = Set::Associate->new(
         ...
-        on_items_empty => Set::Associate::RefillItems::shuffle
+        on_items_empty => Set::Associate::RefillItems->shuffle( items => [ ... ]);
     );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
-
 
 =cut
 
