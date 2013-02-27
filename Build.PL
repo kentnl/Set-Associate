@@ -21,18 +21,18 @@ my %module_build_args = (
     "Kent Fredric <kentfredric\@gmail.com>"
   ],
   "dist_name" => "Set-Associate",
-  "dist_version" => "0.001001",
+  "dist_version" => "0.001002",
   "license" => "perl",
   "module_name" => "Set::Associate",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
-    "Carp" => 0,
     "Digest::MD5" => 0,
     "Digest::SHA1" => 0,
     "List::Util" => 0,
     "Moo" => 0,
     "Scalar::Util" => 0,
+    "Set::Associate::Utils" => 0,
     "bigint" => 0,
     "perl" => "v5.16.0",
     "warnings" => 0

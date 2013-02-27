@@ -7,104 +7,108 @@ BEGIN {
 }
 
 {
-  $Set::Associate::NewKey::VERSION = '0.001001';
+  $Set::Associate::NewKey::VERSION = '0.001002';
 }
 
 
-  # ABSTRACT: New Key assignment methods
+    # ABSTRACT: New Key assignment methods
 
 
-  use Moo;
+    use Moo;
+    use Set::Associate::Utils;
 
-  sub _croak {
-    require Carp;
-    goto \&Carp::croak;
-  }
-
-
-  has name => (
-    isa => sub { _croak('should be Str') if ref $_[0] },
-    is       => rwp =>,
-    required => 1,
-  );
+    *_croak      = Set::Associate::Utils::_croak;
+    *_tc_str     = Set::Associate::Utils::_tc_str;
+    *_tc_coderef = Set::Associate::Utils::_tc_coderef;
 
 
-  has code => (
-    isa => sub { _croak('should be CodeRef') unless ref $_[0] and ref $_[0] eq 'CODE' },
-    is       => rwp =>,
-    required => 1,
-  );
-
-
-  sub run {
-    my ( $self, $sa, $key ) = @_;
-    _croak('->run(x,y), x should be a ref') if not ref $sa;
-    $self->code->( $sa, $key );
-  }
-
-  no Moo;
-
-
-  sub linear_wrap {
-    return __PACKAGE__->new(
-      name => 'linear_wrap',
-      code => sub {
-        my ( $self, ) = @_;
-        return $self->_items_cache_shift;
-      }
+    has name => (
+        isa      => \&_tc_str,
+        is       => rwp =>,
+        required => 1,
     );
-  }
 
 
-  sub random_pick {
-    return __PACKAGE__->new(
-      name => 'random_pick',
-      code => sub {
-        my ( $self, ) = @_;
-        return $self->_items_cache_get( int( rand( $self->_items_cache_count ) ) );
-      }
+    has code => (
+        isa      => \&_tc_coderef,
+        is       => rwp =>,
+        required => 1,
     );
-  }
 
 
-  sub pick_offset {
-    return __PACKAGE__->new(
-      name => 'pick_offset',
-      code => sub {
-        my ( $self, $offset ) = @_;
-        use bigint;
-        return $self->_items_cache_get( $offset % $self->_items_cache_count );
-      }
-    );
-  }
+    sub run {
+        my ( $self, $sa, $key ) = @_;
+        _croak('->run(x,y), x should be a ref') if not ref $sa;
+        $self->code->( $sa, $key );
+    }
+
+    no Moo;
 
 
-  sub hash_sha1 {
-    require Digest::SHA1;
-    my $pick_offset = pick_offset();
-    return __PACKAGE__->new(
-      name => 'hash_sha1',
-      code => sub {
-        my ( $self, $key ) = @_;
-        use bigint;
-        return $pick_offset->run( $self, hex Digest::SHA1::sha1_hex($key) );
-      }
-    );
-  }
+    sub linear_wrap {
+        return __PACKAGE__->new(
+            name => 'linear_wrap',
+            code => sub {
+                my ( $self, ) = @_;
+                return $self->_items_cache_shift;
+            }
+        );
+    }
 
 
-  sub hash_md5 {
-    require Digest::MD5;
-    my $pick_offset = pick_offset();
-    return __PACKAGE__->new(
-      name => 'hash_md5',
-      code => sub {
-        my ( $self, $key ) = @_;
-        use bigint;
-        return $pick_offset->run( $self, hex Digest::MD5::md5_hex($key) );
-      }
-    );
-  }
+    sub random_pick {
+        return __PACKAGE__->new(
+            name => 'random_pick',
+            code => sub {
+                my ( $self, ) = @_;
+                return $self->_items_cache_get(
+                    int( rand( $self->_items_cache_count ) ) );
+            }
+        );
+    }
+
+
+    sub pick_offset {
+        return __PACKAGE__->new(
+            name => 'pick_offset',
+            code => sub {
+                my ( $self, $offset ) = @_;
+                use bigint;
+                return $self->_items_cache_get(
+                    $offset % $self->_items_cache_count );
+            }
+        );
+    }
+
+
+    sub hash_sha1 {
+        require Digest::SHA1;
+        my $pick_offset = pick_offset();
+        return __PACKAGE__->new(
+            name => 'hash_sha1',
+            code => sub {
+                my ( $self, $key ) = @_;
+                use bigint;
+                return $pick_offset->run( $self,
+                    hex Digest::SHA1::sha1_hex($key) );
+            }
+        );
+    }
+
+
+    sub hash_md5 {
+        require Digest::MD5;
+        my $pick_offset = pick_offset();
+        return __PACKAGE__->new(
+            name => 'hash_md5',
+            code => sub {
+                my ( $self, $key ) = @_;
+                use bigint;
+                return $pick_offset->run( $self,
+                    hex Digest::MD5::md5_hex($key) );
+            }
+        );
+    }
 };
 
 1;
@@ -121,7 +125,7 @@ Set::Associate::NewKey - New Key assignment methods
 
 =head1 VERSION
 
-version 0.001001
+version 0.001002
 
 =head1 DESCRIPTION
 
@@ -159,15 +163,13 @@ C<shift>'s the first item off the internal C<_items_cache>
 
     my $sa = Set::Associate->new(
         ...
-        on_new_key => Set::Associate::NewKey::linear_wrap
+        on_new_key => Set::Associate::NewKey->linear_wrap
     );
 
 or alternatively
 
-    my $code = Set::Associate::NewKey::linear_wrap
+    my $code = Set::Associate::NewKey->linear_wrap
     my $newval = $code->run( $set, $key_which_will_be_ignored );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =head2 random_pick
 
@@ -175,15 +177,13 @@ non-destructively picks an element from C<_items_cache> at random.
 
     my $sa = Set::Associate->new(
         ...
-        on_new_key => Set::Associate::NewKey::random_pick
+        on_new_key => Set::Associate::NewKey->random_pick
     );
 
 or alternatively
 
-    my $code = Set::Associate::NewKey::random_pick
+    my $code = Set::Associate::NewKey->random_pick
     my $newval = $code->run( $set, $key_which_will_be_ignored );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =head2 pick_offset
 
@@ -195,16 +195,14 @@ If you're using anything else, the hash_sha1 or hash_md5 methods are suggested.
 
     my $sa = Set::Associate->new(
         ...
-        on_new_key => Set::Associate::NewKey::pick_offset
+        on_new_key => Set::Associate::NewKey->pick_offset
     );
 
 or alternatively
 
-    my $code = Set::Associate::NewKey::pick_offset
+    my $code = Set::Associate::NewKey->pick_offset
     my $newval = $code->run( $set, 9001 ); # despite picking numbers OVER NINE THOUSAND
                                            # will still return items in the array
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =head2 hash_sha1
 
@@ -214,15 +212,13 @@ Determines the offset for L</pick_offset> from taking the numeric value of the S
 
     my $sa = Set::Associate->new(
         ...
-        on_new_key => Set::Associate::NewKey::hash_sha1
+        on_new_key => Set::Associate::NewKey->hash_sha1
     );
 
 or alternatively
 
-    my $code = Set::Associate::NewKey::hash_sha1();
+    my $code = Set::Associate::NewKey->hash_sha1();
     my $newval = $code->run( $set, "Some String" );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =head2 hash_md5
 
@@ -232,15 +228,13 @@ Determines the offset for L</pick_offset> from taking the numeric value of the M
 
     my $sa = Set::Associate->new(
         ...
-        on_new_key => Set::Associate::NewKey::hash_md5
+        on_new_key => Set::Associate::NewKey->hash_md5
     );
 
 or alternatively
 
-    my $code = Set::Associate::NewKey::hash_md5();
+    my $code = Set::Associate::NewKey->hash_md5();
     my $newval = $code->run( $set, "Some String" );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =head1 METHODS
 

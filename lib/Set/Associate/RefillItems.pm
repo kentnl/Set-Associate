@@ -7,64 +7,72 @@ BEGIN {
 }
 
 {
-  $Set::Associate::RefillItems::VERSION = '0.001001';
+  $Set::Associate::RefillItems::VERSION = '0.001002';
 }
 
 
-  # ABSTRACT: Pool repopulation methods
-  use Moo;
+    # ABSTRACT: Pool repopulation methods
+    use Moo;
+    use Set::Associate::Utils;
+
+    *_croak       = *Set::Associate::Utils::_croak;
+    *_tc_str      = *Set::Associate::Utils::_tc_str;
+    *_tc_coderef  = *Set::Associate::Utils::_tc_coderef;
+    *_tc_arrayref = *Set::Associate::Utils::_tc_arrayref;
 
 
-  sub _croak {
-    require Carp;
-    goto \&Carp::croak;
-  }
 
-
-  has name => (
-    isa => sub { _croak('should be Str') if ref $_[0] },
-    is       => rwp =>,
-    required => 1,
-  );
-
-
-  has code => (
-    isa => sub { _croak('should be CodeRef') unless ref $_[0] and ref $_[0] eq 'CODE' },
-    is       => rwp =>,
-    required => 1,
-  );
-
-
-  sub run {
-    my ( $self, $sa ) = @_;
-    _croak('->run(x) should be a ref') if not ref $sa;
-    $self->code->($sa);
-  }
-
-  no Moo;
-
-
-  sub linear {
-    return __PACKAGE__->new(
-      name => 'linear',
-      code => sub {
-        my ( $self, ) = @_;
-        return @{ $self->items };
-      }
+    has name => (
+        isa      => \&_tc_str,
+        is       => rwp =>,
+        required => 1,
     );
-  }
 
 
-  sub shuffle {
-    return __PACKAGE__->new(
-      name => 'shuffle',
-      code => sub {
-        my ( $self, ) = @_;
-        require List::Util;
-        return List::Util::shuffle @{ $self->items };
-      }
+    has code => (
+        isa      => \&_tc_coderef,
+        is       => rwp =>,
+        required => 1,
     );
-  }
+
+
+    has source_pool => (
+        isa       => \&_tc_arrayref,
+        is        => rwp =>,
+        predicate => has_source_pool =>,
+    );
+
+
+    sub run {
+        my ( $self, $sa ) = @_;
+        _croak('->run(x) should be a ref') if not ref $sa;
+        $self->code->($sa);
+    }
+
+    no Moo;
+
+
+    sub linear {
+        return __PACKAGE__->new(
+            name => 'linear',
+            code => sub {
+                my ( $self, ) = @_;
+                return @{ $self->items };
+            }
+        );
+    }
+
+
+    sub shuffle {
+        return __PACKAGE__->new(
+            name => 'shuffle',
+            code => sub {
+                my ( $self, ) = @_;
+                require List::Util;
+                return List::Util::shuffle @{ $self->items };
+            }
+        );
+    }
 };
 
 1;
@@ -81,7 +89,7 @@ Set::Associate::RefillItems - Pool repopulation methods
 
 =head1 VERSION
 
-version 0.001001
+version 0.001002
 
 =head1 DESCRIPTION
 
@@ -111,6 +119,10 @@ This is more or less a wrapper for passing around subs with an implict interface
 
     required CodeRef
 
+=head2 source_pool
+
+    required ArrayRef
+
 =head1 CLASS METHODS
 
 =head2 linear
@@ -119,10 +131,8 @@ Populate from C<items> each time.
 
     my $sa = Set::Associate->new(
         ...
-        on_items_empty => Set::Associate::RefillItems::linear
+        on_items_empty => Set::Associate::RefillItems->linear
     );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =head2 shuffle
 
@@ -130,10 +140,8 @@ Populate with a shuffled version of C<items>
 
     my $sa = Set::Associate->new(
         ...
-        on_items_empty => Set::Associate::RefillItems::shuffle
+        on_items_empty => Set::Associate::RefillItems->shuffle
     );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =head1 METHODS
 
@@ -150,6 +158,12 @@ Where <@list> is the new pool contents.
 =head2 name
 
 =head2 code
+
+=head2 source_pool
+
+=head1 ATTRIBUTE HANDLES
+
+=head2 has_source_pool
 
 =head1 AUTHOR
 

@@ -20,20 +20,20 @@ name: Set-Associate
 provides:
   Set::Associate:
     file: lib/Set/Associate.pm
-    version: 0.001001
+    version: 0.001002
   Set::Associate::NewKey:
     file: lib/Set/Associate/NewKey.pm
-    version: 0.001001
+    version: 0.001002
   Set::Associate::RefillItems:
     file: lib/Set/Associate/RefillItems.pm
-    version: 0.001001
+    version: 0.001002
 requires:
-  Carp: 0
   Digest::MD5: 0
   Digest::SHA1: 0
   List::Util: 0
   Moo: 0
   Scalar::Util: 0
+  Set::Associate::Utils: 0
   bigint: 0
   perl: v5.16.0
   warnings: 0
@@ -41,10 +41,9 @@ resources:
   bugtracker: https://github.com/kentfredric/Set-Associate/issues
   homepage: https://github.com/kentfredric/Set-Associate
   repository: https://github.com/kentfredric/Set-Associate.git
-version: 0.001001
+version: 0.001002
 x_BuiltWith:
   modules:
-    Carp: 1.28
     Digest::MD5: 2.52
     Digest::SHA1: 2.13
     Dist::Zilla::PluginBundle::Author::KENTNL: 1.7.0
@@ -56,6 +55,7 @@ x_BuiltWith:
     Moo: 1.000008
     Pod::Coverage::TrustPod: 0.100002
     Scalar::Util: 1.27
+    Set::Associate::Utils: 'NA(possibly not installed)'
     Test::CPAN::Meta: 0.22
     Test::More: 0.98
     Test::Pod: 1.46
