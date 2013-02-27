@@ -7,10 +7,11 @@ package Set::Associate::RefillItems {
   use Moo;
   use Set::Associate::Utils;
 
-  *_croak       = *Set::Associate::Utils::_croak;
-  *_tc_str      = *Set::Associate::Utils::_tc_str;
-  *_tc_coderef  = *Set::Associate::Utils::_tc_coderef;
-  *_tc_arrayref = *Set::Associate::Utils::_tc_arrayref;
+  *_croak          = *Set::Associate::Utils::_croak;
+  *_tc_str         = *Set::Associate::Utils::_tc_str;
+  *_tc_coderef     = *Set::Associate::Utils::_tc_coderef;
+  *_tc_arrayref    = *Set::Associate::Utils::_tc_arrayref;
+  *_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
 
 =head1 DESCRIPTION
 
@@ -107,6 +108,7 @@ Populate from C<items> each time.
 =cut
 
   sub linear {
+    _warn_nonmethod( $_[0], __PACKAGE__, 'linear' );
     my ( $class, @args ) = @_;
     return __PACKAGE__->new(
       name => 'linear',
@@ -130,6 +132,7 @@ Populate with a shuffled version of C<items>
 =cut
 
   sub shuffle {
+    _warn_nonmethod( $_[0], __PACKAGE__, 'shuffle' );
     my ( $class, @args ) = @_;
     return __PACKAGE__->new(
       name => 'shuffle',
