@@ -26,11 +26,11 @@ This is more or less a wrapper for passing around subs with an implict interface
 =cut
 
   use Moo;
+  use Set::Associate::Utils;
 
-  sub _croak {
-    require Carp;
-    goto \&Carp::croak;
-  }
+  *_croak      = *Set::Associate::Utils::_croak;
+  *_tc_str     = *Set::Associate::Utils::_tc_str;
+  *_tc_coderef = *Set::Associate::Utils::_tc_coderef;
 
 =carg name
 
@@ -41,7 +41,7 @@ This is more or less a wrapper for passing around subs with an implict interface
 =cut
 
   has name => (
-    isa => sub { _croak('should be Str') if ref $_[0] },
+    isa      => \&_tc_str,
     is       => rwp =>,
     required => 1,
   );
@@ -55,7 +55,7 @@ This is more or less a wrapper for passing around subs with an implict interface
 =cut
 
   has code => (
-    isa => sub { _croak('should be CodeRef') unless ref $_[0] and ref $_[0] eq 'CODE' },
+    isa      => \&_tc_coderef,
     is       => rwp =>,
     required => 1,
   );
