@@ -103,8 +103,15 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
-  has items => ( isa => \&_tc_arrayref, is => rwp =>, required => 1, );
+  has items => ( isa => \&_tc_arrayref, is => rwp =>, required => 0, predicate => has_items =>, );
   sub items_elements { @{ $_[0]->items } }
+
+  sub BUILD {
+    my ($self) = @_;
+    if ( $self->has_items ) {
+      $self->on_items_empty->_set_items( $self->items );
+    }
+  }
 
 =pcarg _items_cache
 
