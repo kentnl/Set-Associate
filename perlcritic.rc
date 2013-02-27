@@ -16,7 +16,7 @@ stop_words =
 private_name_regex = _(?!build_)\w
 
 [TestingAndDebugging::RequireUseStrict]
-equivalent_modules = Moose
+equivalent_modules = Moose v5.16
 
 [TestingAndDebugging::RequireUseWarnings]
 equivalent_modules = Moose
