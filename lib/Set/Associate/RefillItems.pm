@@ -5,6 +5,12 @@ package Set::Associate::RefillItems {
 
   # ABSTRACT: Pool repopulation methods
   use Moo;
+  use Set::Associate::Utils;
+
+  *_croak       = *Set::Associate::Utils::_croak;
+  *_tc_str      = *Set::Associate::Utils::_tc_str;
+  *_tc_coderef  = *Set::Associate::Utils::_tc_coderef;
+  *_tc_arrayref = *Set::Associate::Utils::_tc_arrayref;
 
 =head1 DESCRIPTION
 
@@ -27,11 +33,6 @@ This is more or less a wrapper for passing around subs with an implict interface
 
 =cut
 
-  sub _croak {
-    require Carp;
-    goto \&Carp::croak;
-  }
-
 =carg name
 
     required Str
@@ -41,7 +42,7 @@ This is more or less a wrapper for passing around subs with an implict interface
 =cut
 
   has name => (
-    isa => sub { _croak('should be Str') if ref $_[0] },
+    isa      => \&_tc_str,
     is       => rwp =>,
     required => 1,
   );
@@ -55,7 +56,7 @@ This is more or less a wrapper for passing around subs with an implict interface
 =cut
 
   has code => (
-    isa => sub { _croak('should be CodeRef') unless ref $_[0] and ref $_[0] eq 'CODE' },
+    isa      => \&_tc_coderef,
     is       => rwp =>,
     required => 1,
   );
