@@ -311,6 +311,8 @@ Generates an association automatically.
     my $cache = $sa->_association_cache();
     $cache->{ $key } = $value;
 
+=for Pod::Coverage     BUILD
+
 =head1 AUTHOR
 
 Kent Fredric <kentfredric@gmail.com>
