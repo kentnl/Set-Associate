@@ -14,7 +14,9 @@ The most simple usage of this code gives out values from C<items> seqeuntially, 
 and persists them within the scope of the program, ie:
 
     my $set = Set::Associate->new(
-        items => [qw( red blue yellow )],
+        on_items_empty => Set::Associate::RefillItems->linear(
+            items => [qw( red blue yellow )],
+        ),
     );
     sub color_nick {
         my $nick = shift;
@@ -26,8 +28,10 @@ and persists them within the scope of the program, ie:
 And this is extensible to use some sort of persisting allocation method such as a hash
 
     my $set = Set::Associate->new(
-        items => [qw( red blue yellow )],
-        on_new_key => Set::Associate::NewKey::hash_sha1,
+        on_items_empty => Set::Associate::RefillItems->linear(
+            items => [qw( red blue yellow )],
+        ),
+        on_new_key => Set::Associate::NewKey->hash_sha1,
     );
     sub color_nick {
         my $nick = shift;
@@ -42,14 +46,17 @@ Alternatively, you could use 1 of 2 random forms:
     # Can produce colour runs if you're unlucky
 
     my $set = Set::Associate->new(
-        items => [qw( red blue yellow )],
-        on_new_key => Set::Associate::NewKey::random_pick,
+        on_items_empty => Set::Associate::RefillItems->linear(
+            items => [qw( red blue yellow )],
+        ),
+        on_new_key => Set::Associate::NewKey->random_pick,
     );
 
     # Will exhaust the colour variation before giving out the same colour twice
     my $set = Set::Associate->new(
-        items => [qw( red blue yellow )],
-        on_items_empty => Set::Associate::RefillItems::shuffle,
+        on_items_empty => Set::Associate::RefillItems->shuffle(
+            items => [qw( red blue yellow )],
+        ),
     );
 
 
@@ -71,7 +78,7 @@ There are 2 Main phases that occur within this code
 
 The pool of available options ( C<_items_cache> ) is initialised as an empty list, and every time the pool is being detected as empty ( C<_items_cache_empty> ), the C<on_items_empty> method is called ( C<run_on_items_empty> ) and the results are pushed into the pool.
 
-The L<< default implementation|Set::Associate::RefillItems/linear >> copies items from C<items> into the pool.
+The L<< default implementation|Set::Associate::RefillItems/linear >> copies items from their own C<items> into the pool.
 
 =head2 Pool Selection
 
@@ -229,7 +236,9 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
     isa     => _tc_bless('Set::Associate::NewKey'),
     is      => rwp =>,
     lazy    => 1,
-    default => \&Set::Associate::NewKey::linear_wrap,
+    default => sub {
+      Set::Associate::NewKey->linear_wrap,;
+    },
   );
 
   sub run_on_new_key { $_[0]->on_new_key->run(@_) }
