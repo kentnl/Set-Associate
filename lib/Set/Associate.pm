@@ -123,7 +123,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
   sub BUILD {
     my ($self) = @_;
     if ( $self->has_items ) {
-      _croak(q[SA->items is deprecated, pass them to the C<on_items_empty> constructor instead]);
+      _carp(q[SA->items is deprecated, pass them to the C<on_items_empty> constructor instead]);
       $self->on_items_empty->_set_items( $self->items );
     }
   }
