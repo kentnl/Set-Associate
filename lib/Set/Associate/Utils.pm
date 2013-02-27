@@ -13,6 +13,7 @@ BEGIN {
 
   # ABSTRACT: Shared Guts between Set::Associate modules
 
+  use strict;
   sub _croak {
     require Carp;
     goto \&Carp::croak;
@@ -66,7 +67,7 @@ BEGIN {
       _croak( 'Should be a ' . $class );
     };
   }
-}
+};
 
 1;
 
