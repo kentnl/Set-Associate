@@ -132,98 +132,17 @@
 .rm #[ #] #H #V #F C
 .\" ========================================================================
 .\"
-.IX Title "Set::Associate::RefillItems 3"
-.TH Set::Associate::RefillItems 3 "2013-02-28" "perl v5.17.9" "User Contributed Perl Documentation"
+.IX Title "Set::Associate::Utils 3"
+.TH Set::Associate::Utils 3 "2013-02-28" "perl v5.17.9" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
 .nh
 .SH "NAME"
-Set::Associate::RefillItems \- Pool repopulation methods
+Set::Associate::Utils \- Shared Guts between Set::Associate modules
 .SH "VERSION"
 .IX Header "VERSION"
 version 0.002000
-.SH "DESCRIPTION"
-.IX Header "DESCRIPTION"
-This class implements the mechanism which controls how the main pool populates.
-.PP
-The part you're mostly interested in are the \*(L"\s-1CLASS METHODS\*(R"\s0, which return the right populator.
-.PP
-This is more or less a wrapper for passing around subs with an implict interface.
-.PP
-.Vb 7
-\&    my $populator = Set::Associate::RefillItems\->new(
-\&        name => \*(Aqlinear\*(Aq,
-\&        code => sub {
-\&            my ( $self, $sa ) = @_;
-\&            ....
-\&        },
-\&    );
-\&
-\&    my ( @new_pool ) = $populator\->run( $set_associate_object );
-.Ve
-.SH "CONSTRUCTOR ARGUMENTS"
-.IX Header "CONSTRUCTOR ARGUMENTS"
-.SS "name"
-.IX Subsection "name"
-.Vb 1
-\&    required Str
-.Ve
-.SS "code"
-.IX Subsection "code"
-.Vb 1
-\&    required CodeRef
-.Ve
-.SS "items"
-.IX Subsection "items"
-.Vb 1
-\&    required ArrayRef
-.Ve
-.SH "CLASS METHODS"
-.IX Header "CLASS METHODS"
-.SS "linear"
-.IX Subsection "linear"
-Populate from \f(CW\*(C`items\*(C'\fR each time.
-.PP
-.Vb 4
-\&    my $sa = Set::Associate\->new(
-\&        ...
-\&        on_items_empty => Set::Associate::RefillItems\->linear( items => [ ... ])
-\&    );
-.Ve
-.SS "shuffle"
-.IX Subsection "shuffle"
-Populate with a shuffled version of \f(CW\*(C`items\*(C'\fR
-.PP
-.Vb 4
-\&    my $sa = Set::Associate\->new(
-\&        ...
-\&        on_items_empty => Set::Associate::RefillItems\->shuffle( items => [ ... ]);
-\&    );
-.Ve
-.SH "METHODS"
-.IX Header "METHODS"
-.SS "run"
-.IX Subsection "run"
-runs code attached via \*(L"code\*(R"
-.PP
-.Vb 1
-\&    my ( @list ) = $object\->run( $set_associate_object );
-.Ve
-.PP
-Where <@list> is the new pool contents.
-.SH "ATTRIBUTES"
-.IX Header "ATTRIBUTES"
-.SS "name"
-.IX Subsection "name"
-.SS "code"
-.IX Subsection "code"
-.SS "items"
-.IX Subsection "items"
-.SH "ATTRIBUTE HANDLES"
-.IX Header "ATTRIBUTE HANDLES"
-.SS "has_items"
-.IX Subsection "has_items"
 .SH "AUTHOR"
 .IX Header "AUTHOR"
 Kent Fredric <kentfredric@gmail.com>

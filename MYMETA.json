@@ -19,8 +19,7 @@
             "File::Find" : "0",
             "File::Temp" : "0",
             "Module::Build" : "0.4003",
-            "Test::More" : "0.98",
-            "strict" : "0"
+            "Test::More" : "0.98"
          }
       },
       "configure" : {
@@ -38,6 +37,7 @@
             "Scalar::Util" : "0",
             "bigint" : "0",
             "perl" : "v5.16.0",
+            "strict" : "0",
             "warnings" : "0"
          }
       }
@@ -45,15 +45,19 @@
    "provides" : {
       "Set::Associate" : {
          "file" : "lib/Set/Associate.pm",
-         "version" : "0.001001"
+         "version" : "0.002000"
       },
       "Set::Associate::NewKey" : {
          "file" : "lib/Set/Associate/NewKey.pm",
-         "version" : "0.001001"
+         "version" : "0.002000"
       },
       "Set::Associate::RefillItems" : {
          "file" : "lib/Set/Associate/RefillItems.pm",
-         "version" : "0.001001"
+         "version" : "0.002000"
+      },
+      "Set::Associate::Utils" : {
+         "file" : "lib/Set/Associate/Utils.pm",
+         "version" : "0.002000"
       }
    },
    "release_status" : "stable",
@@ -66,7 +70,7 @@
          "url" : "https://github.com/kentfredric/Set-Associate.git"
       }
    },
-   "version" : "0.001001",
+   "version" : "0.002000",
    "x_BuiltWith" : {
       "modules" : {
          "Carp" : "1.28",

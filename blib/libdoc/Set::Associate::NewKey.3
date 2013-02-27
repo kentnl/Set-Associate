@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "Set::Associate::NewKey 3"
-.TH Set::Associate::NewKey 3 "2013-02-26" "perl v5.17.9" "User Contributed Perl Documentation"
+.TH Set::Associate::NewKey 3 "2013-02-28" "perl v5.17.9" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -142,7 +142,7 @@
 Set::Associate::NewKey \- New Key assignment methods
 .SH "VERSION"
 .IX Header "VERSION"
-version 0.001001
+version 0.002000
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
 This class implements the mechanism which controls how the values are assigned to 'new' keys.
@@ -183,18 +183,16 @@ This is more or less a wrapper for passing around subs with an implict interface
 .Vb 4
 \&    my $sa = Set::Associate\->new(
 \&        ...
-\&        on_new_key => Set::Associate::NewKey::linear_wrap
+\&        on_new_key => Set::Associate::NewKey\->linear_wrap
 \&    );
 .Ve
 .PP
 or alternatively
 .PP
 .Vb 2
-\&    my $code = Set::Associate::NewKey::linear_wrap
+\&    my $code = Set::Associate::NewKey\->linear_wrap
 \&    my $newval = $code\->run( $set, $key_which_will_be_ignored );
 .Ve
-.PP
-You can use \f(CW\*(C`\->\*(C'\fR or not if you want, nothing under the hood cares.
 .SS "random_pick"
 .IX Subsection "random_pick"
 non-destructively picks an element from \f(CW\*(C`_items_cache\*(C'\fR at random.
@@ -202,18 +200,16 @@ non-destructively picks an element from \f(CW\*(C`_items_cache\*(C'\fR at random
 .Vb 4
 \&    my $sa = Set::Associate\->new(
 \&        ...
-\&        on_new_key => Set::Associate::NewKey::random_pick
+\&        on_new_key => Set::Associate::NewKey\->random_pick
 \&    );
 .Ve
 .PP
 or alternatively
 .PP
 .Vb 2
-\&    my $code = Set::Associate::NewKey::random_pick
+\&    my $code = Set::Associate::NewKey\->random_pick
 \&    my $newval = $code\->run( $set, $key_which_will_be_ignored );
 .Ve
-.PP
-You can use \f(CW\*(C`\->\*(C'\fR or not if you want, nothing under the hood cares.
 .SS "pick_offset"
 .IX Subsection "pick_offset"
 Assuming offset is numeric, pick either that number, or a modulo of that number.
@@ -225,19 +221,17 @@ If you're using anything else, the hash_sha1 or hash_md5 methods are suggested.
 .Vb 4
 \&    my $sa = Set::Associate\->new(
 \&        ...
-\&        on_new_key => Set::Associate::NewKey::pick_offset
+\&        on_new_key => Set::Associate::NewKey\->pick_offset
 \&    );
 .Ve
 .PP
 or alternatively
 .PP
 .Vb 3
-\&    my $code = Set::Associate::NewKey::pick_offset
+\&    my $code = Set::Associate::NewKey\->pick_offset
 \&    my $newval = $code\->run( $set, 9001 ); # despite picking numbers OVER NINE THOUSAND
 \&                                           # will still return items in the array
 .Ve
-.PP
-You can use \f(CW\*(C`\->\*(C'\fR or not if you want, nothing under the hood cares.
 .SS "hash_sha1"
 .IX Subsection "hash_sha1"
 \&\fBrequires bigint support\fR
@@ -247,18 +241,16 @@ Determines the offset for \*(L"pick_offset\*(R" from taking the numeric value of
 .Vb 4
 \&    my $sa = Set::Associate\->new(
 \&        ...
-\&        on_new_key => Set::Associate::NewKey::hash_sha1
+\&        on_new_key => Set::Associate::NewKey\->hash_sha1
 \&    );
 .Ve
 .PP
 or alternatively
 .PP
 .Vb 2
-\&    my $code = Set::Associate::NewKey::hash_sha1();
+\&    my $code = Set::Associate::NewKey\->hash_sha1();
 \&    my $newval = $code\->run( $set, "Some String" );
 .Ve
-.PP
-You can use \f(CW\*(C`\->\*(C'\fR or not if you want, nothing under the hood cares.
 .SS "hash_md5"
 .IX Subsection "hash_md5"
 \&\fBrequires bigint support\fR
@@ -268,18 +260,16 @@ Determines the offset for \*(L"pick_offset\*(R" from taking the numeric value of
 .Vb 4
 \&    my $sa = Set::Associate\->new(
 \&        ...
-\&        on_new_key => Set::Associate::NewKey::hash_md5
+\&        on_new_key => Set::Associate::NewKey\->hash_md5
 \&    );
 .Ve
 .PP
 or alternatively
 .PP
 .Vb 2
-\&    my $code = Set::Associate::NewKey::hash_md5();
+\&    my $code = Set::Associate::NewKey\->hash_md5();
 \&    my $newval = $code\->run( $set, "Some String" );
 .Ve
-.PP
-You can use \f(CW\*(C`\->\*(C'\fR or not if you want, nothing under the hood cares.
 .SH "METHODS"
 .IX Header "METHODS"
 .SS "run"

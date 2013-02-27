@@ -7,7 +7,7 @@ BEGIN {
 }
 
 {
-  $Set::Associate::VERSION = '0.001001';
+  $Set::Associate::VERSION = '0.002000';
 }
 
 
@@ -17,34 +17,27 @@ BEGIN {
 
   use Moo;
   use Scalar::Util qw( blessed  );
+  use Set::Associate::Utils;
   use Set::Associate::NewKey;
   use Set::Associate::RefillItems;
 
-  sub _croak {
-    require Carp;
-    goto \&Carp::croak;
-  }
-
-  sub _tc_arrayref {
-    _croak('should be ArrayRef') unless ref $_[0] and ref $_[0] eq 'ARRAY';
-  }
-
-  sub _tc_hashref {
-    _croak('Should be HashRef') unless ref $_[0] and ref $_[0] eq 'HASH';
-  }
-
-  sub _tc_bless {
-    my ($class) = @_;
-    return sub {
-      _croak( 'Should be a ' . $class )
-        unless blessed( $_[0] )
-        and $_[0]->isa($class);
-    };
-  }
+  *_croak       = *Set::Associate::Utils::_croak;
+  *_carp        = *Set::Associate::Utils::_carp;
+  *_tc_arrayref = *Set::Associate::Utils::_tc_arrayref;
+  *_tc_hashref  = *Set::Associate::Utils::_tc_hashref;
+  *_tc_bless    = *Set::Associate::Utils::_tc_bless;
 
 
-  has items => ( isa => \&_tc_arrayref, is => rwp =>, required => 1, );
+  has items => ( isa => \&_tc_arrayref, is => rwp =>, required => 0, predicate => has_items =>, );
   sub items_elements { @{ $_[0]->items } }
+
+  sub BUILD {
+    my ($self) = @_;
+    if ( $self->has_items ) {
+      _carp(q[SA->items is deprecated, pass them to the C<on_items_empty> constructor instead]);
+      $self->on_items_empty->_set_items( $self->items );
+    }
+  }
 
 
   has _items_cache => (
@@ -74,7 +67,15 @@ BEGIN {
     isa     => _tc_bless('Set::Associate::RefillItems'),
     is      => rwp =>,
     lazy    => 1,
-    default => \&Set::Associate::RefillItems::linear,
+    default => sub {
+      my ($self) = @_;
+      my @args;
+      if ( $self->has_items ) {
+        _carp('SA->items deprecated in next version');
+        @args = ( items => $self->items );
+      }
+      Set::Associate::RefillItems->linear(@args);
+    },
   );
 
 
@@ -85,7 +86,9 @@ BEGIN {
     isa     => _tc_bless('Set::Associate::NewKey'),
     is      => rwp =>,
     lazy    => 1,
-    default => \&Set::Associate::NewKey::linear_wrap,
+    default => sub {
+      Set::Associate::NewKey->linear_wrap,;
+    },
   );
 
   sub run_on_new_key { $_[0]->on_new_key->run(@_) }
@@ -124,7 +127,7 @@ Set::Associate - Pick items from a dataset associatively
 
 =head1 VERSION
 
-version 0.001001
+version 0.002000
 
 =head1 DESCRIPTION
 
@@ -135,7 +138,9 @@ The most simple usage of this code gives out values from C<items> seqeuntially, 
 and persists them within the scope of the program, ie:
 
     my $set = Set::Associate->new(
-        items => [qw( red blue yellow )],
+        on_items_empty => Set::Associate::RefillItems->linear(
+            items => [qw( red blue yellow )],
+        ),
     );
     sub color_nick {
         my $nick = shift;
@@ -147,8 +152,10 @@ and persists them within the scope of the program, ie:
 And this is extensible to use some sort of persisting allocation method such as a hash
 
     my $set = Set::Associate->new(
-        items => [qw( red blue yellow )],
-        on_new_key => Set::Associate::NewKey::hash_sha1,
+        on_items_empty => Set::Associate::RefillItems->linear(
+            items => [qw( red blue yellow )],
+        ),
+        on_new_key => Set::Associate::NewKey->hash_sha1,
     );
     sub color_nick {
         my $nick = shift;
@@ -162,14 +169,17 @@ Alternatively, you could use 1 of 2 random forms:
     # Can produce colour runs if you're unlucky
 
     my $set = Set::Associate->new(
-        items => [qw( red blue yellow )],
-        on_new_key => Set::Associate::NewKey::random_pick,
+        on_items_empty => Set::Associate::RefillItems->linear(
+            items => [qw( red blue yellow )],
+        ),
+        on_new_key => Set::Associate::NewKey->random_pick,
     );
 
     # Will exhaust the colour variation before giving out the same colour twice
     my $set = Set::Associate->new(
-        items => [qw( red blue yellow )],
-        on_items_empty => Set::Associate::RefillItems::shuffle,
+        on_items_empty => Set::Associate::RefillItems->shuffle(
+            items => [qw( red blue yellow )],
+        ),
     );
 
 =head1 IMPLEMENTATION DETAILS
@@ -188,7 +198,7 @@ There are 2 Main phases that occur within this code
 
 The pool of available options ( C<_items_cache> ) is initialised as an empty list, and every time the pool is being detected as empty ( C<_items_cache_empty> ), the C<on_items_empty> method is called ( C<run_on_items_empty> ) and the results are pushed into the pool.
 
-The L<< default implementation|Set::Associate::RefillItems/linear >> copies items from C<items> into the pool.
+The L<< default implementation|Set::Associate::RefillItems/linear >> copies items from their own C<items> into the pool.
 
 =head2 Pool Selection
 
@@ -300,6 +310,8 @@ Generates an association automatically.
 
     my $cache = $sa->_association_cache();
     $cache->{ $key } = $value;
+
+=for Pod::Coverage     BUILD
 
 =head1 AUTHOR
 

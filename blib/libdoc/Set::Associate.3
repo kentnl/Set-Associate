@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "Set::Associate 3"
-.TH Set::Associate 3 "2013-02-26" "perl v5.17.9" "User Contributed Perl Documentation"
+.TH Set::Associate 3 "2013-02-28" "perl v5.17.9" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -142,7 +142,7 @@
 Set::Associate \- Pick items from a dataset associatively
 .SH "VERSION"
 .IX Header "VERSION"
-version 0.001001
+version 0.002000
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
 Essentially, this is a simple toolkit to map an infinite-many items to a corresponding finite-many values,
@@ -151,9 +151,11 @@ ie: A nick coloring algorithm.
 The most simple usage of this code gives out values from \f(CW\*(C`items\*(C'\fR seqeuntially, and remembers seen values
 and persists them within the scope of the program, ie:
 .PP
-.Vb 9
+.Vb 11
 \&    my $set = Set::Associate\->new(
-\&        items => [qw( red blue yellow )],
+\&        on_items_empty => Set::Associate::RefillItems\->linear(
+\&            items => [qw( red blue yellow )],
+\&        ),
 \&    );
 \&    sub color_nick {
 \&        my $nick = shift;
@@ -165,10 +167,12 @@ and persists them within the scope of the program, ie:
 .PP
 And this is extensible to use some sort of persisting allocation method such as a hash
 .PP
-.Vb 10
+.Vb 12
 \&    my $set = Set::Associate\->new(
-\&        items => [qw( red blue yellow )],
-\&        on_new_key => Set::Associate::NewKey::hash_sha1,
+\&        on_items_empty => Set::Associate::RefillItems\->linear(
+\&            items => [qw( red blue yellow )],
+\&        ),
+\&        on_new_key => Set::Associate::NewKey\->hash_sha1,
 \&    );
 \&    sub color_nick {
 \&        my $nick = shift;
@@ -184,14 +188,17 @@ Alternatively, you could use 1 of 2 random forms:
 \&    # Can produce colour runs if you\*(Aqre unlucky
 \&
 \&    my $set = Set::Associate\->new(
-\&        items => [qw( red blue yellow )],
-\&        on_new_key => Set::Associate::NewKey::random_pick,
+\&        on_items_empty => Set::Associate::RefillItems\->linear(
+\&            items => [qw( red blue yellow )],
+\&        ),
+\&        on_new_key => Set::Associate::NewKey\->random_pick,
 \&    );
 \&
 \&    # Will exhaust the colour variation before giving out the same colour twice
 \&    my $set = Set::Associate\->new(
-\&        items => [qw( red blue yellow )],
-\&        on_items_empty => Set::Associate::RefillItems::shuffle,
+\&        on_items_empty => Set::Associate::RefillItems\->shuffle(
+\&            items => [qw( red blue yellow )],
+\&        ),
 \&    );
 .Ve
 .SH "IMPLEMENTATION DETAILS"
@@ -205,7 +212,7 @@ pool selection
 .IX Subsection "Pool Population"
 The pool of available options ( \f(CW\*(C`_items_cache\*(C'\fR ) is initialised as an empty list, and every time the pool is being detected as empty ( \f(CW\*(C`_items_cache_empty\*(C'\fR ), the \f(CW\*(C`on_items_empty\*(C'\fR method is called ( \f(CW\*(C`run_on_items_empty\*(C'\fR ) and the results are pushed into the pool.
 .PP
-The default implementation copies items from \f(CW\*(C`items\*(C'\fR into the pool.
+The default implementation copies items from their own \f(CW\*(C`items\*(C'\fR into the pool.
 .SS "Pool Selection"
 .IX Subsection "Pool Selection"
 Pool selection can either be cherry-pick based, where the pool doesn't shrink, or can be destructive, so that the pool population phase is triggered to replenish the supply of items only when all values have been exhausted.

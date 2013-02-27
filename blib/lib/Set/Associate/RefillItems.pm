@@ -7,62 +7,77 @@ BEGIN {
 }
 
 {
-  $Set::Associate::RefillItems::VERSION = '0.001001';
+  $Set::Associate::RefillItems::VERSION = '0.002000';
 }
 
 
   # ABSTRACT: Pool repopulation methods
   use Moo;
+  use Set::Associate::Utils;
 
+  *_croak          = *Set::Associate::Utils::_croak;
+  *_tc_str         = *Set::Associate::Utils::_tc_str;
+  *_tc_coderef     = *Set::Associate::Utils::_tc_coderef;
+  *_tc_arrayref    = *Set::Associate::Utils::_tc_arrayref;
+  *_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
 
-  sub _croak {
-    require Carp;
-    goto \&Carp::croak;
-  }
 
 
   has name => (
-    isa => sub { _croak('should be Str') if ref $_[0] },
+    isa      => \&_tc_str,
     is       => rwp =>,
     required => 1,
   );
 
 
   has code => (
-    isa => sub { _croak('should be CodeRef') unless ref $_[0] and ref $_[0] eq 'CODE' },
+    isa      => \&_tc_coderef,
     is       => rwp =>,
     required => 1,
+  );
+
+
+  has items => (
+    isa       => \&_tc_arrayref,
+    is        => rwp =>,
+    predicate => has_items =>,
   );
 
 
   sub run {
     my ( $self, $sa ) = @_;
     _croak('->run(x) should be a ref') if not ref $sa;
-    $self->code->($sa);
+    $self->code->( $self, $sa );
   }
 
   no Moo;
 
 
   sub linear {
+    _warn_nonmethod( $_[0], __PACKAGE__, 'linear' );
+    my ( $class, @args ) = @_;
     return __PACKAGE__->new(
       name => 'linear',
       code => sub {
-        my ( $self, ) = @_;
+        my ( $self, $sa ) = @_;
         return @{ $self->items };
-      }
+      },
+      @args,
     );
   }
 
 
   sub shuffle {
+    _warn_nonmethod( $_[0], __PACKAGE__, 'shuffle' );
+    my ( $class, @args ) = @_;
     return __PACKAGE__->new(
       name => 'shuffle',
       code => sub {
-        my ( $self, ) = @_;
+        my ( $self, $sa ) = @_;
         require List::Util;
         return List::Util::shuffle @{ $self->items };
-      }
+      },
+      @args
     );
   }
 };
@@ -81,7 +96,7 @@ Set::Associate::RefillItems - Pool repopulation methods
 
 =head1 VERSION
 
-version 0.001001
+version 0.002000
 
 =head1 DESCRIPTION
 
@@ -111,6 +126,10 @@ This is more or less a wrapper for passing around subs with an implict interface
 
     required CodeRef
 
+=head2 items
+
+    required ArrayRef
+
 =head1 CLASS METHODS
 
 =head2 linear
@@ -119,10 +138,8 @@ Populate from C<items> each time.
 
     my $sa = Set::Associate->new(
         ...
-        on_items_empty => Set::Associate::RefillItems::linear
+        on_items_empty => Set::Associate::RefillItems->linear( items => [ ... ])
     );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =head2 shuffle
 
@@ -130,10 +147,8 @@ Populate with a shuffled version of C<items>
 
     my $sa = Set::Associate->new(
         ...
-        on_items_empty => Set::Associate::RefillItems::shuffle
+        on_items_empty => Set::Associate::RefillItems->shuffle( items => [ ... ]);
     );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =head1 METHODS
 
@@ -150,6 +165,12 @@ Where <@list> is the new pool contents.
 =head2 name
 
 =head2 code
+
+=head2 items
+
+=head1 ATTRIBUTE HANDLES
+
+=head2 has_items
 
 =head1 AUTHOR
 

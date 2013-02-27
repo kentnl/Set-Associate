@@ -7,7 +7,7 @@ BEGIN {
 }
 
 {
-  $Set::Associate::NewKey::VERSION = '0.001001';
+  $Set::Associate::NewKey::VERSION = '0.002000';
 }
 
 
@@ -15,22 +15,23 @@ BEGIN {
 
 
   use Moo;
+  use Set::Associate::Utils;
 
-  sub _croak {
-    require Carp;
-    goto \&Carp::croak;
-  }
+  *_croak          = *Set::Associate::Utils::_croak;
+  *_tc_str         = *Set::Associate::Utils::_tc_str;
+  *_tc_coderef     = *Set::Associate::Utils::_tc_coderef;
+  *_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
 
 
   has name => (
-    isa => sub { _croak('should be Str') if ref $_[0] },
+    isa      => \&_tc_str,
     is       => rwp =>,
     required => 1,
   );
 
 
   has code => (
-    isa => sub { _croak('should be CodeRef') unless ref $_[0] and ref $_[0] eq 'CODE' },
+    isa      => \&_tc_coderef,
     is       => rwp =>,
     required => 1,
   );
@@ -46,6 +47,7 @@ BEGIN {
 
 
   sub linear_wrap {
+    _warn_nonmethod( $_[0], __PACKAGE__, 'linear_wrap' );
     return __PACKAGE__->new(
       name => 'linear_wrap',
       code => sub {
@@ -57,6 +59,8 @@ BEGIN {
 
 
   sub random_pick {
+    _warn_nonmethod( $_[0], __PACKAGE__, 'random_pick' );
+
     return __PACKAGE__->new(
       name => 'random_pick',
       code => sub {
@@ -68,6 +72,8 @@ BEGIN {
 
 
   sub pick_offset {
+    _warn_nonmethod( $_[0], __PACKAGE__, 'pick_offset' );
+
     return __PACKAGE__->new(
       name => 'pick_offset',
       code => sub {
@@ -80,8 +86,11 @@ BEGIN {
 
 
   sub hash_sha1 {
+    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'hash_sha1' ) ) {
+      unshift @_, __PACKAGE__;
+    }
     require Digest::SHA1;
-    my $pick_offset = pick_offset();
+    my $pick_offset = $_[0]->pick_offset();
     return __PACKAGE__->new(
       name => 'hash_sha1',
       code => sub {
@@ -94,8 +103,11 @@ BEGIN {
 
 
   sub hash_md5 {
+    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'hash_md5' ) ) {
+      unshift @_, __PACKAGE__;
+    }
     require Digest::MD5;
-    my $pick_offset = pick_offset();
+    my $pick_offset = $_[0]->pick_offset();
     return __PACKAGE__->new(
       name => 'hash_md5',
       code => sub {
@@ -121,7 +133,7 @@ Set::Associate::NewKey - New Key assignment methods
 
 =head1 VERSION
 
-version 0.001001
+version 0.002000
 
 =head1 DESCRIPTION
 
@@ -159,15 +171,13 @@ C<shift>'s the first item off the internal C<_items_cache>
 
     my $sa = Set::Associate->new(
         ...
-        on_new_key => Set::Associate::NewKey::linear_wrap
+        on_new_key => Set::Associate::NewKey->linear_wrap
     );
 
 or alternatively
 
-    my $code = Set::Associate::NewKey::linear_wrap
+    my $code = Set::Associate::NewKey->linear_wrap
     my $newval = $code->run( $set, $key_which_will_be_ignored );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =head2 random_pick
 
@@ -175,15 +185,13 @@ non-destructively picks an element from C<_items_cache> at random.
 
     my $sa = Set::Associate->new(
         ...
-        on_new_key => Set::Associate::NewKey::random_pick
+        on_new_key => Set::Associate::NewKey->random_pick
     );
 
 or alternatively
 
-    my $code = Set::Associate::NewKey::random_pick
+    my $code = Set::Associate::NewKey->random_pick
     my $newval = $code->run( $set, $key_which_will_be_ignored );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =head2 pick_offset
 
@@ -195,16 +203,14 @@ If you're using anything else, the hash_sha1 or hash_md5 methods are suggested.
 
     my $sa = Set::Associate->new(
         ...
-        on_new_key => Set::Associate::NewKey::pick_offset
+        on_new_key => Set::Associate::NewKey->pick_offset
     );
 
 or alternatively
 
-    my $code = Set::Associate::NewKey::pick_offset
+    my $code = Set::Associate::NewKey->pick_offset
     my $newval = $code->run( $set, 9001 ); # despite picking numbers OVER NINE THOUSAND
                                            # will still return items in the array
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =head2 hash_sha1
 
@@ -214,15 +220,13 @@ Determines the offset for L</pick_offset> from taking the numeric value of the S
 
     my $sa = Set::Associate->new(
         ...
-        on_new_key => Set::Associate::NewKey::hash_sha1
+        on_new_key => Set::Associate::NewKey->hash_sha1
     );
 
 or alternatively
 
-    my $code = Set::Associate::NewKey::hash_sha1();
+    my $code = Set::Associate::NewKey->hash_sha1();
     my $newval = $code->run( $set, "Some String" );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =head2 hash_md5
 
@@ -232,15 +236,13 @@ Determines the offset for L</pick_offset> from taking the numeric value of the M
 
     my $sa = Set::Associate->new(
         ...
-        on_new_key => Set::Associate::NewKey::hash_md5
+        on_new_key => Set::Associate::NewKey->hash_md5
     );
 
 or alternatively
 
-    my $code = Set::Associate::NewKey::hash_md5();
+    my $code = Set::Associate::NewKey->hash_md5();
     my $newval = $code->run( $set, "Some String" );
-
-You can use C<< -> >> or not if you want, nothing under the hood cares.
 
 =head1 METHODS
 
