@@ -7,7 +7,7 @@ BEGIN {
 }
 
 {
-  $Set::Associate::RefillItems::VERSION = '0.001002';
+  $Set::Associate::RefillItems::VERSION = '0.002000';
 }
 
 
@@ -96,7 +96,7 @@ Set::Associate::RefillItems - Pool repopulation methods
 
 =head1 VERSION
 
-version 0.001002
+version 0.002000
 
 =head1 DESCRIPTION
 

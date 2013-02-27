@@ -7,7 +7,7 @@ BEGIN {
 }
 
 {
-  $Set::Associate::VERSION = '0.001002';
+  $Set::Associate::VERSION = '0.002000';
 }
 
 
@@ -127,7 +127,7 @@ Set::Associate - Pick items from a dataset associatively
 
 =head1 VERSION
 
-version 0.001002
+version 0.002000
 
 =head1 DESCRIPTION
 

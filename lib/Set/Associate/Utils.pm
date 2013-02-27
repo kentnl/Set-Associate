@@ -7,7 +7,7 @@ BEGIN {
 }
 
 {
-  $Set::Associate::Utils::VERSION = '0.001002';
+  $Set::Associate::Utils::VERSION = '0.002000';
 }
 
 
@@ -82,7 +82,7 @@ Set::Associate::Utils - Shared Guts between Set::Associate modules
 
 =head1 VERSION
 
-version 0.001002
+version 0.002000
 
 =head1 AUTHOR
 
