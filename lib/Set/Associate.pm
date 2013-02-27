@@ -84,30 +84,14 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
   use Moo;
   use Scalar::Util qw( blessed  );
+  use Set::Associate::Utils;
   use Set::Associate::NewKey;
   use Set::Associate::RefillItems;
 
-  sub _croak {
-    require Carp;
-    goto \&Carp::croak;
-  }
-
-  sub _tc_arrayref {
-    _croak('should be ArrayRef') unless ref $_[0] and ref $_[0] eq 'ARRAY';
-  }
-
-  sub _tc_hashref {
-    _croak('Should be HashRef') unless ref $_[0] and ref $_[0] eq 'HASH';
-  }
-
-  sub _tc_bless {
-    my ($class) = @_;
-    return sub {
-      _croak( 'Should be a ' . $class )
-        unless blessed( $_[0] )
-        and $_[0]->isa($class);
-    };
-  }
+  *_croak       = *Set::Associate::Utils::_croak;
+  *_tc_arrayref = *Set::Associate::Utils::_tc_arrayref;
+  *_tc_hashref  = *Set::Associate::Utils::_tc_hashref;
+  *_tc_bless    = *Set::Associate::Utils::_tc_bless;
 
 =carg items
 
