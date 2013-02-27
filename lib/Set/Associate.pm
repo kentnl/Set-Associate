@@ -11,86 +11,92 @@ BEGIN {
 }
 
 
-    # ABSTRACT: Pick items from a dataset associatively
+  # ABSTRACT: Pick items from a dataset associatively
 
 
 
-    use Moo;
-    use Scalar::Util qw( blessed  );
-    use Set::Associate::Utils;
-    use Set::Associate::NewKey;
-    use Set::Associate::RefillItems;
+  use Moo;
+  use Scalar::Util qw( blessed  );
+  use Set::Associate::Utils;
+  use Set::Associate::NewKey;
+  use Set::Associate::RefillItems;
 
-    *_croak       = *Set::Associate::Utils::_croak;
-    *_tc_arrayref = *Set::Associate::Utils::_tc_arrayref;
-    *_tc_hashref  = *Set::Associate::Utils::_tc_hashref;
-    *_tc_bless    = *Set::Associate::Utils::_tc_bless;
-
-
-    has items => ( isa => \&_tc_arrayref, is => rwp =>, required => 1, );
-    sub items_elements { @{ $_[0]->items } }
+  *_croak       = *Set::Associate::Utils::_croak;
+  *_tc_arrayref = *Set::Associate::Utils::_tc_arrayref;
+  *_tc_hashref  = *Set::Associate::Utils::_tc_hashref;
+  *_tc_bless    = *Set::Associate::Utils::_tc_bless;
 
 
-    has _items_cache => (
-        isa     => \&_tc_arrayref,
-        is      => rwp =>,
-        lazy    => 1,
-        default => sub { [] },
-    );
-    sub _items_cache_empty { scalar @{ $_[0]->_items_cache } == 0 }
-    sub _items_cache_shift { shift @{ $_[0]->_items_cache } }
-    sub _items_cache_push  { push @{ $_[0]->_items_cache }, splice @_, 1 }
-    sub _items_cache_count { scalar @{ $_[0]->_items_cache } }
-    sub _items_cache_get   { $_[0]->_items_cache->[ $_[1] ] }
+  has items => ( isa => \&_tc_arrayref, is => rwp =>, required => 0, predicate => has_items  =>, );
+  sub items_elements { @{ $_[0]->items } }
+
+  sub BUILD {
+      my ( $self ) = @_; 
+      if ( $self->has_items ) { 
+          $self->on_items_empty->items( $self->items );
+      }
+  }
+
+  has _items_cache => (
+    isa     => \&_tc_arrayref,
+    is      => rwp =>,
+    lazy    => 1,
+    default => sub { [] },
+  );
+  sub _items_cache_empty { scalar @{ $_[0]->_items_cache } == 0 }
+  sub _items_cache_shift { shift @{ $_[0]->_items_cache } }
+  sub _items_cache_push  { push @{ $_[0]->_items_cache }, splice @_, 1 }
+  sub _items_cache_count { scalar @{ $_[0]->_items_cache } }
+  sub _items_cache_get   { $_[0]->_items_cache->[ $_[1] ] }
 
 
-    has _association_cache => (
-        isa     => \&_tc_hashref,
-        is      => rwp =>,
-        default => sub { {} },
-    );
-    sub _association_cache_has { exists $_[0]->_association_cache->{ $_[1] } }
-    sub _association_cache_get { $_[0]->_association_cache->{ $_[1] } }
-    sub _association_cache_set { $_[0]->_association_cache->{ $_[1] } = $_[2] }
+  has _association_cache => (
+    isa     => \&_tc_hashref,
+    is      => rwp =>,
+    default => sub { {} },
+  );
+  sub _association_cache_has { exists $_[0]->_association_cache->{ $_[1] } }
+  sub _association_cache_get { $_[0]->_association_cache->{ $_[1] } }
+  sub _association_cache_set { $_[0]->_association_cache->{ $_[1] } = $_[2] }
 
 
-    has on_items_empty => (
-        isa     => _tc_bless('Set::Associate::RefillItems'),
-        is      => rwp =>,
-        lazy    => 1,
-        default => \&Set::Associate::RefillItems::linear,
-    );
+  has on_items_empty => (
+    isa     => _tc_bless('Set::Associate::RefillItems'),
+    is      => rwp =>,
+    lazy    => 1,
+    default => \&Set::Associate::RefillItems::linear,
+  );
 
 
-    sub run_on_items_empty { $_[0]->on_items_empty->run(@_) }
+  sub run_on_items_empty { $_[0]->on_items_empty->run(@_) }
 
 
-    has on_new_key => (
-        isa     => _tc_bless('Set::Associate::NewKey'),
-        is      => rwp =>,
-        lazy    => 1,
-        default => \&Set::Associate::NewKey::linear_wrap,
-    );
+  has on_new_key => (
+    isa     => _tc_bless('Set::Associate::NewKey'),
+    is      => rwp =>,
+    lazy    => 1,
+    default => \&Set::Associate::NewKey::linear_wrap,
+  );
 
-    sub run_on_new_key { $_[0]->on_new_key->run(@_) }
+  sub run_on_new_key { $_[0]->on_new_key->run(@_) }
 
 
-    sub associate {
-        my ( $self, $key ) = @_;
-        return if $self->_association_cache_has($key);
-        if ( $self->_items_cache_empty ) {
-            $self->_items_cache_push( $self->run_on_items_empty );
-        }
-        $self->_association_cache_set( $key, $self->run_on_new_key($key) );
-        return 1;
+  sub associate {
+    my ( $self, $key ) = @_;
+    return if $self->_association_cache_has($key);
+    if ( $self->_items_cache_empty ) {
+      $self->_items_cache_push( $self->run_on_items_empty );
     }
+    $self->_association_cache_set( $key, $self->run_on_new_key($key) );
+    return 1;
+  }
 
 
-    sub get_associated {
-        my ( $self, $key ) = @_;
-        $self->associate($key);
-        return $self->_association_cache_get($key);
-    }
+  sub get_associated {
+    my ( $self, $key ) = @_;
+    $self->associate($key);
+    return $self->_association_cache_get($key);
+  }
 
 };
 

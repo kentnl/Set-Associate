@@ -11,104 +11,100 @@ BEGIN {
 }
 
 
-    # ABSTRACT: New Key assignment methods
+  # ABSTRACT: New Key assignment methods
 
 
-    use Moo;
-    use Set::Associate::Utils;
+  use Moo;
+  use Set::Associate::Utils;
 
-    *_croak      = Set::Associate::Utils::_croak;
-    *_tc_str     = Set::Associate::Utils::_tc_str;
-    *_tc_coderef = Set::Associate::Utils::_tc_coderef;
+  *_croak      = *Set::Associate::Utils::_croak;
+  *_tc_str     = *Set::Associate::Utils::_tc_str;
+  *_tc_coderef = *Set::Associate::Utils::_tc_coderef;
 
 
-    has name => (
-        isa      => \&_tc_str,
-        is       => rwp =>,
-        required => 1,
+  has name => (
+    isa      => \&_tc_str,
+    is       => rwp =>,
+    required => 1,
+  );
+
+
+  has code => (
+    isa      => \&_tc_coderef,
+    is       => rwp =>,
+    required => 1,
+  );
+
+
+  sub run {
+    my ( $self, $sa, $key ) = @_;
+    _croak('->run(x,y), x should be a ref') if not ref $sa;
+    $self->code->( $sa, $key );
+  }
+
+  no Moo;
+
+
+  sub linear_wrap {
+    return __PACKAGE__->new(
+      name => 'linear_wrap',
+      code => sub {
+        my ( $self, ) = @_;
+        return $self->_items_cache_shift;
+      }
     );
+  }
 
 
-    has code => (
-        isa      => \&_tc_coderef,
-        is       => rwp =>,
-        required => 1,
+  sub random_pick {
+    return __PACKAGE__->new(
+      name => 'random_pick',
+      code => sub {
+        my ( $self, ) = @_;
+        return $self->_items_cache_get( int( rand( $self->_items_cache_count ) ) );
+      }
     );
+  }
 
 
-    sub run {
-        my ( $self, $sa, $key ) = @_;
-        _croak('->run(x,y), x should be a ref') if not ref $sa;
-        $self->code->( $sa, $key );
-    }
-
-    no Moo;
-
-
-    sub linear_wrap {
-        return __PACKAGE__->new(
-            name => 'linear_wrap',
-            code => sub {
-                my ( $self, ) = @_;
-                return $self->_items_cache_shift;
-            }
-        );
-    }
+  sub pick_offset {
+    return __PACKAGE__->new(
+      name => 'pick_offset',
+      code => sub {
+        my ( $self, $offset ) = @_;
+        use bigint;
+        return $self->_items_cache_get( $offset % $self->_items_cache_count );
+      }
+    );
+  }
 
 
-    sub random_pick {
-        return __PACKAGE__->new(
-            name => 'random_pick',
-            code => sub {
-                my ( $self, ) = @_;
-                return $self->_items_cache_get(
-                    int( rand( $self->_items_cache_count ) ) );
-            }
-        );
-    }
+  sub hash_sha1 {
+    require Digest::SHA1;
+    my $pick_offset = pick_offset();
+    return __PACKAGE__->new(
+      name => 'hash_sha1',
+      code => sub {
+        my ( $self, $key ) = @_;
+        use bigint;
+        return $pick_offset->run( $self, hex Digest::SHA1::sha1_hex($key) );
+      }
+    );
+  }
 
 
-    sub pick_offset {
-        return __PACKAGE__->new(
-            name => 'pick_offset',
-            code => sub {
-                my ( $self, $offset ) = @_;
-                use bigint;
-                return $self->_items_cache_get(
-                    $offset % $self->_items_cache_count );
-            }
-        );
-    }
-
-
-    sub hash_sha1 {
-        require Digest::SHA1;
-        my $pick_offset = pick_offset();
-        return __PACKAGE__->new(
-            name => 'hash_sha1',
-            code => sub {
-                my ( $self, $key ) = @_;
-                use bigint;
-                return $pick_offset->run( $self,
-                    hex Digest::SHA1::sha1_hex($key) );
-            }
-        );
-    }
-
-
-    sub hash_md5 {
-        require Digest::MD5;
-        my $pick_offset = pick_offset();
-        return __PACKAGE__->new(
-            name => 'hash_md5',
-            code => sub {
-                my ( $self, $key ) = @_;
-                use bigint;
-                return $pick_offset->run( $self,
-                    hex Digest::MD5::md5_hex($key) );
-            }
-        );
-    }
+  sub hash_md5 {
+    require Digest::MD5;
+    my $pick_offset = pick_offset();
+    return __PACKAGE__->new(
+      name => 'hash_md5',
+      code => sub {
+        my ( $self, $key ) = @_;
+        use bigint;
+        return $pick_offset->run( $self, hex Digest::MD5::md5_hex($key) );
+      }
+    );
+  }
 };
 
 1;
