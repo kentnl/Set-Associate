@@ -14,6 +14,7 @@ BEGIN {
   # ABSTRACT: Shared Guts between Set::Associate modules
 
   use strict;
+
   sub _croak {
     require Carp;
     goto \&Carp::croak;
