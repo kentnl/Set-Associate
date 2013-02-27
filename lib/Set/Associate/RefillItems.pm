@@ -61,6 +61,22 @@ This is more or less a wrapper for passing around subs with an implict interface
     required => 1,
   );
 
+=carg items
+
+    required ArrayRef
+
+=attr items
+
+=ahandle has_items
+
+=cut
+
+  has items => (
+    isa       => \&_tc_arrayref,
+    is        => rwp =>,
+    predicate => has_items =>,
+  );
+
 =method run
 
 runs code attached via L</code>
@@ -74,7 +90,7 @@ Where <@list> is the new pool contents.
   sub run {
     my ( $self, $sa ) = @_;
     _croak('->run(x) should be a ref') if not ref $sa;
-    $self->code->($sa);
+    $self->code->( $self, $sa );
   }
 
   no Moo;
@@ -91,12 +107,14 @@ Populate from C<items> each time.
 =cut
 
   sub linear {
+    my ( $class, @args ) = @_;
     return __PACKAGE__->new(
       name => 'linear',
       code => sub {
-        my ( $self, ) = @_;
+        my ( $self, $sa ) = @_;
         return @{ $self->items };
-      }
+      },
+      @args,
     );
   }
 
@@ -112,13 +130,15 @@ Populate with a shuffled version of C<items>
 =cut
 
   sub shuffle {
+    my ( $class, @args ) = @_;
     return __PACKAGE__->new(
       name => 'shuffle',
       code => sub {
-        my ( $self, ) = @_;
+        my ( $self, $sa ) = @_;
         require List::Util;
         return List::Util::shuffle @{ $self->items };
-      }
+      },
+      @args
     );
   }
 };
