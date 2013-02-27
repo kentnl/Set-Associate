@@ -1,6 +1,15 @@
 Release history for Set-Associate
 
 {{$NEXT}}
+ [API Changes]
+ - Set::Associate should no longer be passed an `items` value, instead,
+   those should be passed to the `on_items_empty` handler constructor.
+ - `items` support temporarily forwarded for you till 0.3.0 at least
+ - ::NewKey and ::RefillItems now only should have their sugars accessed
+   via method style, ie: ::NewKey->linear_wrap()
+
+ [Internals]
+ - commmon code moved to a ::Utils file
 
 0.001001 2013-02-25T15:23:51Z
  [minor bugfix]
