@@ -1,6 +1,6 @@
 Release history for Set-Associate
 
-0.002000 2013-02-27T17:25:09Z
+0.002000 2013-02-27T17:26:09Z
  [API Changes]
  - Set::Associate should no longer be passed an `items` value, instead,
    those should be passed to the `on_items_empty` handler constructor.

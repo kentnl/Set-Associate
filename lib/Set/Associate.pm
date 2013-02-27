@@ -34,7 +34,7 @@ BEGIN {
   sub BUILD {
     my ($self) = @_;
     if ( $self->has_items ) {
-      warn "SA->items is deprecated, pass them to the C<on_items_empty> constructor instead";
+      _croak("SA->items is deprecated, pass them to the C<on_items_empty> constructor instead");
       $self->on_items_empty->_set_items( $self->items );
     }
   }
