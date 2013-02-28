@@ -34,16 +34,14 @@ BEGIN {
     isa      => CodeRef =>,
     is       => rwp     =>,
     required => 1,
+    traits   => ['Code'],
+    handles  => {
+      get_assoc => execute_method =>,
+    }
   );
 
-
-  sub run {
-    my ( $self, $sa, $key ) = @_;
-    croak('->run(x,y), x should be a ref') if not ref $sa;
-    $self->code->( $sa, $key );
-  }
-
-  no Moo;
+  with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
+  __PACKAGE__->meta->make_immutable;
 
 
   sub linear_wrap {
@@ -221,16 +219,6 @@ or alternatively
 
     my $code = Set::Associate::NewKey->hash_md5();
     my $newval = $code->run( $set, "Some String" );
-
-=head1 METHODS
-
-=head2 run
-
-runs code attached via L</code>
-
-    my $value = $object->run( $set_associate_object , $key );
-
-And C<$value> is the newly formed associaiton value.
 
 =head1 ATTRIBUTES
 

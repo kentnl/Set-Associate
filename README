@@ -71,9 +71,6 @@ IMPLEMENTATION DETAILS
     "_items_cache_empty" ), the "on_items_empty" method is called (
     "run_on_items_empty" ) and the results are pushed into the pool.
 
-    The default implementation copies items from their own "items" into the
-    pool.
-
   Pool Selection
     Pool selection can either be cherry-pick based, where the pool doesn't
     shrink, or can be destructive, so that the pool population phase is

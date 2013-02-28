@@ -87,21 +87,27 @@ version 0.003000
 
 =head1 DESCRIPTION
 
-This class implements the mechanism which controls how the main pool populates.
+This class implements a genericised interface for creating objects which populate pools.
+
+What you're mostly interested in are L</CLASS METHODS>, which are shorthand (somewhat) for loading and constructing
+many of the C<Set::Associate::RefillItems::*> family.
 
 The part you're mostly interested in are the L</CLASS METHODS>, which return the right populator.
 
-This is more or less a wrapper for passing around subs with an implict interface.
+However, if your code needs to design its own version on the fly, this interface should work:
 
     my $populator = Set::Associate::RefillItems->new(
-        name => 'linear',
+        name => 'foo',
+        items => [  .... ],
         code => sub {
             my ( $self, $sa ) = @_;
             ....
         },
     );
-
-    my ( @new_pool ) = $populator->run( $set_associate_object );
+    my $sa = Set::Associate->new(
+        on_item_empty => $populator , 
+        ...
+    );
 
 =head1 CONSTRUCTOR ARGUMENTS
 
@@ -123,9 +129,19 @@ This is more or less a wrapper for passing around subs with an implict interface
 
 Populate from C<items> each time.
 
+See L<Set::Associate::RefillItems::Linear> for details.
+
     my $sa = Set::Associate->new(
         ...
         on_items_empty => Set::Associate::RefillItems->linear( items => [ ... ])
+    );
+
+or ... 
+
+    use Set::Associate::RefillItems::Linear;
+    my $sa = Set::Associate->new(
+        ...
+        on_items_empty => Set::Associate::RefillItems::Linear->new( items => [ ... ])
     );
 
 =head2 shuffle

@@ -57,7 +57,6 @@ eval { $v .= pmver('File::Find','any version') };
 eval { $v .= pmver('File::Temp','any version') };
 eval { $v .= pmver('List::Util','any version') };
 eval { $v .= pmver('Module::Build','0.4003') };
-eval { $v .= pmver('Moo','any version') };
 eval { $v .= pmver('Moose','any version') };
 eval { $v .= pmver('MooseX::AttributeShortcuts','any version') };
 eval { $v .= pmver('MooseX::Role::Parameterized','any version') };
