@@ -105,7 +105,7 @@ However, if your code needs to design its own version on the fly, this interface
         },
     );
     my $sa = Set::Associate->new(
-        on_item_empty => $populator , 
+        on_item_empty => $populator ,
         ...
     );
 
@@ -136,7 +136,7 @@ See L<Set::Associate::RefillItems::Linear> for details.
         on_items_empty => Set::Associate::RefillItems->linear( items => [ ... ])
     );
 
-or ... 
+or ...
 
     use Set::Associate::RefillItems::Linear;
     my $sa = Set::Associate->new(
