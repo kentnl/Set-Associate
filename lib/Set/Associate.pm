@@ -89,19 +89,18 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
+  use Carp qw( croak );
   use Moose;
   use MooseX::AttributeShortcuts;
   use Set::Associate::Utils;
   use Set::Associate::NewKey;
   use Set::Associate::RefillItems;
 
-  *_croak = *Set::Associate::Utils::_croak;
-
   around BUILDARGS => sub {
     my ( $orig, $self, @args ) = @_;
     my ($result) = $self->$orig(@args);
     if ( exists $result->{items} ) {
-      _croak('->new( items => ) was deprecated in v0.2.0');
+      croak('->new( items => ) was deprecated in v0.2.0');
     }
     return $result;
   };
@@ -189,7 +188,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 =cut
 
   has on_items_empty => (
-    isa      => 'Set::Associate::RefillItems',
+    does     => 'Set::Associate::Role::RefillItems',
     is       => rwp =>,
     required => 1,
   );
@@ -202,7 +201,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
-  sub run_on_items_empty { $_[0]->on_items_empty->run(@_) }
+  sub run_on_items_empty { $_[0]->on_items_empty->get_all }
 
 =carg on_new_key
 
@@ -223,7 +222,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 =cut
 
   has on_new_key => (
-    isa     => 'Set::Associate::NewKey',
+    does    => 'Set::Associate::Role::NewKey',
     is      => rwp =>,
     lazy    => 1,
     default => sub {
@@ -231,7 +230,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
     },
   );
 
-  sub run_on_new_key { $_[0]->on_new_key->run(@_) }
+  sub run_on_new_key { $_[0]->on_new_key->get_assoc(@_) }
 
 =method associate
 
@@ -266,6 +265,8 @@ Generates an association automatically.
     $self->associate($key);
     return $self->_association_cache_get($key);
   }
+
+  __PACKAGE__->meta->make_immutable;
 
 };
 
