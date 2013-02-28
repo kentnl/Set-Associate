@@ -7,7 +7,7 @@ BEGIN {
 }
 
 {
-  $Set::Associate::VERSION = '0.002000';
+  $Set::Associate::VERSION = '0.003000';
 }
 
 
@@ -15,83 +15,70 @@ BEGIN {
 
 
 
-  use Moo;
-  use Scalar::Util qw( blessed  );
-  use Set::Associate::Utils;
-  use Set::Associate::NewKey;
-  use Set::Associate::RefillItems;
+  use Carp qw( croak );
+  use Moose;
+  use MooseX::AttributeShortcuts;
 
-  *_croak       = *Set::Associate::Utils::_croak;
-  *_carp        = *Set::Associate::Utils::_carp;
-  *_tc_arrayref = *Set::Associate::Utils::_tc_arrayref;
-  *_tc_hashref  = *Set::Associate::Utils::_tc_hashref;
-  *_tc_bless    = *Set::Associate::Utils::_tc_bless;
-
-
-  has items => ( isa => \&_tc_arrayref, is => rwp =>, required => 0, predicate => has_items =>, );
-  sub items_elements { @{ $_[0]->items } }
-
-  sub BUILD {
-    my ($self) = @_;
-    if ( $self->has_items ) {
-      _carp(q[SA->items is deprecated, pass them to the C<on_items_empty> constructor instead]);
-      $self->on_items_empty->_set_items( $self->items );
+  around BUILDARGS => sub {
+    my ( $orig, $self, @args ) = @_;
+    my ($result) = $self->$orig(@args);
+    if ( exists $result->{items} ) {
+      croak('->new( items => ) was deprecated in v0.2.0');
     }
-  }
+    return $result;
+  };
 
 
   has _items_cache => (
-    isa     => \&_tc_arrayref,
+    isa     => 'ArrayRef',
     is      => rwp =>,
+    traits  => ['Array'],
     lazy    => 1,
     default => sub { [] },
+    handles => {
+      _items_cache_empty => is_empty =>,
+      _items_cache_shift => shift    =>,
+      _items_cache_push  => push     =>,
+      _items_cache_count => count    =>,
+      _items_cache_get   => get      =>,
+    }
   );
-  sub _items_cache_empty { scalar @{ $_[0]->_items_cache } == 0 }
-  sub _items_cache_shift { shift @{ $_[0]->_items_cache } }
-  sub _items_cache_push  { push @{ $_[0]->_items_cache }, splice @_, 1 }
-  sub _items_cache_count { scalar @{ $_[0]->_items_cache } }
-  sub _items_cache_get   { $_[0]->_items_cache->[ $_[1] ] }
 
 
   has _association_cache => (
-    isa     => \&_tc_hashref,
+    isa     => 'HashRef',
     is      => rwp =>,
+    traits  => ['Hash'],
     default => sub { {} },
+    handles => {
+      _association_cache_has => exists =>,
+      _association_cache_get => get    =>,
+      _association_cache_set => set    =>,
+    },
   );
-  sub _association_cache_has { exists $_[0]->_association_cache->{ $_[1] } }
-  sub _association_cache_get { $_[0]->_association_cache->{ $_[1] } }
-  sub _association_cache_set { $_[0]->_association_cache->{ $_[1] } = $_[2] }
 
 
   has on_items_empty => (
-    isa     => _tc_bless('Set::Associate::RefillItems'),
-    is      => rwp =>,
-    lazy    => 1,
-    default => sub {
-      my ($self) = @_;
-      my @args;
-      if ( $self->has_items ) {
-        _carp('SA->items deprecated in next version');
-        @args = ( items => $self->items );
-      }
-      Set::Associate::RefillItems->linear(@args);
-    },
+    does     => 'Set::Associate::Role::RefillItems',
+    is       => rwp =>,
+    required => 1,
   );
 
 
-  sub run_on_items_empty { $_[0]->on_items_empty->run(@_) }
+  sub run_on_items_empty { $_[0]->on_items_empty->get_all }
 
 
   has on_new_key => (
-    isa     => _tc_bless('Set::Associate::NewKey'),
+    does    => 'Set::Associate::Role::NewKey',
     is      => rwp =>,
     lazy    => 1,
     default => sub {
-      Set::Associate::NewKey->linear_wrap,;
+      require Set::Associate::NewKey;
+      Set::Associate::NewKey->linear_wrap;
     },
   );
 
-  sub run_on_new_key { $_[0]->on_new_key->run(@_) }
+  sub run_on_new_key { $_[0]->on_new_key->get_assoc(@_) }
 
 
   sub associate {
@@ -111,6 +98,8 @@ BEGIN {
     return $self->_association_cache_get($key);
   }
 
+  __PACKAGE__->meta->make_immutable;
+
 };
 
 1;
@@ -127,7 +116,7 @@ Set::Associate - Pick items from a dataset associatively
 
 =head1 VERSION
 
-version 0.002000
+version 0.003000
 
 =head1 DESCRIPTION
 
@@ -208,21 +197,15 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =head1 CONSTRUCTOR ARGUMENTS
 
-=head2 items
-
-    required ArrayRef[ Any ]
-
 =head2 on_items_empty
 
-    lazy Set::Associate::RefillItems = Set::Associate::RefillItems::linear
+    required Set::Associate::RefillItems
 
 =head2 on_new_key
 
     lazy Set::Associate::NewKey = Set::Associate::NewKey::linear_wrap
 
 =head1 METHODS
-
-=head2 items_elements
 
 =head2 run_on_items_empty
 
@@ -251,8 +234,6 @@ Generates an association automatically.
     my $result = $object->get_associated( $key );
 
 =head1 ATTRIBUTES
-
-=head2 items
 
 =head2 on_items_empty
 
@@ -310,8 +291,6 @@ Generates an association automatically.
 
     my $cache = $sa->_association_cache();
     $cache->{ $key } = $value;
-
-=for Pod::Coverage     BUILD
 
 =head1 AUTHOR
 

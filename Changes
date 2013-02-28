@@ -1,5 +1,7 @@
 Release history for Set-Associate
 
+0.003000 2013-02-28T16:54:25Z
+
 0.002000 2013-02-27T17:35:56Z
  [API Changes]
  - Set::Associate should no longer be passed an `items` value, instead,

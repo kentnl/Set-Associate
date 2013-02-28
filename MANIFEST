@@ -9,7 +9,16 @@ README
 dist.ini
 lib/Set/Associate.pm
 lib/Set/Associate/NewKey.pm
+lib/Set/Associate/NewKey/HashMD5.pm
+lib/Set/Associate/NewKey/HashSHA1.pm
+lib/Set/Associate/NewKey/LinearWrap.pm
+lib/Set/Associate/NewKey/PickOffset.pm
+lib/Set/Associate/NewKey/RandomPick.pm
 lib/Set/Associate/RefillItems.pm
+lib/Set/Associate/RefillItems/Linear.pm
+lib/Set/Associate/RefillItems/Shuffle.pm
+lib/Set/Associate/Role/NewKey.pm
+lib/Set/Associate/Role/RefillItems.pm
 lib/Set/Associate/Utils.pm
 perlcritic.rc
 t/00-compile.t

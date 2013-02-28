@@ -2,7 +2,7 @@ NAME
     Set::Associate - Pick items from a dataset associatively
 
 VERSION
-    version 0.002000
+    version 0.003000
 
 DESCRIPTION
     Essentially, this is a simple toolkit to map an infinite-many items to a
@@ -85,17 +85,13 @@ IMPLEMENTATION DETAILS
     occur periodically to regenerate the source list.
 
 CONSTRUCTOR ARGUMENTS
-  items
-        required ArrayRef[ Any ]
-
   on_items_empty
-        lazy Set::Associate::RefillItems = Set::Associate::RefillItems::linear
+        required Set::Associate::RefillItems
 
   on_new_key
         lazy Set::Associate::NewKey = Set::Associate::NewKey::linear_wrap
 
 METHODS
-  items_elements
   run_on_items_empty
         if( not @items ){
             push @items, $sa->run_on_items_empty();
@@ -119,7 +115,6 @@ METHODS
         my $result = $object->get_associated( $key );
 
 ATTRIBUTES
-  items
   on_items_empty
         my $object = $sa->on_items_empty();
         say "Running empty items mechanism " . $object->name;
