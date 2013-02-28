@@ -92,9 +92,6 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
   use Carp qw( croak );
   use Moose;
   use MooseX::AttributeShortcuts;
-  use Set::Associate::Utils;
-  use Set::Associate::NewKey;
-  use Set::Associate::RefillItems;
 
   around BUILDARGS => sub {
     my ( $orig, $self, @args ) = @_;
@@ -226,7 +223,8 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
     is      => rwp =>,
     lazy    => 1,
     default => sub {
-      Set::Associate::NewKey->linear_wrap,;
+      require Set::Associate::NewKey;
+      Set::Associate::NewKey->linear_wrap;
     },
   );
 
