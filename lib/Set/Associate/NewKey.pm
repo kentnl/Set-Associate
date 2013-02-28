@@ -59,25 +59,14 @@ This is more or less a wrapper for passing around subs with an implict interface
     isa      => CodeRef =>,
     is       => rwp     =>,
     required => 1,
+    traits   => ['Code'],
+    handles  => {
+      get_assoc => execute_method =>,
+    }
   );
 
-=method run
-
-runs code attached via L</code>
-
-    my $value = $object->run( $set_associate_object , $key );
-
-And C<$value> is the newly formed associaiton value.
-
-=cut
-
-  sub run {
-    my ( $self, $sa, $key ) = @_;
-    croak('->run(x,y), x should be a ref') if not ref $sa;
-    $self->code->( $sa, $key );
-  }
-
-  no Moo;
+  with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
+  __PACKAGE__->meta->make_immutable;
 
 =cmethod linear_wrap
 
