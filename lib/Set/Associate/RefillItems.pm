@@ -4,13 +4,10 @@ use warnings;
 package Set::Associate::RefillItems {
 
   # ABSTRACT: Pool repopulation methods
-  use Moo;
-  use Set::Associate::Utils;
+  use Moose;
+  use MooseX::AttributeShortcuts;
 
-  *_croak          = *Set::Associate::Utils::_croak;
-  *_tc_str         = *Set::Associate::Utils::_tc_str;
-  *_tc_coderef     = *Set::Associate::Utils::_tc_coderef;
-  *_tc_arrayref    = *Set::Associate::Utils::_tc_arrayref;
+  use Set::Associate::Utils;
   *_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
 
 =head1 DESCRIPTION
@@ -43,7 +40,7 @@ This is more or less a wrapper for passing around subs with an implict interface
 =cut
 
   has name => (
-    isa      => \&_tc_str,
+    isa      => Str =>,
     is       => rwp =>,
     required => 1,
   );
@@ -57,9 +54,13 @@ This is more or less a wrapper for passing around subs with an implict interface
 =cut
 
   has code => (
-    isa      => \&_tc_coderef,
-    is       => rwp =>,
+    isa      => CodeRef =>,
+    is       => rwp     =>,
     required => 1,
+    traits   => ['Code'],
+    handles  => {
+      get_all => execute_method =>,
+    }
   );
 
 =carg items
@@ -73,28 +74,14 @@ This is more or less a wrapper for passing around subs with an implict interface
 =cut
 
   has items => (
-    isa       => \&_tc_arrayref,
-    is        => rwp =>,
+    isa       => ArrayRef  =>,
+    is        => rwp       =>,
     predicate => has_items =>,
   );
 
-=method run
+  with 'Set::Associate::Role::RefillItems' => { can_get_all => 1, };
 
-runs code attached via L</code>
-
-    my ( @list ) = $object->run( $set_associate_object );
-
-Where <@list> is the new pool contents.
-
-=cut
-
-  sub run {
-    my ( $self, $sa ) = @_;
-    _croak('->run(x) should be a ref') if not ref $sa;
-    $self->code->( $self, $sa );
-  }
-
-  no Moo;
+  __PACKAGE__->meta->make_immutable;
 
 =cmethod linear
 
@@ -108,16 +95,12 @@ Populate from C<items> each time.
 =cut
 
   sub linear {
-    _warn_nonmethod( $_[0], __PACKAGE__, 'linear' );
+    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'linear' ) ) {
+      unshift @_, __PACKAGE__;
+    }
     my ( $class, @args ) = @_;
-    return __PACKAGE__->new(
-      name => 'linear',
-      code => sub {
-        my ( $self, $sa ) = @_;
-        return @{ $self->items };
-      },
-      @args,
-    );
+    require Set::Associate::RefillItems::Linear;
+    return Set::Associate::RefillItems::Linear->new(@args);
   }
 
 =cmethod shuffle
@@ -132,17 +115,12 @@ Populate with a shuffled version of C<items>
 =cut
 
   sub shuffle {
-    _warn_nonmethod( $_[0], __PACKAGE__, 'shuffle' );
+    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'shuffle' ) ) {
+      unshift @_, __PACKAGE__;
+    }
     my ( $class, @args ) = @_;
-    return __PACKAGE__->new(
-      name => 'shuffle',
-      code => sub {
-        my ( $self, $sa ) = @_;
-        require List::Util;
-        return List::Util::shuffle @{ $self->items };
-      },
-      @args
-    );
+    require Set::Associate::RefillItems::Shuffle;
+    return Set::Associate::RefillItems::Shuffle->new(@args);
   }
 };
 
