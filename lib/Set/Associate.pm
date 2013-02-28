@@ -89,44 +89,22 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
-  use Moo;
-  use Scalar::Util qw( blessed  );
+  use Moose;
+  use MooseX::AttributeShortcuts;
   use Set::Associate::Utils;
   use Set::Associate::NewKey;
   use Set::Associate::RefillItems;
 
-  *_croak       = *Set::Associate::Utils::_croak;
-  *_carp        = *Set::Associate::Utils::_carp;
-  *_tc_arrayref = *Set::Associate::Utils::_tc_arrayref;
-  *_tc_hashref  = *Set::Associate::Utils::_tc_hashref;
-  *_tc_bless    = *Set::Associate::Utils::_tc_bless;
+  *_croak = *Set::Associate::Utils::_croak;
 
-=begin Pod::Coverage
-
-    BUILD
-
-=end Pod::Coverage
-
-=carg items
-
-    required ArrayRef[ Any ]
-
-=attr items
-
-=method items_elements
-
-=cut
-
-  has items => ( isa => \&_tc_arrayref, is => rwp =>, required => 0, predicate => has_items =>, );
-  sub items_elements { @{ $_[0]->items } }
-
-  sub BUILD {
-    my ($self) = @_;
-    if ( $self->has_items ) {
-      _carp(q[SA->items is deprecated, pass them to the C<on_items_empty> constructor instead]);
-      $self->on_items_empty->_set_items( $self->items );
+  around BUILDARGS => sub {
+    my ( $orig, $self, @args ) = @_;
+    my ($result) = $self->$orig(@args);
+    if ( exists $result->{items} ) {
+      _croak('->new( items => ) was deprecated in v0.2.0');
     }
-  }
+    return $result;
+  };
 
 =pcarg _items_cache
 
@@ -147,16 +125,19 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 =cut
 
   has _items_cache => (
-    isa     => \&_tc_arrayref,
+    isa     => 'ArrayRef',
     is      => rwp =>,
+    traits  => ['Array'],
     lazy    => 1,
     default => sub { [] },
+    handles => {
+      _items_cache_empty => is_empty =>,
+      _items_cache_shift => shift    =>,
+      _items_cache_push  => push     =>,
+      _items_cache_count => count    =>,
+      _items_cache_get   => get      =>,
+    }
   );
-  sub _items_cache_empty { scalar @{ $_[0]->_items_cache } == 0 }
-  sub _items_cache_shift { shift @{ $_[0]->_items_cache } }
-  sub _items_cache_push  { push @{ $_[0]->_items_cache }, splice @_, 1 }
-  sub _items_cache_count { scalar @{ $_[0]->_items_cache } }
-  sub _items_cache_get   { $_[0]->_items_cache->[ $_[1] ] }
 
 =pcarg _association_cache
 
@@ -184,17 +165,20 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 =cut
 
   has _association_cache => (
-    isa     => \&_tc_hashref,
+    isa     => 'HashRef',
     is      => rwp =>,
+    traits  => ['Hash'],
     default => sub { {} },
+    handles => {
+      _association_cache_has => exists =>,
+      _association_cache_get => get    =>,
+      _association_cache_set => set    =>,
+    },
   );
-  sub _association_cache_has { exists $_[0]->_association_cache->{ $_[1] } }
-  sub _association_cache_get { $_[0]->_association_cache->{ $_[1] } }
-  sub _association_cache_set { $_[0]->_association_cache->{ $_[1] } = $_[2] }
 
 =carg on_items_empty
 
-    lazy Set::Associate::RefillItems = Set::Associate::RefillItems::linear
+    required Set::Associate::RefillItems
 
 =attr on_items_empty
 
@@ -202,22 +186,12 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
     say "Running empty items mechanism " . $object->name;
     push @items, $object->run( $sa  );
 
-
 =cut
 
   has on_items_empty => (
-    isa     => _tc_bless('Set::Associate::RefillItems'),
-    is      => rwp =>,
-    lazy    => 1,
-    default => sub {
-      my ($self) = @_;
-      my @args;
-      if ( $self->has_items ) {
-        _carp('SA->items deprecated in next version');
-        @args = ( items => $self->items );
-      }
-      Set::Associate::RefillItems->linear(@args);
-    },
+    isa      => 'Set::Associate::RefillItems',
+    is       => rwp =>,
+    required => 1,
   );
 
 =method run_on_items_empty
@@ -249,7 +223,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 =cut
 
   has on_new_key => (
-    isa     => _tc_bless('Set::Associate::NewKey'),
+    isa     => 'Set::Associate::NewKey',
     is      => rwp =>,
     lazy    => 1,
     default => sub {
