@@ -4,7 +4,7 @@ Set::Associate - Pick items from a dataset associatively
 
 # VERSION
 
-version 0.002000
+version 0.003000
 
 # DESCRIPTION
 
@@ -70,8 +70,6 @@ There are 2 Main phases that occur within this code
 
 The pool of available options ( `_items_cache` ) is initialised as an empty list, and every time the pool is being detected as empty ( `_items_cache_empty` ), the `on_items_empty` method is called ( `run_on_items_empty` ) and the results are pushed into the pool.
 
-The [default implementation](http://search.cpan.org/perldoc?Set::Associate::RefillItems#linear) copies items from their own `items` into the pool.
-
 ## Pool Selection
 
 Pool selection can either be cherry-pick based, where the pool doesn't shrink, or can be destructive, so that the pool population phase is triggered to replenish the supply of items only when all values have been exhausted.
@@ -80,21 +78,15 @@ The [default implementation](http://search.cpan.org/perldoc?Set::Associate::NewK
 
 # CONSTRUCTOR ARGUMENTS
 
-## items
-
-    required ArrayRef[ Any ]
-
 ## on\_items\_empty
 
-    lazy Set::Associate::RefillItems = Set::Associate::RefillItems::linear
+    required Set::Associate::RefillItems
 
 ## on\_new\_key
 
     lazy Set::Associate::NewKey = Set::Associate::NewKey::linear_wrap
 
 # METHODS
-
-## items\_elements
 
 ## run\_on\_items\_empty
 
@@ -123,8 +115,6 @@ Generates an association automatically.
     my $result = $object->get_associated( $key );
 
 # ATTRIBUTES
-
-## items
 
 ## on\_items\_empty
 

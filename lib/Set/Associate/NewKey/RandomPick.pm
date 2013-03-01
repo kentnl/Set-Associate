@@ -3,6 +3,8 @@ use warnings;
 
 package Set::Associate::NewKey::RandomPick {
 
+  # ABSTRACT: Associate a key by randomly picking from a pool
+
   use Moose;
 
   with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };

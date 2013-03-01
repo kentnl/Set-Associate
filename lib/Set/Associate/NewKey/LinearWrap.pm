@@ -3,6 +3,7 @@ use warnings;
 
 package Set::Associate::NewKey::LinearWrap {
 
+  # ABSTRACT: destructively empty the supply pool from the left hand end to give associations.
   use Moose;
 
   with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };

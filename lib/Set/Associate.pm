@@ -78,8 +78,6 @@ There are 2 Main phases that occur within this code
 
 The pool of available options ( C<_items_cache> ) is initialised as an empty list, and every time the pool is being detected as empty ( C<_items_cache_empty> ), the C<on_items_empty> method is called ( C<run_on_items_empty> ) and the results are pushed into the pool.
 
-The L<< default implementation|Set::Associate::RefillItems/linear >> copies items from their own C<items> into the pool.
-
 =head2 Pool Selection
 
 Pool selection can either be cherry-pick based, where the pool doesn't shrink, or can be destructive, so that the pool population phase is triggered to replenish the supply of items only when all values have been exhausted.

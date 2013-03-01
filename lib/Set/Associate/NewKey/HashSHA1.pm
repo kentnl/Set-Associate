@@ -3,6 +3,8 @@ use warnings;
 
 package Set::Associate::NewKey::HashSHA1 {
 
+  # ABSTRACT: Pick a value from the pool based on the SHA1 value of the key
+
   use Moose;
   use Digest::SHA1;
   extends 'Set::Associate::NewKey::PickOffset';

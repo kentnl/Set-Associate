@@ -3,6 +3,7 @@ use warnings;
 
 package Set::Associate::RefillItems::Linear {
 
+  # ABSTRACT: An Item refiller that replenishes the cache with a repeating set of items
   use Moose;
 
   with 'Set::Associate::Role::RefillItems' => { can_get_all => 1 };

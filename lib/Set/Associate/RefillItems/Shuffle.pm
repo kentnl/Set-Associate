@@ -3,6 +3,8 @@ use warnings;
 
 package Set::Associate::RefillItems::Shuffle {
 
+  # ABSTRACT: An item refiller that replenishes the cache with a shuffled list
+
   use Moose;
 
   with 'Set::Associate::Role::RefillItems' => { can_get_all => 1, };
