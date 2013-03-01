@@ -11,6 +11,8 @@ BEGIN {
 }
 
 
+  # ABSTRACT: Pick a value from the pool based on the MD5 value of the key
+
   use Moose;
   use Digest::MD5;
   extends 'Set::Associate::NewKey::PickOffset';
@@ -36,7 +38,7 @@ __END__
 
 =head1 NAME
 
-Set::Associate::NewKey::HashMD5
+Set::Associate::NewKey::HashMD5 - Pick a value from the pool based on the MD5 value of the key
 
 =head1 VERSION
 

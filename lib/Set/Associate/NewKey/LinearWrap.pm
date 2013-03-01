@@ -11,6 +11,7 @@ BEGIN {
 }
 
 
+  # ABSTRACT: destructively empty the supply pool from the left hand end to give associations.
   use Moose;
 
   with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
@@ -35,7 +36,7 @@ __END__
 
 =head1 NAME
 
-Set::Associate::NewKey::LinearWrap
+Set::Associate::NewKey::LinearWrap - destructively empty the supply pool from the left hand end to give associations.
 
 =head1 VERSION
 

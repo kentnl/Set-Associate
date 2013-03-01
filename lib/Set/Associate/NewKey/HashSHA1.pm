@@ -11,6 +11,8 @@ BEGIN {
 }
 
 
+  # ABSTRACT: Pick a value from the pool based on the SHA1 value of the key
+
   use Moose;
   use Digest::SHA1;
   extends 'Set::Associate::NewKey::PickOffset';
@@ -36,7 +38,7 @@ __END__
 
 =head1 NAME
 
-Set::Associate::NewKey::HashSHA1
+Set::Associate::NewKey::HashSHA1 - Pick a value from the pool based on the SHA1 value of the key
 
 =head1 VERSION
 

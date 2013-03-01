@@ -11,6 +11,8 @@ BEGIN {
 }
 
 
+  # ABSTRACT: Associate a key with a value from a pool based on the keys value as a numeric offset.
+
   use Moose;
 
   with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
@@ -36,7 +38,7 @@ __END__
 
 =head1 NAME
 
-Set::Associate::NewKey::PickOffset
+Set::Associate::NewKey::PickOffset - Associate a key with a value from a pool based on the keys value as a numeric offset.
 
 =head1 VERSION
 

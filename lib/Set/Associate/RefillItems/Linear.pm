@@ -11,6 +11,7 @@ BEGIN {
 }
 
 
+  # ABSTRACT: An Item refiller that replenishes the cache with a repeating set of items
   use Moose;
 
   with 'Set::Associate::Role::RefillItems' => { can_get_all => 1 };
@@ -34,7 +35,7 @@ __END__
 
 =head1 NAME
 
-Set::Associate::RefillItems::Linear
+Set::Associate::RefillItems::Linear - An Item refiller that replenishes the cache with a repeating set of items
 
 =head1 VERSION
 

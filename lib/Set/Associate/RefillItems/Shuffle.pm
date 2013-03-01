@@ -11,6 +11,8 @@ BEGIN {
 }
 
 
+  # ABSTRACT: An item refiller that replenishes the cache with a shuffled list
+
   use Moose;
 
   with 'Set::Associate::Role::RefillItems' => { can_get_all => 1, };
@@ -36,7 +38,7 @@ __END__
 
 =head1 NAME
 
-Set::Associate::RefillItems::Shuffle
+Set::Associate::RefillItems::Shuffle - An item refiller that replenishes the cache with a shuffled list
 
 =head1 VERSION
 

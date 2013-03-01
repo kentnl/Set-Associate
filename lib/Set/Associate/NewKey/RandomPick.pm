@@ -11,6 +11,8 @@ BEGIN {
 }
 
 
+  # ABSTRACT: Associate a key by randomly picking from a pool
+
   use Moose;
 
   with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
@@ -35,7 +37,7 @@ __END__
 
 =head1 NAME
 
-Set::Associate::NewKey::RandomPick
+Set::Associate::NewKey::RandomPick - Associate a key by randomly picking from a pool
 
 =head1 VERSION
 
