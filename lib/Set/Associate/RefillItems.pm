@@ -147,9 +147,19 @@ or ...
 
 Populate with a shuffled version of C<items>
 
+See L<< C<Set::Associate::B<RefillItems::Shuffle>>|Set::Associate::RefillItems::Shuffle >> for details.
+
     my $sa = Set::Associate->new(
         ...
         on_items_empty => Set::Associate::RefillItems->shuffle( items => [ ... ]);
+    );
+
+or ...
+
+    use Set::Associate::RefillItems::Shuffle;
+    my $sa = Set::Associate->new(
+        ...
+        on_items_empty => Set::Associate::RefillItems::Shuffle->new( items => [ ... ])
     );
 
 =head1 ATTRIBUTES
