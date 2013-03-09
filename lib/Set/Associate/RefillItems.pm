@@ -19,7 +19,6 @@ BEGIN {
   *_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
 
 
-
   has name => (
     isa      => Str =>,
     is       => rwp =>,
