@@ -1,6 +1,36 @@
 Release history for Set-Associate
 
-0.003000 2013-03-09T17:22:44Z
+0.003000 2013-03-09T18:51:24Z
+ [API Changes]
+ - 0.001000 syntax fully deprecated
+ - `::NewKey` and `::RefillItems` are now mostly proxy packages, class
+   methods defer to dedicated packages,
+ - `::NewKey` and `::NewKey::*` are things that `do`
+   `Set::Associate::Role::NewKey`, and conformance to this role is now
+   reqired for `on_new_key`, not `isa Set::Associate::NewKey`
+ - `::RefillItems` and `::RefillItems::*` are things that `do`
+   `Set::Associate::Role::RefillItems`, and conformance to this role is now
+   reqired for `on_items_empty`, not `isa Set::Associate::RefillItems`
+ - `on_items_empty` is now a mandatory argument
+ - `run` is no longer the public method for `::NewKey`, use `get_assoc`
+ - `run` is no longer the public method for `::RefillItems`, use `get_all`
+
+ [Dependencies::New / runtime requires]
+ - Moose
+ - MooseX::AttributeShortcuts
+ - MooseX::Role::Parameterized
+
+ [Dependencies::New / test requires]
+ - Test::Fatal
+
+ [Dependencies::Removed / runtime requires]
+ - Moo
+
+ [Internals]
+ - Code shifted from Moo to Moose, because we want Parameterised Roles, so
+   may as well go the whole cow.
+ - Hand-written Accessors now replaced by Moose native traits
+ - `items` and `items_elements` on the main class now gone.
 
 0.002000 2013-02-27T17:35:56Z
  [API Changes]
