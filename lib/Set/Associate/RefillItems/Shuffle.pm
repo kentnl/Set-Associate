@@ -18,7 +18,6 @@ BEGIN {
   with 'Set::Associate::Role::RefillItems' => { can_get_all => 1, };
 
 
-
   has items => ( isa => 'ArrayRef', is => 'rw', required => 1 );
 
 
