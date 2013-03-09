@@ -17,7 +17,9 @@ BEGIN {
 
   with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
 
+
   sub name { 'random_pick' }
+
 
   sub get_assoc {
     my ( $self, $sa, $key ) = @_;
@@ -42,6 +44,20 @@ Set::Associate::NewKey::RandomPick - Associate a key by randomly picking from a 
 =head1 VERSION
 
 version 0.003000
+
+=head1 METHODS
+
+=head2 name
+
+The name of this key assignment method ( C<random_pick> )
+
+=head2 get_assoc
+
+Returns a value non-destructively at random from C<$set_assoc>'s pool.
+
+C<$new_key> is ignored with this method.
+
+   my $value = $object->get_assoc( $set_assoc, $new_key );
 
 =head1 AUTHOR
 
