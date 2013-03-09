@@ -3,7 +3,7 @@ use warnings;
 
 package Set::Associate::RefillItems {
 
-  # ABSTRACT: Pool repopulation methods
+  # ABSTRACT: Pool re-population methods
   use Moose;
   use MooseX::AttributeShortcuts;
 
@@ -12,12 +12,10 @@ package Set::Associate::RefillItems {
 
 =head1 DESCRIPTION
 
-This class implements a genericised interface for creating objects which populate pools.
+This class implements a generalized interface for creating objects which populate pools.
 
 What you're mostly interested in are L</CLASS METHODS>, which are shorthand (somewhat) for loading and constructing
 many of the C<Set::Associate::RefillItems::*> family.
-
-The part you're mostly interested in are the L</CLASS METHODS>, which return the right populator.
 
 However, if your code needs to design its own version on the fly, this interface should work:
 
@@ -54,6 +52,10 @@ However, if your code needs to design its own version on the fly, this interface
 
 =attr code
 
+=ahandle get_all
+
+Invokes C<Trait:Code/execute_method> on L</code>
+
 =cut
 
   has code => (
@@ -63,7 +65,7 @@ However, if your code needs to design its own version on the fly, this interface
     traits   => ['Code'],
     handles  => {
       get_all => execute_method =>,
-    }
+    },
   );
 
 =carg items
@@ -73,6 +75,8 @@ However, if your code needs to design its own version on the fly, this interface
 =attr items
 
 =ahandle has_items
+
+Predicate method for L</items>
 
 =cut
 
@@ -90,7 +94,7 @@ However, if your code needs to design its own version on the fly, this interface
 
 Populate from C<items> each time.
 
-See L<Set::Associate::RefillItems::Linear> for details.
+See L<< C<Set::Associate::B<RefillItems::Linear>>|Set::Associate::RefillItems::Linear >> for details.
 
     my $sa = Set::Associate->new(
         ...
@@ -120,11 +124,22 @@ or ...
 
 Populate with a shuffled version of C<items>
 
+See L<< C<Set::Associate::B<RefillItems::Shuffle>>|Set::Associate::RefillItems::Shuffle >> for details.
+
+
     my $sa = Set::Associate->new(
         ...
         on_items_empty => Set::Associate::RefillItems->shuffle( items => [ ... ]);
     );
 
+or ...
+
+    use Set::Associate::RefillItems::Shuffle;
+    my $sa = Set::Associate->new(
+        ...
+        on_items_empty => Set::Associate::RefillItems::Shuffle->new( items => [ ... ])
+    );
+    
 =cut
 
   sub shuffle {

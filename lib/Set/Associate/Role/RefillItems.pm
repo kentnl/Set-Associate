@@ -2,6 +2,9 @@ use v5.16;
 use warnings;
 
 package Set::Associate::Role::RefillItems {
+
+  # ABSTRACT: A data provider for Set::Associate
+  use strict;
   use MooseX::Role::Parameterized;
 
   parameter can_get_next => (
@@ -39,5 +42,6 @@ package Set::Associate::Role::RefillItems {
     }
 
   }
-}
+};
 
+1;

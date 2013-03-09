@@ -9,7 +9,23 @@ package Set::Associate::NewKey::PickOffset {
 
   with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
 
+=method name
+
+The name of this key assignment method ( C<pick_offset> )
+
+=cut
+
   sub name { 'pick_offset' }
+
+=method get_assoc
+
+Returns a value non-destructively by picking an item at numerical offset C<$new_key>
+
+   my $value = $object->get_assoc( $set_assoc, $new_key );
+
+B<Note:> C<$new_key> is automatically modulo  of the length of C<$set_assoc>, so offsets beyond end of array are safe, and wrap.
+
+=cut
 
   sub get_assoc {
     my ( $self, $sa, $key ) = @_;
@@ -18,7 +34,7 @@ package Set::Associate::NewKey::PickOffset {
   }
 
   __PACKAGE__->meta->make_immutable;
-}
+};
 
 1;
 

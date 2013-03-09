@@ -9,7 +9,13 @@ package Set::Associate::NewKey::HashMD5 {
   use Digest::MD5;
   extends 'Set::Associate::NewKey::PickOffset';
 
-  sub name { 'hash_sha1' }
+=method name
+
+The name of this key assignment method ( C<hash_md5> )
+
+=cut
+
+  sub name { 'hash_md5' }
 
   around get_assoc => sub {
     my ( $orig, $self, $sa, $key ) = @_;
@@ -18,7 +24,7 @@ package Set::Associate::NewKey::HashMD5 {
   };
 
   __PACKAGE__->meta->make_immutable;
-}
+};
 
 1;
 

@@ -3,14 +3,34 @@ use warnings;
 
 package Set::Associate::RefillItems::Linear {
 
-  # ABSTRACT: An Item refiller that replenishes the cache with a repeating set of items
+  # ABSTRACT: a refill method that replenishes the cache with a repeating set of items
   use Moose;
 
   with 'Set::Associate::Role::RefillItems' => { can_get_all => 1 };
 
+=carg items
+
+    required ArrayRef
+
+=attr items
+
+=cut
+
   has items => ( isa => 'ArrayRef', is => 'rw', required => 1 );
 
+=method name
+
+The name of this refill method ( C<linear> )
+
+=cut
+
   sub name { 'linear' }
+
+=method get_all
+
+Get a new copy of L</items>.
+
+=cut
 
   sub get_all { return @{ $_[0]->items } }
 

@@ -2,6 +2,9 @@ use v5.16;
 use warnings;
 
 package Set::Associate::Role::NewKey {
+
+  # ABSTRACT: A Key Association methodology for Set::Associate
+  use strict;
   use MooseX::Role::Parameterized;
 
   parameter can_get_next => (
@@ -29,5 +32,6 @@ package Set::Associate::Role::NewKey {
     }
 
   }
-}
+};
 
+1;

@@ -8,7 +8,23 @@ package Set::Associate::NewKey::LinearWrap {
 
   with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
 
+=method name
+
+The name of this key assignment method ( C<linear_wrap> )
+
+=cut
+
   sub name { 'linear_wrap' }
+
+=method get_assoc
+
+Returns a value destructively by taking the first value from C<$set_assoc>'s pool.
+
+C<$new_key> is ignored with this method.
+
+   my $value = $object->get_assoc( $set_assoc, $new_key );
+
+=cut
 
   sub get_assoc {
     my ( $self, $sa, $key ) = @_;
@@ -16,7 +32,7 @@ package Set::Associate::NewKey::LinearWrap {
   }
 
   __PACKAGE__->meta->make_immutable;
-}
+};
 
 1;
 
