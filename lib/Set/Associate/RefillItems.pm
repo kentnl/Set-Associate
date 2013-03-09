@@ -11,7 +11,7 @@ BEGIN {
 }
 
 
-  # ABSTRACT: Pool repopulation methods
+  # ABSTRACT: Pool re-population methods
   use Moose;
   use MooseX::AttributeShortcuts;
 
@@ -33,7 +33,7 @@ BEGIN {
     traits   => ['Code'],
     handles  => {
       get_all => execute_method =>,
-    }
+    },
   );
 
 
@@ -78,7 +78,7 @@ __END__
 
 =head1 NAME
 
-Set::Associate::RefillItems - Pool repopulation methods
+Set::Associate::RefillItems - Pool re-population methods
 
 =head1 VERSION
 
@@ -86,12 +86,12 @@ version 0.003000
 
 =head1 DESCRIPTION
 
-This class implements a genericised interface for creating objects which populate pools.
+This class implements a generalised interface for creating objects which populate pools.
 
 What you're mostly interested in are L</CLASS METHODS>, which are shorthand (somewhat) for loading and constructing
 many of the C<Set::Associate::RefillItems::*> family.
 
-The part you're mostly interested in are the L</CLASS METHODS>, which return the right populator.
+The part you're mostly interested in are the L</CLASS METHODS>, which return the right population method.
 
 However, if your code needs to design its own version on the fly, this interface should work:
 
@@ -128,7 +128,7 @@ However, if your code needs to design its own version on the fly, this interface
 
 Populate from C<items> each time.
 
-See L<Set::Associate::RefillItems::Linear> for details.
+See L<< C<Set::Associate::B<RefillItems::Linear>>|Set::Associate::RefillItems::Linear >> for details.
 
     my $sa = Set::Associate->new(
         ...
