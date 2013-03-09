@@ -11,7 +11,7 @@ BEGIN {
 }
 
 
-  # ABSTRACT: A Key Assocation methodology for Set::Associate
+  # ABSTRACT: A Key Association methodology for Set::Associate
   use MooseX::Role::Parameterized;
 
   parameter can_get_next => (
@@ -51,7 +51,7 @@ __END__
 
 =head1 NAME
 
-Set::Associate::Role::NewKey - A Key Assocation methodology for Set::Associate
+Set::Associate::Role::NewKey - A Key Association methodology for Set::Associate
 
 =head1 VERSION
 

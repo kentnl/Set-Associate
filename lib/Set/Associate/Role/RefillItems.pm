@@ -11,7 +11,7 @@ BEGIN {
 }
 
 
-  # ABSTRACT: A Dataset provider for Set::Associate
+  # ABSTRACT: A data provider for Set::Associate
 
   use MooseX::Role::Parameterized;
 
@@ -62,7 +62,7 @@ __END__
 
 =head1 NAME
 
-Set::Associate::Role::RefillItems - A Dataset provider for Set::Associate
+Set::Associate::Role::RefillItems - A data provider for Set::Associate
 
 =head1 VERSION
 
