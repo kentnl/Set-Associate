@@ -58,8 +58,7 @@ Returns a value non-destructively by picking an item at numerical offset C<$new_
 
    my $value = $object->get_assoc( $set_assoc, $new_key );
 
-B<Note:> C<$new_key> is automatically modulo  of the length of C<$set_assoc>, so offsets beyond end of 
-array are safe, and wrap.
+B<Note:> C<$new_key> is automatically modulo  of the length of C<$set_assoc>, so offsets beyond end of array are safe, and wrap.
 
 =head1 AUTHOR
 
