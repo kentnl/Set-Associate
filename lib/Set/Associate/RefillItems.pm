@@ -34,8 +34,6 @@ However, if your code needs to design its own version on the fly, this interface
         ...
     );
 
-=cut
-
 =carg name
 
     required Str
