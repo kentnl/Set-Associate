@@ -11,7 +11,7 @@ BEGIN {
 }
 
 
-  # ABSTRACT: Pick items from a dataset associatively
+  # ABSTRACT: Pick items from a data set associatively
 
 
 
@@ -41,7 +41,7 @@ BEGIN {
       _items_cache_push  => push     =>,
       _items_cache_count => count    =>,
       _items_cache_get   => get      =>,
-    }
+    },
   );
 
 
@@ -112,7 +112,7 @@ __END__
 
 =head1 NAME
 
-Set::Associate - Pick items from a dataset associatively
+Set::Associate - Pick items from a data set associatively
 
 =head1 VERSION
 
@@ -121,9 +121,9 @@ version 0.003000
 =head1 DESCRIPTION
 
 Essentially, this is a simple toolkit to map an infinite-many items to a corresponding finite-many values,
-ie: A nick coloring algorithm.
+i.e: A nick coloring algorithm.
 
-The most simple usage of this code gives out values from C<items> seqeuntially, and remembers seen values
+The most simple usage of this code gives out values from C<items> sequentially, and remembers seen values
 and persists them within the scope of the program, ie:
 
     my $set = Set::Associate->new(
@@ -185,7 +185,7 @@ There are 2 Main phases that occur within this code
 
 =head2 Pool Population
 
-The pool of available options ( C<_items_cache> ) is initialised as an empty list, and every time the pool is being detected as empty ( C<_items_cache_empty> ), the C<on_items_empty> method is called ( C<run_on_items_empty> ) and the results are pushed into the pool.
+The pool of available options ( C<_items_cache> ) is initialized as an empty list, and every time the pool is being detected as empty ( C<_items_cache_empty> ), the C<on_items_empty> method is called ( C<run_on_items_empty> ) and the results are pushed into the pool.
 
 =head2 Pool Selection
 

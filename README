@@ -1,15 +1,15 @@
 NAME
-    Set::Associate - Pick items from a dataset associatively
+    Set::Associate - Pick items from a data set associatively
 
 VERSION
     version 0.003000
 
 DESCRIPTION
     Essentially, this is a simple toolkit to map an infinite-many items to a
-    corresponding finite-many values, ie: A nick coloring algorithm.
+    corresponding finite-many values, i.e: A nick coloring algorithm.
 
     The most simple usage of this code gives out values from "items"
-    seqeuntially, and remembers seen values and persists them within the
+    sequentially, and remembers seen values and persists them within the
     scope of the program, ie:
 
         my $set = Set::Associate->new(
@@ -66,7 +66,7 @@ IMPLEMENTATION DETAILS
     *   pool selection
 
   Pool Population
-    The pool of available options ( "_items_cache" ) is initialised as an
+    The pool of available options ( "_items_cache" ) is initialized as an
     empty list, and every time the pool is being detected as empty (
     "_items_cache_empty" ), the "on_items_empty" method is called (
     "run_on_items_empty" ) and the results are pushed into the pool.

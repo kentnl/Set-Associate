@@ -1,5 +1,5 @@
 ---
-abstract: 'Pick items from a dataset associatively'
+abstract: 'Pick items from a data set associatively'
 author:
   - 'Kent Fredric <kentfredric@gmail.com>'
 build_requires:

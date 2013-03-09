@@ -16,7 +16,7 @@ my %module_build_args = (
   "configure_requires" => {
     "Module::Build" => "0.4003"
   },
-  "dist_abstract" => "Pick items from a dataset associatively",
+  "dist_abstract" => "Pick items from a data set associatively",
   "dist_author" => [
     "Kent Fredric <kentfredric\@gmail.com>"
   ],
