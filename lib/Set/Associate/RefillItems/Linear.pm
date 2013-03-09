@@ -58,7 +58,7 @@ The name of this refill method ( C<linear> )
 
 =head2 get_all
 
-Get a new copy of L<< C<items>|/items >>.
+Get a new copy of L</items>.
 
 =head1 ATTRIBUTES
 
