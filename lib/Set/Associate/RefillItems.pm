@@ -91,8 +91,6 @@ This class implements a generalised interface for creating objects which populat
 What you're mostly interested in are L</CLASS METHODS>, which are shorthand (somewhat) for loading and constructing
 many of the C<Set::Associate::RefillItems::*> family.
 
-The part you're mostly interested in are the L</CLASS METHODS>, which return the right population method.
-
 However, if your code needs to design its own version on the fly, this interface should work:
 
     my $populator = Set::Associate::RefillItems->new(
@@ -172,7 +170,13 @@ or ...
 
 =head1 ATTRIBUTE HANDLES
 
+=head2 get_all
+
+Invokes C<Trait:Code/execute_method> on L</code>
+
 =head2 has_items
+
+Predicate method for L</items>
 
 =head1 AUTHOR
 
