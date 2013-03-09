@@ -86,7 +86,7 @@ version 0.003000
 
 =head1 DESCRIPTION
 
-This class implements a generalised interface for creating objects which populate pools.
+This class implements a generalized interface for creating objects which populate pools.
 
 What you're mostly interested in are L</CLASS METHODS>, which are shorthand (somewhat) for loading and constructing
 many of the C<Set::Associate::RefillItems::*> family.
