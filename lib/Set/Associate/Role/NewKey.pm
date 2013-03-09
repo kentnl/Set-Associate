@@ -10,6 +10,8 @@ BEGIN {
   $Set::Associate::Role::NewKey::VERSION = '0.003000';
 }
 
+
+  # ABSTRACT: A Key Assocation methodology for Set::Associate
   use MooseX::Role::Parameterized;
 
   parameter can_get_next => (
@@ -39,6 +41,8 @@ BEGIN {
   }
 }
 
+1;
+
 __END__
 
 =pod
@@ -47,7 +51,7 @@ __END__
 
 =head1 NAME
 
-Set::Associate::Role::NewKey
+Set::Associate::Role::NewKey - A Key Assocation methodology for Set::Associate
 
 =head1 VERSION
 

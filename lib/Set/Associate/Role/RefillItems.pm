@@ -10,6 +10,9 @@ BEGIN {
   $Set::Associate::Role::RefillItems::VERSION = '0.003000';
 }
 
+
+  # ABSTRACT: A Dataset provider for Set::Associate
+
   use MooseX::Role::Parameterized;
 
   parameter can_get_next => (
@@ -49,6 +52,8 @@ BEGIN {
   }
 }
 
+1;
+
 __END__
 
 =pod
@@ -57,7 +62,7 @@ __END__
 
 =head1 NAME
 
-Set::Associate::Role::RefillItems
+Set::Associate::Role::RefillItems - A Dataset provider for Set::Associate
 
 =head1 VERSION
 
