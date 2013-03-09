@@ -20,6 +20,7 @@ BEGIN {
 
   sub name { 'pick_offset' }
 
+
   sub get_assoc {
     my ( $self, $sa, $key ) = @_;
     use bigint;
@@ -50,6 +51,15 @@ version 0.003000
 =head2 name
 
 The name of this key assignment method ( C<pick_offset> )
+
+=head2 get_assoc
+
+Returns a value non-destructively by picking an item at numerical offset C<$new_key>
+
+   my $value = $object->get_assoc( $set_assoc, $new_key );
+
+B<Note:> C<$new_key> is automatically modulo  of the length of C<$set_assoc>, so offsets beyond end of 
+array are safe, and wrap.
 
 =head1 AUTHOR
 

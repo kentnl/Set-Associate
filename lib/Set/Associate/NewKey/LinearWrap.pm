@@ -19,6 +19,7 @@ BEGIN {
 
   sub name { 'linear_wrap' }
 
+
   sub get_assoc {
     my ( $self, $sa, $key ) = @_;
     return $sa->_items_cache_shift;
@@ -48,6 +49,14 @@ version 0.003000
 =head2 name
 
 The name of this key assignment method ( C<linear_wrap> )
+
+=head2 get_assoc
+
+Returns a value destructively by taking the first value from C<$set_assoc>'s pool.
+
+C<$new_key> is ignored with this method.
+
+   my $value = $object->get_assoc( $set_assoc, $new_key );
 
 =head1 AUTHOR
 
