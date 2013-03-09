@@ -17,11 +17,15 @@ BEGIN {
 
   with 'Set::Associate::Role::RefillItems' => { can_get_all => 1, };
 
+
+
   has items => ( isa => 'ArrayRef', is => 'rw', required => 1 );
+
 
   sub name { 'shuffle' }
 
   use List::Util qw( shuffle );
+
 
   sub get_all { return shuffle( @{ $_[0]->items } ) }
 
@@ -43,6 +47,26 @@ Set::Associate::RefillItems::Shuffle - a refill method that replenishes the cach
 =head1 VERSION
 
 version 0.003000
+
+=head1 CONSTRUCTOR ARGUMENTS
+
+=head2 items
+
+    required ArrayRef
+
+=head1 METHODS
+
+=head2 name
+
+The name of this refill method ( C<shuffle> )
+
+=head2 get_all
+
+Get a new copy of C<items> in shuffled form.
+
+=head1 ATTRIBUTES
+
+=head2 items 
 
 =head1 AUTHOR
 
