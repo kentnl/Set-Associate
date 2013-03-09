@@ -37,7 +37,7 @@ BEGIN {
     traits   => ['Code'],
     handles  => {
       get_assoc => execute_method =>,
-    }
+    },
   );
 
   with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
@@ -190,9 +190,9 @@ or alternatively
 
 =head2 hash_sha1
 
-B<requires bigint support>
+B<requires C<bigint> support>
 
-Determines the offset for L</pick_offset> from taking the numeric value of the SHA1 hash of the given string
+Determines the offset for L</pick_offset> from taking the numeric value of the C<SHA1> hash of the given string
 
     my $sa = Set::Associate->new(
         ...

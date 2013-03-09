@@ -124,7 +124,7 @@ Essentially, this is a simple toolkit to map an infinite-many items to a corresp
 i.e: A nick coloring algorithm.
 
 The most simple usage of this code gives out values from C<items> sequentially, and remembers seen values
-and persists them within the scope of the program, ie:
+and persists them within the scope of the program, i.e:
 
     my $set = Set::Associate->new(
         on_items_empty => Set::Associate::RefillItems->linear(
