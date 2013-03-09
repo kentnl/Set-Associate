@@ -115,9 +115,9 @@ version 0.003000
 
 This class implements the mechanism which controls how the values are assigned to 'new' keys.
 
-The part you're mostly interested in are the L</CLASS METHODS>, which return the right populator.
+The part you're mostly interested in are the L</CLASS METHODS>, which return the right assignment method.
 
-This is more or less a wrapper for passing around subs with an implict interface.
+This is more or less a wrapper for passing around subs with an implicit interface.
 
     my $assigner = Set::Associate::NewKey->new(
         name => 'linear_wrap',
@@ -206,7 +206,7 @@ or alternatively
 
 =head2 hash_md5
 
-B<requires bigint support>
+B<requires C<bigint> support>
 
 Determines the offset for L</pick_offset> from taking the numeric value of the MD5 hash of the given string
 
