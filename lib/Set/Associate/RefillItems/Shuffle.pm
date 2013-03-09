@@ -11,7 +11,7 @@ BEGIN {
 }
 
 
-  # ABSTRACT: An item refiller that replenishes the cache with a shuffled list
+  # ABSTRACT: a refill method that replenishes the cache with a shuffled list
 
   use Moose;
 
@@ -38,7 +38,7 @@ __END__
 
 =head1 NAME
 
-Set::Associate::RefillItems::Shuffle - An item refiller that replenishes the cache with a shuffled list
+Set::Associate::RefillItems::Shuffle - a refill method that replenishes the cache with a shuffled list
 
 =head1 VERSION
 
