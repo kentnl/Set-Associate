@@ -62,7 +62,7 @@ Get a new copy of L</items>.
 
 =head1 ATTRIBUTES
 
-=head2 items 
+=head2 items
 
 =head1 AUTHOR
 

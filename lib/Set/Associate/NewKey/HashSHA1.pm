@@ -17,6 +17,7 @@ BEGIN {
   use Digest::SHA1;
   extends 'Set::Associate::NewKey::PickOffset';
 
+
   sub name { 'hash_sha1' }
 
   around get_assoc => sub {
@@ -43,6 +44,12 @@ Set::Associate::NewKey::HashSHA1 - Pick a value from the pool based on the C<SHA
 =head1 VERSION
 
 version 0.003000
+
+=head1 METHODS
+
+=head2 name
+
+The name of this key assignment method ( C<hash_sha1> )
 
 =head1 AUTHOR
 

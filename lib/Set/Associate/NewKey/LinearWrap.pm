@@ -16,6 +16,7 @@ BEGIN {
 
   with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
 
+
   sub name { 'linear_wrap' }
 
   sub get_assoc {
@@ -41,6 +42,12 @@ Set::Associate::NewKey::LinearWrap - destructively empty the supply pool from th
 =head1 VERSION
 
 version 0.003000
+
+=head1 METHODS
+
+=head2 name
+
+The name of this key assignment method ( C<linear_wrap> )
 
 =head1 AUTHOR
 

@@ -17,6 +17,7 @@ BEGIN {
 
   with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
 
+
   sub name { 'pick_offset' }
 
   sub get_assoc {
@@ -43,6 +44,12 @@ Set::Associate::NewKey::PickOffset - Associate a key with a value from a pool ba
 =head1 VERSION
 
 version 0.003000
+
+=head1 METHODS
+
+=head2 name
+
+The name of this key assignment method ( C<pick_offset> )
 
 =head1 AUTHOR
 

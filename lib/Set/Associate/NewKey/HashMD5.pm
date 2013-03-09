@@ -17,7 +17,8 @@ BEGIN {
   use Digest::MD5;
   extends 'Set::Associate::NewKey::PickOffset';
 
-  sub name { 'hash_sha1' }
+
+  sub name { 'hash_md5' }
 
   around get_assoc => sub {
     my ( $orig, $self, $sa, $key ) = @_;
@@ -43,6 +44,12 @@ Set::Associate::NewKey::HashMD5 - Pick a value from the pool based on the MD5 va
 =head1 VERSION
 
 version 0.003000
+
+=head1 METHODS
+
+=head2 name
+
+The name of this key assignment method ( C<hash_md5> )
 
 =head1 AUTHOR
 

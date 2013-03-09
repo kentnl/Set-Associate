@@ -65,7 +65,7 @@ Get a new copy of C<items> in shuffled form.
 
 =head1 ATTRIBUTES
 
-=head2 items 
+=head2 items
 
 =head1 AUTHOR
 
