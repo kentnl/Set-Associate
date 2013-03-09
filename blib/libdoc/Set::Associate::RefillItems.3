@@ -133,34 +133,38 @@
 .\" ========================================================================
 .\"
 .IX Title "Set::Associate::RefillItems 3"
-.TH Set::Associate::RefillItems 3 "2013-02-28" "perl v5.17.9" "User Contributed Perl Documentation"
+.TH Set::Associate::RefillItems 3 "2013-03-10" "perl v5.17.9" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
 .nh
 .SH "NAME"
-Set::Associate::RefillItems \- Pool repopulation methods
+Set::Associate::RefillItems \- Pool re\-population methods
 .SH "VERSION"
 .IX Header "VERSION"
-version 0.002000
+version 0.003000
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
-This class implements the mechanism which controls how the main pool populates.
+This class implements a generalized interface for creating objects which populate pools.
 .PP
-The part you're mostly interested in are the \*(L"\s-1CLASS METHODS\*(R"\s0, which return the right populator.
+What you're mostly interested in are \*(L"\s-1CLASS METHODS\*(R"\s0, which are shorthand (somewhat) for loading and constructing
+many of the \f(CW\*(C`Set::Associate::RefillItems::*\*(C'\fR family.
 .PP
-This is more or less a wrapper for passing around subs with an implict interface.
+However, if your code needs to design its own version on the fly, this interface should work:
 .PP
-.Vb 7
+.Vb 12
 \&    my $populator = Set::Associate::RefillItems\->new(
-\&        name => \*(Aqlinear\*(Aq,
+\&        name => \*(Aqfoo\*(Aq,
+\&        items => [  .... ],
 \&        code => sub {
 \&            my ( $self, $sa ) = @_;
 \&            ....
 \&        },
 \&    );
-\&
-\&    my ( @new_pool ) = $populator\->run( $set_associate_object );
+\&    my $sa = Set::Associate\->new(
+\&        on_item_empty => $populator ,
+\&        ...
+\&    );
 .Ve
 .SH "CONSTRUCTOR ARGUMENTS"
 .IX Header "CONSTRUCTOR ARGUMENTS"
@@ -185,15 +189,29 @@ This is more or less a wrapper for passing around subs with an implict interface
 .IX Subsection "linear"
 Populate from \f(CW\*(C`items\*(C'\fR each time.
 .PP
+See \f(CW\*(C`Set::Associate::\f(CBRefillItems::Linear\f(CW\*(C'\fR for details.
+.PP
 .Vb 4
 \&    my $sa = Set::Associate\->new(
 \&        ...
 \&        on_items_empty => Set::Associate::RefillItems\->linear( items => [ ... ])
 \&    );
 .Ve
+.PP
+or ...
+.PP
+.Vb 5
+\&    use Set::Associate::RefillItems::Linear;
+\&    my $sa = Set::Associate\->new(
+\&        ...
+\&        on_items_empty => Set::Associate::RefillItems::Linear\->new( items => [ ... ])
+\&    );
+.Ve
 .SS "shuffle"
 .IX Subsection "shuffle"
 Populate with a shuffled version of \f(CW\*(C`items\*(C'\fR
+.PP
+See \f(CW\*(C`Set::Associate::\f(CBRefillItems::Shuffle\f(CW\*(C'\fR for details.
 .PP
 .Vb 4
 \&    my $sa = Set::Associate\->new(
@@ -201,17 +219,16 @@ Populate with a shuffled version of \f(CW\*(C`items\*(C'\fR
 \&        on_items_empty => Set::Associate::RefillItems\->shuffle( items => [ ... ]);
 \&    );
 .Ve
-.SH "METHODS"
-.IX Header "METHODS"
-.SS "run"
-.IX Subsection "run"
-runs code attached via \*(L"code\*(R"
 .PP
-.Vb 1
-\&    my ( @list ) = $object\->run( $set_associate_object );
+or ...
+.PP
+.Vb 5
+\&    use Set::Associate::RefillItems::Shuffle;
+\&    my $sa = Set::Associate\->new(
+\&        ...
+\&        on_items_empty => Set::Associate::RefillItems::Shuffle\->new( items => [ ... ])
+\&    );
 .Ve
-.PP
-Where <@list> is the new pool contents.
 .SH "ATTRIBUTES"
 .IX Header "ATTRIBUTES"
 .SS "name"
@@ -222,8 +239,12 @@ Where <@list> is the new pool contents.
 .IX Subsection "items"
 .SH "ATTRIBUTE HANDLES"
 .IX Header "ATTRIBUTE HANDLES"
+.SS "get_all"
+.IX Subsection "get_all"
+Invokes \f(CW\*(C`Trait:Code/execute_method\*(C'\fR on \*(L"code\*(R"
 .SS "has_items"
 .IX Subsection "has_items"
+Predicate method for \*(L"items\*(R"
 .SH "AUTHOR"
 .IX Header "AUTHOR"
 Kent Fredric <kentfredric@gmail.com>

@@ -133,23 +133,23 @@
 .\" ========================================================================
 .\"
 .IX Title "Set::Associate 3"
-.TH Set::Associate 3 "2013-02-28" "perl v5.17.9" "User Contributed Perl Documentation"
+.TH Set::Associate 3 "2013-03-10" "perl v5.17.9" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
 .nh
 .SH "NAME"
-Set::Associate \- Pick items from a dataset associatively
+Set::Associate \- Pick items from a data set associatively
 .SH "VERSION"
 .IX Header "VERSION"
-version 0.002000
+version 0.003000
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
 Essentially, this is a simple toolkit to map an infinite-many items to a corresponding finite-many values,
-ie: A nick coloring algorithm.
+i.e: A nick coloring algorithm.
 .PP
-The most simple usage of this code gives out values from \f(CW\*(C`items\*(C'\fR seqeuntially, and remembers seen values
-and persists them within the scope of the program, ie:
+The most simple usage of this code gives out values from \f(CW\*(C`items\*(C'\fR sequentially, and remembers seen values
+and persists them within the scope of the program, i.e:
 .PP
 .Vb 11
 \&    my $set = Set::Associate\->new(
@@ -210,9 +210,7 @@ pool population
 pool selection
 .SS "Pool Population"
 .IX Subsection "Pool Population"
-The pool of available options ( \f(CW\*(C`_items_cache\*(C'\fR ) is initialised as an empty list, and every time the pool is being detected as empty ( \f(CW\*(C`_items_cache_empty\*(C'\fR ), the \f(CW\*(C`on_items_empty\*(C'\fR method is called ( \f(CW\*(C`run_on_items_empty\*(C'\fR ) and the results are pushed into the pool.
-.PP
-The default implementation copies items from their own \f(CW\*(C`items\*(C'\fR into the pool.
+The pool of available options ( \f(CW\*(C`_items_cache\*(C'\fR ) is initialized as an empty list, and every time the pool is being detected as empty ( \f(CW\*(C`_items_cache_empty\*(C'\fR ), the \f(CW\*(C`on_items_empty\*(C'\fR method is called ( \f(CW\*(C`run_on_items_empty\*(C'\fR ) and the results are pushed into the pool.
 .SS "Pool Selection"
 .IX Subsection "Pool Selection"
 Pool selection can either be cherry-pick based, where the pool doesn't shrink, or can be destructive, so that the pool population phase is triggered to replenish the supply of items only when all values have been exhausted.
@@ -220,15 +218,10 @@ Pool selection can either be cherry-pick based, where the pool doesn't shrink, o
 The default implementation \f(CW\*(C`shift\*(C'\fR's the first item off the queue, allowing the queue to be exhausted and requiring pool population to occur periodically to regenerate the source list.
 .SH "CONSTRUCTOR ARGUMENTS"
 .IX Header "CONSTRUCTOR ARGUMENTS"
-.SS "items"
-.IX Subsection "items"
-.Vb 1
-\&    required ArrayRef[ Any ]
-.Ve
 .SS "on_items_empty"
 .IX Subsection "on_items_empty"
 .Vb 1
-\&    lazy Set::Associate::RefillItems = Set::Associate::RefillItems::linear
+\&    required Set::Associate::RefillItems
 .Ve
 .SS "on_new_key"
 .IX Subsection "on_new_key"
@@ -237,8 +230,6 @@ The default implementation \f(CW\*(C`shift\*(C'\fR's the first item off the queu
 .Ve
 .SH "METHODS"
 .IX Header "METHODS"
-.SS "items_elements"
-.IX Subsection "items_elements"
 .SS "run_on_items_empty"
 .IX Subsection "run_on_items_empty"
 .Vb 3
@@ -271,8 +262,6 @@ Generates an association automatically.
 .Ve
 .SH "ATTRIBUTES"
 .IX Header "ATTRIBUTES"
-.SS "items"
-.IX Subsection "items"
 .SS "on_items_empty"
 .IX Subsection "on_items_empty"
 .Vb 3

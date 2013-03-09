@@ -7,78 +7,64 @@ BEGIN {
 }
 
 {
-  $Set::Associate::RefillItems::VERSION = '0.002000';
+  $Set::Associate::RefillItems::VERSION = '0.003000';
 }
 
 
-  # ABSTRACT: Pool repopulation methods
-  use Moo;
-  use Set::Associate::Utils;
+  # ABSTRACT: Pool re-population methods
+  use Moose;
+  use MooseX::AttributeShortcuts;
 
-  *_croak          = *Set::Associate::Utils::_croak;
-  *_tc_str         = *Set::Associate::Utils::_tc_str;
-  *_tc_coderef     = *Set::Associate::Utils::_tc_coderef;
-  *_tc_arrayref    = *Set::Associate::Utils::_tc_arrayref;
+  use Set::Associate::Utils;
   *_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
 
 
-
   has name => (
-    isa      => \&_tc_str,
+    isa      => Str =>,
     is       => rwp =>,
     required => 1,
   );
 
 
   has code => (
-    isa      => \&_tc_coderef,
-    is       => rwp =>,
+    isa      => CodeRef =>,
+    is       => rwp     =>,
     required => 1,
+    traits   => ['Code'],
+    handles  => {
+      get_all => execute_method =>,
+    },
   );
 
 
   has items => (
-    isa       => \&_tc_arrayref,
-    is        => rwp =>,
+    isa       => ArrayRef  =>,
+    is        => rwp       =>,
     predicate => has_items =>,
   );
 
+  with 'Set::Associate::Role::RefillItems' => { can_get_all => 1, };
 
-  sub run {
-    my ( $self, $sa ) = @_;
-    _croak('->run(x) should be a ref') if not ref $sa;
-    $self->code->( $self, $sa );
-  }
-
-  no Moo;
+  __PACKAGE__->meta->make_immutable;
 
 
   sub linear {
-    _warn_nonmethod( $_[0], __PACKAGE__, 'linear' );
+    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'linear' ) ) {
+      unshift @_, __PACKAGE__;
+    }
     my ( $class, @args ) = @_;
-    return __PACKAGE__->new(
-      name => 'linear',
-      code => sub {
-        my ( $self, $sa ) = @_;
-        return @{ $self->items };
-      },
-      @args,
-    );
+    require Set::Associate::RefillItems::Linear;
+    return Set::Associate::RefillItems::Linear->new(@args);
   }
 
 
   sub shuffle {
-    _warn_nonmethod( $_[0], __PACKAGE__, 'shuffle' );
+    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'shuffle' ) ) {
+      unshift @_, __PACKAGE__;
+    }
     my ( $class, @args ) = @_;
-    return __PACKAGE__->new(
-      name => 'shuffle',
-      code => sub {
-        my ( $self, $sa ) = @_;
-        require List::Util;
-        return List::Util::shuffle @{ $self->items };
-      },
-      @args
-    );
+    require Set::Associate::RefillItems::Shuffle;
+    return Set::Associate::RefillItems::Shuffle->new(@args);
   }
 };
 
@@ -92,29 +78,33 @@ __END__
 
 =head1 NAME
 
-Set::Associate::RefillItems - Pool repopulation methods
+Set::Associate::RefillItems - Pool re-population methods
 
 =head1 VERSION
 
-version 0.002000
+version 0.003000
 
 =head1 DESCRIPTION
 
-This class implements the mechanism which controls how the main pool populates.
+This class implements a generalized interface for creating objects which populate pools.
 
-The part you're mostly interested in are the L</CLASS METHODS>, which return the right populator.
+What you're mostly interested in are L</CLASS METHODS>, which are shorthand (somewhat) for loading and constructing
+many of the C<Set::Associate::RefillItems::*> family.
 
-This is more or less a wrapper for passing around subs with an implict interface.
+However, if your code needs to design its own version on the fly, this interface should work:
 
     my $populator = Set::Associate::RefillItems->new(
-        name => 'linear',
+        name => 'foo',
+        items => [  .... ],
         code => sub {
             my ( $self, $sa ) = @_;
             ....
         },
     );
-
-    my ( @new_pool ) = $populator->run( $set_associate_object );
+    my $sa = Set::Associate->new(
+        on_item_empty => $populator ,
+        ...
+    );
 
 =head1 CONSTRUCTOR ARGUMENTS
 
@@ -136,29 +126,39 @@ This is more or less a wrapper for passing around subs with an implict interface
 
 Populate from C<items> each time.
 
+See L<< C<Set::Associate::B<RefillItems::Linear>>|Set::Associate::RefillItems::Linear >> for details.
+
     my $sa = Set::Associate->new(
         ...
         on_items_empty => Set::Associate::RefillItems->linear( items => [ ... ])
+    );
+
+or ...
+
+    use Set::Associate::RefillItems::Linear;
+    my $sa = Set::Associate->new(
+        ...
+        on_items_empty => Set::Associate::RefillItems::Linear->new( items => [ ... ])
     );
 
 =head2 shuffle
 
 Populate with a shuffled version of C<items>
 
+See L<< C<Set::Associate::B<RefillItems::Shuffle>>|Set::Associate::RefillItems::Shuffle >> for details.
+
     my $sa = Set::Associate->new(
         ...
         on_items_empty => Set::Associate::RefillItems->shuffle( items => [ ... ]);
     );
 
-=head1 METHODS
+or ...
 
-=head2 run
-
-runs code attached via L</code>
-
-    my ( @list ) = $object->run( $set_associate_object );
-
-Where <@list> is the new pool contents.
+    use Set::Associate::RefillItems::Shuffle;
+    my $sa = Set::Associate->new(
+        ...
+        on_items_empty => Set::Associate::RefillItems::Shuffle->new( items => [ ... ])
+    );
 
 =head1 ATTRIBUTES
 
@@ -170,7 +170,13 @@ Where <@list> is the new pool contents.
 
 =head1 ATTRIBUTE HANDLES
 
+=head2 get_all
+
+Invokes C<Trait:Code/execute_method> on L</code>
+
 =head2 has_items
+
+Predicate method for L</items>
 
 =head1 AUTHOR
 

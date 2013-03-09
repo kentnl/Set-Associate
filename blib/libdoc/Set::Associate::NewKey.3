@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "Set::Associate::NewKey 3"
-.TH Set::Associate::NewKey 3 "2013-02-28" "perl v5.17.9" "User Contributed Perl Documentation"
+.TH Set::Associate::NewKey 3 "2013-03-10" "perl v5.17.9" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -142,14 +142,14 @@
 Set::Associate::NewKey \- New Key assignment methods
 .SH "VERSION"
 .IX Header "VERSION"
-version 0.002000
+version 0.003000
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
 This class implements the mechanism which controls how the values are assigned to 'new' keys.
 .PP
-The part you're mostly interested in are the \*(L"\s-1CLASS METHODS\*(R"\s0, which return the right populator.
+The part you're mostly interested in are the \*(L"\s-1CLASS METHODS\*(R"\s0, which return the right assignment method.
 .PP
-This is more or less a wrapper for passing around subs with an implict interface.
+This is more or less a wrapper for passing around subs with an implicit interface.
 .PP
 .Vb 7
 \&    my $assigner = Set::Associate::NewKey\->new(
@@ -234,9 +234,9 @@ or alternatively
 .Ve
 .SS "hash_sha1"
 .IX Subsection "hash_sha1"
-\&\fBrequires bigint support\fR
+\&\fBrequires \f(CB\*(C`bigint\*(C'\fB support\fR
 .PP
-Determines the offset for \*(L"pick_offset\*(R" from taking the numeric value of the \s-1SHA1\s0 hash of the given string
+Determines the offset for \*(L"pick_offset\*(R" from taking the numeric value of the \f(CW\*(C`SHA1\*(C'\fR hash of the given string
 .PP
 .Vb 4
 \&    my $sa = Set::Associate\->new(
@@ -253,7 +253,7 @@ or alternatively
 .Ve
 .SS "hash_md5"
 .IX Subsection "hash_md5"
-\&\fBrequires bigint support\fR
+\&\fBrequires \f(CB\*(C`bigint\*(C'\fB support\fR
 .PP
 Determines the offset for \*(L"pick_offset\*(R" from taking the numeric value of the \s-1MD5\s0 hash of the given string
 .PP
@@ -270,17 +270,6 @@ or alternatively
 \&    my $code = Set::Associate::NewKey\->hash_md5();
 \&    my $newval = $code\->run( $set, "Some String" );
 .Ve
-.SH "METHODS"
-.IX Header "METHODS"
-.SS "run"
-.IX Subsection "run"
-runs code attached via \*(L"code\*(R"
-.PP
-.Vb 1
-\&    my $value = $object\->run( $set_associate_object , $key );
-.Ve
-.PP
-And \f(CW$value\fR is the newly formed associaiton value.
 .SH "ATTRIBUTES"
 .IX Header "ATTRIBUTES"
 .SS "name"

@@ -1,11 +1,12 @@
 ---
-abstract: 'Pick items from a dataset associatively'
+abstract: 'Pick items from a data set associatively'
 author:
   - 'Kent Fredric <kentfredric@gmail.com>'
 build_requires:
   File::Find: 0
   File::Temp: 0
   Module::Build: 0.4003
+  Test::Fatal: 0
   Test::More: 0.98
 configure_requires:
   Module::Build: 0.4003
@@ -19,22 +20,51 @@ name: Set-Associate
 provides:
   Set::Associate:
     file: lib/Set/Associate.pm
-    version: 0.002000
+    version: 0.003000
   Set::Associate::NewKey:
     file: lib/Set/Associate/NewKey.pm
-    version: 0.002000
+    version: 0.003000
+  Set::Associate::NewKey::HashMD5:
+    file: lib/Set/Associate/NewKey/HashMD5.pm
+    version: 0.003000
+  Set::Associate::NewKey::HashSHA1:
+    file: lib/Set/Associate/NewKey/HashSHA1.pm
+    version: 0.003000
+  Set::Associate::NewKey::LinearWrap:
+    file: lib/Set/Associate/NewKey/LinearWrap.pm
+    version: 0.003000
+  Set::Associate::NewKey::PickOffset:
+    file: lib/Set/Associate/NewKey/PickOffset.pm
+    version: 0.003000
+  Set::Associate::NewKey::RandomPick:
+    file: lib/Set/Associate/NewKey/RandomPick.pm
+    version: 0.003000
   Set::Associate::RefillItems:
     file: lib/Set/Associate/RefillItems.pm
-    version: 0.002000
+    version: 0.003000
+  Set::Associate::RefillItems::Linear:
+    file: lib/Set/Associate/RefillItems/Linear.pm
+    version: 0.003000
+  Set::Associate::RefillItems::Shuffle:
+    file: lib/Set/Associate/RefillItems/Shuffle.pm
+    version: 0.003000
+  Set::Associate::Role::NewKey:
+    file: lib/Set/Associate/Role/NewKey.pm
+    version: 0.003000
+  Set::Associate::Role::RefillItems:
+    file: lib/Set/Associate/Role/RefillItems.pm
+    version: 0.003000
   Set::Associate::Utils:
     file: lib/Set/Associate/Utils.pm
-    version: 0.002000
+    version: 0.003000
 requires:
   Carp: 0
   Digest::MD5: 0
   Digest::SHA1: 0
   List::Util: 0
-  Moo: 0
+  Moose: 0
+  MooseX::AttributeShortcuts: 0
+  MooseX::Role::Parameterized: 0
   Scalar::Util: 0
   bigint: 0
   perl: v5.16.0
@@ -44,7 +74,7 @@ resources:
   bugtracker: https://github.com/kentfredric/Set-Associate/issues
   homepage: https://github.com/kentfredric/Set-Associate
   repository: https://github.com/kentfredric/Set-Associate.git
-version: 0.002000
+version: 0.003000
 x_BuiltWith:
   modules:
     Carp: 1.28
@@ -56,10 +86,13 @@ x_BuiltWith:
     File::Temp: 0.22_90
     List::Util: 1.27
     Module::Build: 0.4003
-    Moo: 1.000008
+    Moose: 2.0604
+    MooseX::AttributeShortcuts: 0.017
+    MooseX::Role::Parameterized: 1.00
     Pod::Coverage::TrustPod: 0.100002
     Scalar::Util: 1.27
     Test::CPAN::Meta: 0.22
+    Test::Fatal: 0.010
     Test::More: 0.98
     Test::Pod: 1.46
     Test::Pod::Coverage: 1.08
@@ -82,7 +115,7 @@ x_BuiltWith:
     myarchname: x86_64-linux
     osname: linux
   platform: linux
-  uname: 'Linux 3.8.0-gentoo x86_64 GenuineIntel GNU/Linux'
+  uname: 'Linux 3.8.2-gentoo x86_64 GenuineIntel GNU/Linux'
 x_Dist_Zilla:
   perl:
     version: 5.017009

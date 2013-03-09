@@ -10,17 +10,18 @@ my %module_build_args = (
     "File::Find" => 0,
     "File::Temp" => 0,
     "Module::Build" => "0.4003",
+    "Test::Fatal" => 0,
     "Test::More" => "0.98"
   },
   "configure_requires" => {
     "Module::Build" => "0.4003"
   },
-  "dist_abstract" => "Pick items from a dataset associatively",
+  "dist_abstract" => "Pick items from a data set associatively",
   "dist_author" => [
     "Kent Fredric <kentfredric\@gmail.com>"
   ],
   "dist_name" => "Set-Associate",
-  "dist_version" => "0.002000",
+  "dist_version" => "0.003000",
   "license" => "perl",
   "module_name" => "Set::Associate",
   "recommends" => {},
@@ -30,7 +31,9 @@ my %module_build_args = (
     "Digest::MD5" => 0,
     "Digest::SHA1" => 0,
     "List::Util" => 0,
-    "Moo" => 0,
+    "Moose" => 0,
+    "MooseX::AttributeShortcuts" => 0,
+    "MooseX::Role::Parameterized" => 0,
     "Scalar::Util" => 0,
     "bigint" => 0,
     "perl" => "v5.16.0",

@@ -7,81 +7,71 @@ BEGIN {
 }
 
 {
-  $Set::Associate::NewKey::VERSION = '0.002000';
+  $Set::Associate::NewKey::VERSION = '0.003000';
 }
 
 
   # ABSTRACT: New Key assignment methods
 
 
-  use Moo;
+  use Carp qw( croak );
+  use Moose;
+  use MooseX::AttributeShortcuts;
+
   use Set::Associate::Utils;
 
-  *_croak          = *Set::Associate::Utils::_croak;
-  *_tc_str         = *Set::Associate::Utils::_tc_str;
-  *_tc_coderef     = *Set::Associate::Utils::_tc_coderef;
   *_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
 
 
   has name => (
-    isa      => \&_tc_str,
+    isa      => Str =>,
     is       => rwp =>,
     required => 1,
   );
 
 
   has code => (
-    isa      => \&_tc_coderef,
-    is       => rwp =>,
+    isa      => CodeRef =>,
+    is       => rwp     =>,
     required => 1,
+    traits   => ['Code'],
+    handles  => {
+      get_assoc => execute_method =>,
+    },
   );
 
-
-  sub run {
-    my ( $self, $sa, $key ) = @_;
-    _croak('->run(x,y), x should be a ref') if not ref $sa;
-    $self->code->( $sa, $key );
-  }
-
-  no Moo;
+  with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
+  __PACKAGE__->meta->make_immutable;
 
 
   sub linear_wrap {
-    _warn_nonmethod( $_[0], __PACKAGE__, 'linear_wrap' );
-    return __PACKAGE__->new(
-      name => 'linear_wrap',
-      code => sub {
-        my ( $self, ) = @_;
-        return $self->_items_cache_shift;
-      }
-    );
+    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'linear_wrap' ) ) {
+      unshift @_, __PACKAGE__;
+    }
+    my ( $class, @args ) = @_;
+    require Set::Associate::NewKey::LinearWrap;
+
+    return Set::Associate::NewKey::LinearWrap->new(@args);
   }
 
 
   sub random_pick {
-    _warn_nonmethod( $_[0], __PACKAGE__, 'random_pick' );
-
-    return __PACKAGE__->new(
-      name => 'random_pick',
-      code => sub {
-        my ( $self, ) = @_;
-        return $self->_items_cache_get( int( rand( $self->_items_cache_count ) ) );
-      }
-    );
+    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'random_pick' ) ) {
+      unshift @_, __PACKAGE__;
+    }
+    my ( $class, @args ) = @_;
+    require Set::Associate::NewKey::RandomPick;
+    return Set::Associate::NewKey::RandomPick->new(@args);
   }
 
 
   sub pick_offset {
-    _warn_nonmethod( $_[0], __PACKAGE__, 'pick_offset' );
-
-    return __PACKAGE__->new(
-      name => 'pick_offset',
-      code => sub {
-        my ( $self, $offset ) = @_;
-        use bigint;
-        return $self->_items_cache_get( $offset % $self->_items_cache_count );
-      }
-    );
+    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'pick_offset' ) ) {
+      unshift @_, __PACKAGE__;
+    }
+    my ( $class, @args ) = @_;
+    require Set::Associate::NewKey::PickOffset;
+    return Set::Associate::NewKey::PickOffset->new(@args);
   }
 
 
@@ -89,16 +79,9 @@ BEGIN {
     if ( _warn_nonmethod( $_[0], __PACKAGE__, 'hash_sha1' ) ) {
       unshift @_, __PACKAGE__;
     }
-    require Digest::SHA1;
-    my $pick_offset = $_[0]->pick_offset();
-    return __PACKAGE__->new(
-      name => 'hash_sha1',
-      code => sub {
-        my ( $self, $key ) = @_;
-        use bigint;
-        return $pick_offset->run( $self, hex Digest::SHA1::sha1_hex($key) );
-      }
-    );
+    my ( $class, @args ) = @_;
+    require Set::Associate::NewKey::HashSHA1;
+    return Set::Associate::NewKey::HashSHA1->new(@args);
   }
 
 
@@ -106,16 +89,9 @@ BEGIN {
     if ( _warn_nonmethod( $_[0], __PACKAGE__, 'hash_md5' ) ) {
       unshift @_, __PACKAGE__;
     }
-    require Digest::MD5;
-    my $pick_offset = $_[0]->pick_offset();
-    return __PACKAGE__->new(
-      name => 'hash_md5',
-      code => sub {
-        my ( $self, $key ) = @_;
-        use bigint;
-        return $pick_offset->run( $self, hex Digest::MD5::md5_hex($key) );
-      }
-    );
+    my ( $class, @args ) = @_;
+    require Set::Associate::NewKey::HashMD5;
+    return Set::Associate::NewKey::HashMD5->new(@args);
   }
 };
 
@@ -133,15 +109,15 @@ Set::Associate::NewKey - New Key assignment methods
 
 =head1 VERSION
 
-version 0.002000
+version 0.003000
 
 =head1 DESCRIPTION
 
 This class implements the mechanism which controls how the values are assigned to 'new' keys.
 
-The part you're mostly interested in are the L</CLASS METHODS>, which return the right populator.
+The part you're mostly interested in are the L</CLASS METHODS>, which return the right assignment method.
 
-This is more or less a wrapper for passing around subs with an implict interface.
+This is more or less a wrapper for passing around subs with an implicit interface.
 
     my $assigner = Set::Associate::NewKey->new(
         name => 'linear_wrap',
@@ -214,9 +190,9 @@ or alternatively
 
 =head2 hash_sha1
 
-B<requires bigint support>
+B<requires C<bigint> support>
 
-Determines the offset for L</pick_offset> from taking the numeric value of the SHA1 hash of the given string
+Determines the offset for L</pick_offset> from taking the numeric value of the C<SHA1> hash of the given string
 
     my $sa = Set::Associate->new(
         ...
@@ -230,7 +206,7 @@ or alternatively
 
 =head2 hash_md5
 
-B<requires bigint support>
+B<requires C<bigint> support>
 
 Determines the offset for L</pick_offset> from taking the numeric value of the MD5 hash of the given string
 
@@ -243,16 +219,6 @@ or alternatively
 
     my $code = Set::Associate::NewKey->hash_md5();
     my $newval = $code->run( $set, "Some String" );
-
-=head1 METHODS
-
-=head2 run
-
-runs code attached via L</code>
-
-    my $value = $object->run( $set_associate_object , $key );
-
-And C<$value> is the newly formed associaiton value.
 
 =head1 ATTRIBUTES
 
