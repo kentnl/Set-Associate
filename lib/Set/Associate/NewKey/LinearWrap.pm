@@ -2,14 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::NewKey::LinearWrap {
-BEGIN {
-  $Set::Associate::NewKey::LinearWrap::AUTHORITY = 'cpan:KENTNL';
-}
-
-{
-  $Set::Associate::NewKey::LinearWrap::VERSION = '0.003000';
-}
-
 
   # ABSTRACT: destructively empty the supply pool from the left hand end to give associations.
   use Moose;
@@ -27,6 +19,12 @@ BEGIN {
 
   __PACKAGE__->meta->make_immutable;
 };
+BEGIN {
+  $Set::Associate::NewKey::LinearWrap::AUTHORITY = 'cpan:KENTNL';
+}
+{
+  $Set::Associate::NewKey::LinearWrap::VERSION = '0.003001';
+}
 
 1;
 
@@ -42,7 +40,7 @@ Set::Associate::NewKey::LinearWrap - destructively empty the supply pool from th
 
 =head1 VERSION
 
-version 0.003000
+version 0.003001
 
 =head1 METHODS
 

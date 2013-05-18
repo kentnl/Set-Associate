@@ -2,14 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::RefillItems {
-BEGIN {
-  $Set::Associate::RefillItems::AUTHORITY = 'cpan:KENTNL';
-}
-
-{
-  $Set::Associate::RefillItems::VERSION = '0.003000';
-}
-
 
   # ABSTRACT: Pool re-population methods
   use Moose;
@@ -67,6 +59,12 @@ BEGIN {
     return Set::Associate::RefillItems::Shuffle->new(@args);
   }
 };
+BEGIN {
+  $Set::Associate::RefillItems::AUTHORITY = 'cpan:KENTNL';
+}
+{
+  $Set::Associate::RefillItems::VERSION = '0.003001';
+}
 
 1;
 
@@ -82,7 +80,7 @@ Set::Associate::RefillItems - Pool re-population methods
 
 =head1 VERSION
 
-version 0.003000
+version 0.003001
 
 =head1 DESCRIPTION
 

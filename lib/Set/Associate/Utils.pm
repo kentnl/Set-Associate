@@ -2,14 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::Utils {
-BEGIN {
-  $Set::Associate::Utils::AUTHORITY = 'cpan:KENTNL';
-}
-
-{
-  $Set::Associate::Utils::VERSION = '0.003000';
-}
-
 
   # ABSTRACT: Shared Guts between Set::Associate modules
 
@@ -37,6 +29,12 @@ BEGIN {
   }
 
 };
+BEGIN {
+  $Set::Associate::Utils::AUTHORITY = 'cpan:KENTNL';
+}
+{
+  $Set::Associate::Utils::VERSION = '0.003001';
+}
 
 1;
 
@@ -52,7 +50,7 @@ Set::Associate::Utils - Shared Guts between Set::Associate modules
 
 =head1 VERSION
 
-version 0.003000
+version 0.003001
 
 =head1 AUTHOR
 

@@ -2,14 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::NewKey::HashSHA1 {
-BEGIN {
-  $Set::Associate::NewKey::HashSHA1::AUTHORITY = 'cpan:KENTNL';
-}
-
-{
-  $Set::Associate::NewKey::HashSHA1::VERSION = '0.003000';
-}
-
 
   # ABSTRACT: Pick a value from the pool based on the C<SHA1> value of the key
 
@@ -28,6 +20,12 @@ BEGIN {
 
   __PACKAGE__->meta->make_immutable;
 };
+BEGIN {
+  $Set::Associate::NewKey::HashSHA1::AUTHORITY = 'cpan:KENTNL';
+}
+{
+  $Set::Associate::NewKey::HashSHA1::VERSION = '0.003001';
+}
 
 1;
 
@@ -43,7 +41,7 @@ Set::Associate::NewKey::HashSHA1 - Pick a value from the pool based on the C<SHA
 
 =head1 VERSION
 
-version 0.003000
+version 0.003001
 
 =head1 METHODS
 

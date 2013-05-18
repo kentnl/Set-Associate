@@ -2,14 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::NewKey::PickOffset {
-BEGIN {
-  $Set::Associate::NewKey::PickOffset::AUTHORITY = 'cpan:KENTNL';
-}
-
-{
-  $Set::Associate::NewKey::PickOffset::VERSION = '0.003000';
-}
-
 
   # ABSTRACT: Associate a key with a value from a pool based on the keys value as a numeric offset.
 
@@ -29,6 +21,12 @@ BEGIN {
 
   __PACKAGE__->meta->make_immutable;
 };
+BEGIN {
+  $Set::Associate::NewKey::PickOffset::AUTHORITY = 'cpan:KENTNL';
+}
+{
+  $Set::Associate::NewKey::PickOffset::VERSION = '0.003001';
+}
 
 1;
 
@@ -44,7 +42,7 @@ Set::Associate::NewKey::PickOffset - Associate a key with a value from a pool ba
 
 =head1 VERSION
 
-version 0.003000
+version 0.003001
 
 =head1 METHODS
 

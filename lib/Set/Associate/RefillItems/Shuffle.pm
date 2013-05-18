@@ -2,14 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::RefillItems::Shuffle {
-BEGIN {
-  $Set::Associate::RefillItems::Shuffle::AUTHORITY = 'cpan:KENTNL';
-}
-
-{
-  $Set::Associate::RefillItems::Shuffle::VERSION = '0.003000';
-}
-
 
   # ABSTRACT: a refill method that replenishes the cache with a shuffled list
 
@@ -30,6 +22,12 @@ BEGIN {
 
   __PACKAGE__->meta->make_immutable;
 };
+BEGIN {
+  $Set::Associate::RefillItems::Shuffle::AUTHORITY = 'cpan:KENTNL';
+}
+{
+  $Set::Associate::RefillItems::Shuffle::VERSION = '0.003001';
+}
 
 1;
 
@@ -45,7 +43,7 @@ Set::Associate::RefillItems::Shuffle - a refill method that replenishes the cach
 
 =head1 VERSION
 
-version 0.003000
+version 0.003001
 
 =head1 CONSTRUCTOR ARGUMENTS
 

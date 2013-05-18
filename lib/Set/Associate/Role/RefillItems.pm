@@ -2,14 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::Role::RefillItems {
-BEGIN {
-  $Set::Associate::Role::RefillItems::AUTHORITY = 'cpan:KENTNL';
-}
-
-{
-  $Set::Associate::Role::RefillItems::VERSION = '0.003000';
-}
-
 
   # ABSTRACT: A data provider for Set::Associate
   use strict;
@@ -51,6 +43,12 @@ BEGIN {
 
   }
 };
+BEGIN {
+  $Set::Associate::Role::RefillItems::AUTHORITY = 'cpan:KENTNL';
+}
+{
+  $Set::Associate::Role::RefillItems::VERSION = '0.003001';
+}
 
 1;
 
@@ -66,7 +64,7 @@ Set::Associate::Role::RefillItems - A data provider for Set::Associate
 
 =head1 VERSION
 
-version 0.003000
+version 0.003001
 
 =head1 AUTHOR
 

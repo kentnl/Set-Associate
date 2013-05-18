@@ -2,14 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::NewKey::RandomPick {
-BEGIN {
-  $Set::Associate::NewKey::RandomPick::AUTHORITY = 'cpan:KENTNL';
-}
-
-{
-  $Set::Associate::NewKey::RandomPick::VERSION = '0.003000';
-}
-
 
   # ABSTRACT: Associate a key by randomly picking from a pool
 
@@ -28,6 +20,12 @@ BEGIN {
 
   __PACKAGE__->meta->make_immutable;
 };
+BEGIN {
+  $Set::Associate::NewKey::RandomPick::AUTHORITY = 'cpan:KENTNL';
+}
+{
+  $Set::Associate::NewKey::RandomPick::VERSION = '0.003001';
+}
 
 1;
 
@@ -43,7 +41,7 @@ Set::Associate::NewKey::RandomPick - Associate a key by randomly picking from a 
 
 =head1 VERSION
 
-version 0.003000
+version 0.003001
 
 =head1 METHODS
 

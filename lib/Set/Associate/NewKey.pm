@@ -2,14 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::NewKey {
-BEGIN {
-  $Set::Associate::NewKey::AUTHORITY = 'cpan:KENTNL';
-}
-
-{
-  $Set::Associate::NewKey::VERSION = '0.003000';
-}
-
 
   # ABSTRACT: New Key assignment methods
 
@@ -94,6 +86,12 @@ BEGIN {
     return Set::Associate::NewKey::HashMD5->new(@args);
   }
 };
+BEGIN {
+  $Set::Associate::NewKey::AUTHORITY = 'cpan:KENTNL';
+}
+{
+  $Set::Associate::NewKey::VERSION = '0.003001';
+}
 
 1;
 
@@ -109,7 +107,7 @@ Set::Associate::NewKey - New Key assignment methods
 
 =head1 VERSION
 
-version 0.003000
+version 0.003001
 
 =head1 DESCRIPTION
 

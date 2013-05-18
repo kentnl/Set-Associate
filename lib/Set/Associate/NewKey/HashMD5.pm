@@ -2,14 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::NewKey::HashMD5 {
-BEGIN {
-  $Set::Associate::NewKey::HashMD5::AUTHORITY = 'cpan:KENTNL';
-}
-
-{
-  $Set::Associate::NewKey::HashMD5::VERSION = '0.003000';
-}
-
 
   # ABSTRACT: Pick a value from the pool based on the MD5 value of the key
 
@@ -28,6 +20,12 @@ BEGIN {
 
   __PACKAGE__->meta->make_immutable;
 };
+BEGIN {
+  $Set::Associate::NewKey::HashMD5::AUTHORITY = 'cpan:KENTNL';
+}
+{
+  $Set::Associate::NewKey::HashMD5::VERSION = '0.003001';
+}
 
 1;
 
@@ -43,7 +41,7 @@ Set::Associate::NewKey::HashMD5 - Pick a value from the pool based on the MD5 va
 
 =head1 VERSION
 
-version 0.003000
+version 0.003001
 
 =head1 METHODS
 

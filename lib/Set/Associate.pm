@@ -2,14 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate {
-BEGIN {
-  $Set::Associate::AUTHORITY = 'cpan:KENTNL';
-}
-
-{
-  $Set::Associate::VERSION = '0.003000';
-}
-
 
   # ABSTRACT: Pick items from a data set associatively
 
@@ -101,6 +93,12 @@ BEGIN {
   __PACKAGE__->meta->make_immutable;
 
 };
+BEGIN {
+  $Set::Associate::AUTHORITY = 'cpan:KENTNL';
+}
+{
+  $Set::Associate::VERSION = '0.003001';
+}
 
 1;
 
@@ -116,7 +114,7 @@ Set::Associate - Pick items from a data set associatively
 
 =head1 VERSION
 
-version 0.003000
+version 0.003001
 
 =head1 DESCRIPTION
 

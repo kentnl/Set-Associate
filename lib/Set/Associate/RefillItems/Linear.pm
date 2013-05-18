@@ -2,14 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::RefillItems::Linear {
-BEGIN {
-  $Set::Associate::RefillItems::Linear::AUTHORITY = 'cpan:KENTNL';
-}
-
-{
-  $Set::Associate::RefillItems::Linear::VERSION = '0.003000';
-}
-
 
   # ABSTRACT: a refill method that replenishes the cache with a repeating set of items
   use Moose;
@@ -27,6 +19,12 @@ BEGIN {
 
   __PACKAGE__->meta->make_immutable;
 };
+BEGIN {
+  $Set::Associate::RefillItems::Linear::AUTHORITY = 'cpan:KENTNL';
+}
+{
+  $Set::Associate::RefillItems::Linear::VERSION = '0.003001';
+}
 
 1;
 
@@ -42,7 +40,7 @@ Set::Associate::RefillItems::Linear - a refill method that replenishes the cache
 
 =head1 VERSION
 
-version 0.003000
+version 0.003001
 
 =head1 CONSTRUCTOR ARGUMENTS
 
