@@ -10,6 +10,11 @@ our $VERSION = '0.004000';
 
 # AUTHORITY
 
+require Exporter;
+*import = \&Exporter::import;    ## no critic (ProhibitCallsToUnexportedSubs)
+
+our @EXPORT_OK = qw( _warn_nonmethod );
+
 sub _carp {
   require Carp;
   goto \&Carp::carp;
@@ -20,6 +25,7 @@ sub _blessed {
   goto \&Scalar::Util::blessed;
 }
 
+## no critic (RequireArgUnpacking)
 sub _warn_nonmethod {
   if ( defined $_[0] and not ref $_[0] ) {
     return if $_[0]->isa( $_[1] );

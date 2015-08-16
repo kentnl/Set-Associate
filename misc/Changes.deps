@@ -5,6 +5,9 @@ This file contains changes in REQUIRED dependencies for standard CPAN phases (co
  - ExtUtils::MakeMaker
  - perl 5.006
 
+ [Added / runtime requires]
+ - Exporter
+
  [Added / test requires]
  - ExtUtils::MakeMaker
  - File::Spec
