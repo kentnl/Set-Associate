@@ -23,24 +23,6 @@ around BUILDARGS => sub {
   return $result;
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 has _items_cache => (
   isa     => 'ArrayRef',
   is      => rwp =>,
@@ -55,31 +37,6 @@ has _items_cache => (
     _items_cache_get   => get      =>,
   },
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 has _association_cache => (
   isa     => 'HashRef',
@@ -342,51 +299,6 @@ Generates an association automatically.
     my $object = $sa->on_new_key();
     say "Running new key mechanism " . $object->name;
     my $value = $object->run( $sa, $key );
-
-=head1 PRIVATE CONSTRUCTOR ARGUMENTS
-
-=head2 _items_cache
-
-    lazy ArrayRef[ Any ] = [ ]
-
-=head2 _association_cache
-
-    lazy HashRef[ Any ] = { }
-
-=head1 PRIVATE METHODS
-
-=head2 _items_cache_empty
-
-=head2 _items_cache_shift
-
-=head2 _items_cache_push
-
-=head2 _items_cache_count
-
-=head2 _items_cache_get
-
-=head2 _association_cache_has
-
-    if ( $sa->_assocition_cache_has( $key ) ){
-        return $sa->_association_cache_get( $key );
-    }
-
-=head2 _association_cache_get
-
-    my $assocval = $sa->_association_cache_get( $key );
-
-=head2 _association_cache_set
-
-    $sa->_association_cache_set( $key, $assocval );
-
-=head1 PRIVATE ATTRIBUTES
-
-=head2 _items_cache
-
-=head2 _association_cache
-
-    my $cache = $sa->_association_cache();
-    $cache->{ $key } = $value;
 
 =head1 AUTHOR
 
