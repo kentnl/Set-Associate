@@ -3,8 +3,12 @@ use strict;
 use warnings;
 
 package Set::Associate::NewKey::RandomPick;
-$Set::Associate::NewKey::RandomPick::VERSION = '0.003001';
+
 # ABSTRACT: Associate a key by randomly picking from a pool
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
 use Moose;
 
@@ -49,7 +53,7 @@ Set::Associate::NewKey::RandomPick - Associate a key by randomly picking from a 
 
 =head1 VERSION
 
-version 0.003001
+version 0.004000
 
 =head1 METHODS
 

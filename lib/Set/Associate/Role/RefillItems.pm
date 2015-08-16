@@ -3,8 +3,12 @@ use strict;
 use warnings;
 
 package Set::Associate::Role::RefillItems;
-$Set::Associate::Role::RefillItems::VERSION = '0.003001';
+
 # ABSTRACT: A data provider for Set::Associate
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
 use MooseX::Role::Parameterized;
 
@@ -58,7 +62,7 @@ Set::Associate::Role::RefillItems - A data provider for Set::Associate
 
 =head1 VERSION
 
-version 0.003001
+version 0.004000
 
 =head1 AUTHOR
 

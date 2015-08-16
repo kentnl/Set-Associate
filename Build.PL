@@ -19,7 +19,7 @@ my %module_build_args = (
     "Kent Fredric <kentnl\@cpan.org>"
   ],
   "dist_name" => "Set-Associate",
-  "dist_version" => "0.003001",
+  "dist_version" => "0.004000",
   "license" => "perl",
   "module_name" => "Set::Associate",
   "recommends" => {

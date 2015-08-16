@@ -3,8 +3,12 @@ use strict;
 use warnings;
 
 package Set::Associate::NewKey;
-$Set::Associate::NewKey::VERSION = '0.003001';
+
 # ABSTRACT: New Key assignment methods
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
 
 
@@ -220,7 +224,7 @@ Set::Associate::NewKey - New Key assignment methods
 
 =head1 VERSION
 
-version 0.003001
+version 0.004000
 
 =head1 DESCRIPTION
 

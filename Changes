@@ -1,6 +1,6 @@
 Release history for Set-Associate
 
-0.003001 2015-08-16T10:27:55Z 4189f60
+0.004000 2015-08-16T10:27:55Z 4189f60
  [Dependencies::Stats]
  - Dependencies changed since 0.003000, see misc/*.deps* for details
  - build: ↑1

@@ -3,8 +3,12 @@ use strict;
 use warnings;
 
 package Set::Associate::NewKey::HashSHA1;
-$Set::Associate::NewKey::HashSHA1::VERSION = '0.003001';
+
 # ABSTRACT: Pick a value from the pool based on the C<SHA1> value of the key
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
 use Moose;
 use Digest::SHA1;
@@ -40,7 +44,7 @@ Set::Associate::NewKey::HashSHA1 - Pick a value from the pool based on the C<SHA
 
 =head1 VERSION
 
-version 0.003001
+version 0.004000
 
 =head1 METHODS
 

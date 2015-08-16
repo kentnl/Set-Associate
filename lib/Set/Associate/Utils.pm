@@ -3,8 +3,12 @@ use strict;
 use warnings;
 
 package Set::Associate::Utils;
-$Set::Associate::Utils::VERSION = '0.003001';
+
 # ABSTRACT: Shared Guts between Set::Associate modules
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
 sub _carp {
   require Carp;
@@ -41,7 +45,7 @@ Set::Associate::Utils - Shared Guts between Set::Associate modules
 
 =head1 VERSION
 
-version 0.003001
+version 0.004000
 
 =head1 AUTHOR
 

@@ -3,8 +3,12 @@ use strict;
 use warnings;
 
 package Set::Associate::NewKey::HashMD5;
-$Set::Associate::NewKey::HashMD5::VERSION = '0.003001';
+
 # ABSTRACT: Pick a value from the pool based on the MD5 value of the key
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
 use Moose;
 use Digest::MD5;
@@ -40,7 +44,7 @@ Set::Associate::NewKey::HashMD5 - Pick a value from the pool based on the MD5 va
 
 =head1 VERSION
 
-version 0.003001
+version 0.004000
 
 =head1 METHODS
 

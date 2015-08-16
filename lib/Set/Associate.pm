@@ -3,8 +3,12 @@ use strict;
 use warnings;
 
 package Set::Associate;
-$Set::Associate::VERSION = '0.003001';
+
 # ABSTRACT: Pick items from a data set associatively
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
 
 
@@ -279,7 +283,7 @@ Set::Associate - Pick items from a data set associatively
 
 =head1 VERSION
 
-version 0.003001
+version 0.004000
 
 =head1 DESCRIPTION
 

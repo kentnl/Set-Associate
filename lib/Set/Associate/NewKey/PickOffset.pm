@@ -3,8 +3,12 @@ use strict;
 use warnings;
 
 package Set::Associate::NewKey::PickOffset;
-$Set::Associate::NewKey::PickOffset::VERSION = '0.003001';
+
 # ABSTRACT: Associate a key with a value from a pool based on the keys value as a numeric offset.
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
 use Moose;
 
@@ -50,7 +54,7 @@ Set::Associate::NewKey::PickOffset - Associate a key with a value from a pool ba
 
 =head1 VERSION
 
-version 0.003001
+version 0.004000
 
 =head1 METHODS
 

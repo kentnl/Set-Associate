@@ -3,8 +3,13 @@ use strict;
 use warnings;
 
 package Set::Associate::Role::NewKey;
-$Set::Associate::Role::NewKey::VERSION = '0.003001';
+
 # ABSTRACT: A Key Association methodology for Set::Associate
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
+
 use MooseX::Role::Parameterized;
 
 parameter can_get_next => (
@@ -47,7 +52,7 @@ Set::Associate::Role::NewKey - A Key Association methodology for Set::Associate
 
 =head1 VERSION
 
-version 0.003001
+version 0.004000
 
 =head1 AUTHOR
 

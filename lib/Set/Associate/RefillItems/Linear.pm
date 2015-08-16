@@ -3,8 +3,13 @@ use strict;
 use warnings;
 
 package Set::Associate::RefillItems::Linear;
-$Set::Associate::RefillItems::Linear::VERSION = '0.003001';
+
 # ABSTRACT: a refill method that replenishes the cache with a repeating set of items
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
+
 use Moose;
 
 with 'Set::Associate::Role::RefillItems' => { can_get_all => 1 };
@@ -51,7 +56,7 @@ Set::Associate::RefillItems::Linear - a refill method that replenishes the cache
 
 =head1 VERSION
 
-version 0.003001
+version 0.004000
 
 =head1 CONSTRUCTOR ARGUMENTS
 

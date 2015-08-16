@@ -3,8 +3,13 @@ use strict;
 use warnings;
 
 package Set::Associate::NewKey::LinearWrap;
-$Set::Associate::NewKey::LinearWrap::VERSION = '0.003001';
+
 # ABSTRACT: destructively empty the supply pool from the left hand end to give associations.
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
+
 use Moose;
 
 with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
@@ -48,7 +53,7 @@ Set::Associate::NewKey::LinearWrap - destructively empty the supply pool from th
 
 =head1 VERSION
 
-version 0.003001
+version 0.004000
 
 =head1 METHODS
 

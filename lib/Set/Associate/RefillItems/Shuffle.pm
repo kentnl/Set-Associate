@@ -3,8 +3,12 @@ use strict;
 use warnings;
 
 package Set::Associate::RefillItems::Shuffle;
-$Set::Associate::RefillItems::Shuffle::VERSION = '0.003001';
+
 # ABSTRACT: a refill method that replenishes the cache with a shuffled list
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
 use Moose;
 
@@ -54,7 +58,7 @@ Set::Associate::RefillItems::Shuffle - a refill method that replenishes the cach
 
 =head1 VERSION
 
-version 0.003001
+version 0.004000
 
 =head1 CONSTRUCTOR ARGUMENTS
 
