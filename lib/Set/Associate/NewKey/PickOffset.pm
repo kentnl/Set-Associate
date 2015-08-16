@@ -37,9 +37,8 @@ B<Note:> C<$new_key> is automatically modulo  of the length of C<$set_assoc>, so
 =cut
 
 sub get_assoc {
-  my ( $self, $sa, $key ) = @_;
   use bigint;
-  return $sa->_items_cache_get( $key % $sa->_items_cache_count );
+  return $_[1]->_items_cache_get( $_[2] % $_[1]->_items_cache_count );
 }
 
 1;

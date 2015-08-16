@@ -71,13 +71,9 @@ or alternatively
 =cut
 
 sub linear_wrap {
-  if ( _warn_nonmethod( $_[0], __PACKAGE__, 'linear_wrap' ) ) {
-    unshift @_, __PACKAGE__;
-  }
-  my ( $class, @args ) = @_;
+  shift @_ unless _warn_nonmethod( $_[0], __PACKAGE__, 'linear_wrap' );
   require Set::Associate::NewKey::LinearWrap;
-
-  return Set::Associate::NewKey::LinearWrap->new(@args);
+  return Set::Associate::NewKey::LinearWrap->new(@_);
 }
 
 =cmethod random_pick
@@ -97,12 +93,9 @@ or alternatively
 =cut
 
 sub random_pick {
-  if ( _warn_nonmethod( $_[0], __PACKAGE__, 'random_pick' ) ) {
-    unshift @_, __PACKAGE__;
-  }
-  my ( $class, @args ) = @_;
+  shift @_ unless _warn_nonmethod( $_[0], __PACKAGE__, 'random_pick' );
   require Set::Associate::NewKey::RandomPick;
-  return Set::Associate::NewKey::RandomPick->new(@args);
+  return Set::Associate::NewKey::RandomPick->new(@_);
 }
 
 =cmethod pick_offset
@@ -128,12 +121,9 @@ or alternatively
 =cut
 
 sub pick_offset {
-  if ( _warn_nonmethod( $_[0], __PACKAGE__, 'pick_offset' ) ) {
-    unshift @_, __PACKAGE__;
-  }
-  my ( $class, @args ) = @_;
+  shift @_ unless _warn_nonmethod( $_[0], __PACKAGE__, 'pick_offset' );
   require Set::Associate::NewKey::PickOffset;
-  return Set::Associate::NewKey::PickOffset->new(@args);
+  return Set::Associate::NewKey::PickOffset->new(@_);
 }
 
 =cmethod hash_sha1
@@ -155,12 +145,9 @@ or alternatively
 =cut
 
 sub hash_sha1 {
-  if ( _warn_nonmethod( $_[0], __PACKAGE__, 'hash_sha1' ) ) {
-    unshift @_, __PACKAGE__;
-  }
-  my ( $class, @args ) = @_;
+  shift @_ unless _warn_nonmethod( $_[0], __PACKAGE__, 'hash_sha1' );
   require Set::Associate::NewKey::HashSHA1;
-  return Set::Associate::NewKey::HashSHA1->new(@args);
+  return Set::Associate::NewKey::HashSHA1->new(@_);
 }
 
 =cmethod hash_md5
@@ -182,12 +169,9 @@ or alternatively
 =cut
 
 sub hash_md5 {
-  if ( _warn_nonmethod( $_[0], __PACKAGE__, 'hash_md5' ) ) {
-    unshift @_, __PACKAGE__;
-  }
-  my ( $class, @args ) = @_;
+  shift @_ unless _warn_nonmethod( $_[0], __PACKAGE__, 'hash_md5' );
   require Set::Associate::NewKey::HashMD5;
-  return Set::Associate::NewKey::HashMD5->new(@args);
+  return Set::Associate::NewKey::HashMD5->new(@_);
 }
 
 1;

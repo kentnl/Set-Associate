@@ -37,8 +37,7 @@ C<$new_key> is ignored with this method.
 =cut
 
 sub get_assoc {
-  my ( $self, $sa, $key ) = @_;
-  return $sa->_items_cache_get( int( rand( $sa->_items_cache_count ) ) );
+  return $_[1]->_items_cache_get( int( rand( $_[1]->_items_cache_count ) ) );
 }
 
 1;
