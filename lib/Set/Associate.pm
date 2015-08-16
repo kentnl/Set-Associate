@@ -10,33 +10,6 @@ our $VERSION = '0.004000';
 
 # AUTHORITY
 
-=head1 IMPLEMENTATION DETAILS
-
-There are 2 Main phases that occur within this code
-
-=over 4
-
-=item * pool population
-
-=item * pool selection
-
-=back
-
-=cut
-
-=head2 Pool Population
-
-The pool of available options ( C<_items_cache> ) is initialized as an empty list, and every time the pool is being detected as empty ( C<_items_cache_empty> ), the C<on_items_empty> method is called ( C<run_on_items_empty> ) and the results are pushed into the pool.
-
-=head2 Pool Selection
-
-Pool selection can either be cherry-pick based, where the pool doesn't shrink, or can be destructive, so that the pool population phase is triggered to replenish the supply of items only when all values have been exhausted.
-
-The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s the first item off the queue, allowing the queue to be exhausted and requiring pool population to occur periodically to regenerate the source list.
-
-
-=cut
-
 use Carp qw( croak );
 use Moose;
 use MooseX::AttributeShortcuts;
@@ -269,3 +242,29 @@ Alternatively, you could use 1 of 2 random forms:
             items => [qw( red blue yellow )],
         ),
     );
+
+=head1 IMPLEMENTATION DETAILS
+
+There are 2 Main phases that occur within this code
+
+=over 4
+
+=item * pool population
+
+=item * pool selection
+
+=back
+
+=cut
+
+=head2 Pool Population
+
+The pool of available options ( C<_items_cache> ) is initialized as an empty list, and every time the pool is being detected as empty ( C<_items_cache_empty> ), the C<on_items_empty> method is called ( C<run_on_items_empty> ) and the results are pushed into the pool.
+
+=head2 Pool Selection
+
+Pool selection can either be cherry-pick based, where the pool doesn't shrink, or can be destructive, so that the pool population phase is triggered to replenish the supply of items only when all values have been exhausted.
+
+The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s the first item off the queue, allowing the queue to be exhausted and requiring pool population to occur periodically to regenerate the source list.
+
+=cut
