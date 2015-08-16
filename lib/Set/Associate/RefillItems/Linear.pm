@@ -10,7 +10,7 @@ our $VERSION = '0.004000';
 
 our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
-use Moose;
+use Moose qw( with has );
 
 with 'Set::Associate::Role::RefillItems' => { can_get_all => 1 };
 
@@ -23,6 +23,10 @@ with 'Set::Associate::Role::RefillItems' => { can_get_all => 1 };
 
 
 has items => ( isa => 'ArrayRef', is => 'rw', required => 1 );
+
+__PACKAGE__->meta->make_immutable;
+
+no Moose;
 
 
 
@@ -39,8 +43,6 @@ sub name { 'linear' }
 
 
 sub get_all { return @{ $_[0]->items } }
-
-__PACKAGE__->meta->make_immutable;
 
 1;
 

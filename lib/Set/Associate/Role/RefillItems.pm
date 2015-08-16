@@ -10,7 +10,7 @@ our $VERSION = '0.004000';
 
 our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
-use MooseX::Role::Parameterized;
+use MooseX::Role::Parameterized qw( parameter role requires );
 
 parameter can_get_next => (
   isa     => Bool =>,
@@ -47,6 +47,8 @@ role {
   }
 
 };
+
+no MooseX::Role::Parameterized;
 
 1;
 
