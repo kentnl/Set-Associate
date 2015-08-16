@@ -14,9 +14,7 @@ use Carp qw( croak );
 use Moose qw( has with );
 use MooseX::AttributeShortcuts;
 
-use Set::Associate::Utils;
-
-*_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
+use Set::Associate::Utils qw( _warn_nonmethod );
 
 
 

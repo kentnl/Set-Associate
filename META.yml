@@ -64,6 +64,7 @@ requires:
   Carp: '0'
   Digest::MD5: '0'
   Digest::SHA1: '0'
+  Exporter: '0'
   List::Util: '0'
   Moose: '0'
   MooseX::AttributeShortcuts: '0'
