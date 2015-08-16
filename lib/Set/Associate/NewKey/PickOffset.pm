@@ -68,7 +68,7 @@ B<Note:> C<$new_key> is automatically modulo  of the length of C<$set_assoc>, so
 
 =head1 AUTHOR
 
-Kent Fredric <kentfredric@gmail.com>
+Kent Fredric <kentnl@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 

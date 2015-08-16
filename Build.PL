@@ -16,7 +16,7 @@ my %module_build_args = (
   },
   "dist_abstract" => "Pick items from a data set associatively",
   "dist_author" => [
-    "Kent Fredric <kentfredric\@gmail.com>"
+    "Kent Fredric <kentnl\@cpan.org>"
   ],
   "dist_name" => "Set-Associate",
   "dist_version" => "0.003001",

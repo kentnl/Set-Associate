@@ -50,7 +50,7 @@ The name of this key assignment method ( C<hash_sha1> )
 
 =head1 AUTHOR
 
-Kent Fredric <kentfredric@gmail.com>
+Kent Fredric <kentnl@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
