@@ -3,12 +3,13 @@
 .mailmap
 .perltidyrc
 .travis.yml
-Build.PL
 Changes
+INSTALL.SKIP
 LICENSE
 MANIFEST
 META.json
 META.yml
+Makefile.PL
 README
 dist.ini
 dist.ini.meta
