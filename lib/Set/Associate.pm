@@ -11,7 +11,7 @@ our $VERSION = '0.004000';
 # AUTHORITY
 
 use Carp qw( croak );
-use Moose;
+use Moose qw( around has );
 use MooseX::AttributeShortcuts;
 
 around BUILDARGS => sub {
@@ -149,6 +149,9 @@ has on_new_key => (
   },
 );
 
+__PACKAGE__->meta->make_immutable;
+no Moose;
+
 sub run_on_new_key { $_[0]->on_new_key->get_assoc(@_) }
 
 =method associate
@@ -184,8 +187,6 @@ sub get_associated {
   $self->associate($key);
   return $self->_association_cache_get($key);
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;
 

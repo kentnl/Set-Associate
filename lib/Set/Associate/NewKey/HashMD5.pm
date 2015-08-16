@@ -10,7 +10,7 @@ our $VERSION = '0.004000';
 
 # AUTHORITY
 
-use Moose;
+use Moose qw( around extends );
 use Digest::MD5;
 extends 'Set::Associate::NewKey::PickOffset';
 
@@ -29,6 +29,8 @@ around get_assoc => sub {
 };
 
 __PACKAGE__->meta->make_immutable;
+
+no Moose;
 
 1;
 

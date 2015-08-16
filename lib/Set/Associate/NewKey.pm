@@ -11,7 +11,7 @@ our $VERSION = '0.004000';
 # AUTHORITY
 
 use Carp qw( croak );
-use Moose;
+use Moose qw( has with );
 use MooseX::AttributeShortcuts;
 
 use Set::Associate::Utils;
@@ -51,7 +51,9 @@ has code => (
 );
 
 with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
+
 __PACKAGE__->meta->make_immutable;
+no Moose;
 
 =cmethod linear_wrap
 
