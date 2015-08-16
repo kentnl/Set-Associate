@@ -23,24 +23,6 @@ around BUILDARGS => sub {
   return $result;
 };
 
-=pcarg _items_cache
-
-    lazy ArrayRef[ Any ] = [ ]
-
-=pattr _items_cache
-
-=pmethod _items_cache_empty
-
-=pmethod _items_cache_shift
-
-=pmethod _items_cache_push
-
-=pmethod _items_cache_count
-
-=pmethod _items_cache_get
-
-=cut
-
 has _items_cache => (
   isa     => 'ArrayRef',
   is      => rwp =>,
@@ -55,31 +37,6 @@ has _items_cache => (
     _items_cache_get   => get      =>,
   },
 );
-
-=pcarg _association_cache
-
-    lazy HashRef[ Any ] = { }
-
-=pattr _association_cache
-
-    my $cache = $sa->_association_cache();
-    $cache->{ $key } = $value;
-
-=pmethod _association_cache_has
-
-    if ( $sa->_assocition_cache_has( $key ) ){
-        return $sa->_association_cache_get( $key );
-    }
-
-=pmethod _association_cache_get
-
-    my $assocval = $sa->_association_cache_get( $key );
-
-=pmethod _association_cache_set
-
-    $sa->_association_cache_set( $key, $assocval );
-
-=cut
 
 has _association_cache => (
   isa     => 'HashRef',
