@@ -20,6 +20,8 @@ $bundle->configure;
 
 my @stopwords = (
   qw(
+    SHA1
+    associatively
     )
 );
 for my $wordlist (@stopwords) {
