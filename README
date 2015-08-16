@@ -46,7 +46,8 @@ Alternatively, you could use 1 of 2 random forms:
         on_new_key => Set::Associate::NewKey->random_pick,
     );
 
-    # Will exhaust the colour variation before giving out the same colour twice
+    # Will exhaust the colour variation before giving out the same colour
+    # twice
     my $set = Set::Associate->new(
         on_items_empty => Set::Associate::RefillItems->shuffle(
             items => [qw( red blue yellow )],

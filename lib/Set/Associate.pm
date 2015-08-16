@@ -206,11 +206,12 @@ version 0.004000
 
 =head1 DESCRIPTION
 
-Essentially, this is a simple toolkit to map an infinite-many items to a corresponding finite-many values,
-i.e: A nick coloring algorithm.
+Essentially, this is a simple toolkit to map an infinite-many items to a
+corresponding finite-many values, i.e: A nick coloring algorithm.
 
-The most simple usage of this code gives out values from C<items> sequentially, and remembers seen values
-and persists them within the scope of the program, i.e:
+The most simple usage of this code gives out values from C<items>
+sequentially, and remembers seen values and persists them within the scope of
+the program, i.e:
 
     my $set = Set::Associate->new(
         on_items_empty => Set::Associate::RefillItems->linear(
@@ -224,7 +225,8 @@ and persists them within the scope of the program, i.e:
     ...
     printf '<< %s >> %s', color_nick( $nick ), $message;
 
-And this is extensible to use some sort of persisting allocation method such as a hash
+And this is extensible to use some sort of persisting allocation method such
+as a hash
 
     my $set = Set::Associate->new(
         on_items_empty => Set::Associate::RefillItems->linear(
@@ -250,7 +252,8 @@ Alternatively, you could use 1 of 2 random forms:
         on_new_key => Set::Associate::NewKey->random_pick,
     );
 
-    # Will exhaust the colour variation before giving out the same colour twice
+    # Will exhaust the colour variation before giving out the same colour
+    # twice
     my $set = Set::Associate->new(
         on_items_empty => Set::Associate::RefillItems->shuffle(
             items => [qw( red blue yellow )],
@@ -271,13 +274,22 @@ There are 2 Main phases that occur within this code
 
 =head2 Pool Population
 
-The pool of available options ( C<_items_cache> ) is initialized as an empty list, and every time the pool is being detected as empty ( C<_items_cache_empty> ), the C<on_items_empty> method is called ( C<run_on_items_empty> ) and the results are pushed into the pool.
+The pool of available options ( C<_items_cache> ) is initialized as an empty
+list, and every time the pool is being detected as empty
+( C<_items_cache_empty> ), the C<on_items_empty> method is called
+( C<run_on_items_empty> ) and the results are pushed into the pool.
 
 =head2 Pool Selection
 
-Pool selection can either be cherry-pick based, where the pool doesn't shrink, or can be destructive, so that the pool population phase is triggered to replenish the supply of items only when all values have been exhausted.
+Pool selection can either be cherry-pick based, where the pool doesn't
+shrink, or can be destructive, so that the pool population phase is
+triggered to replenish the supply of items only when all values have been
+exhausted.
 
-The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s the first item off the queue, allowing the queue to be exhausted and requiring pool population to occur periodically to regenerate the source list.
+The L<< default implementation|Set::Associate::NewKey/linear_wrap >>
+C<shift>'s the first item off the queue, allowing the queue to be exhausted
+and requiring pool population to occur periodically to regenerate the source
+list.
 
 =head1 CONSTRUCTOR ARGUMENTS
 
