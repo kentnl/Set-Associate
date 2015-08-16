@@ -1,72 +1,134 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::RefillItems {
-BEGIN {
-  $Set::Associate::RefillItems::AUTHORITY = 'cpan:KENTNL';
+package Set::Associate::RefillItems;
+
+# ABSTRACT: Pool re-population methods
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
+
+use Moose qw( has with );
+use MooseX::AttributeShortcuts;
+
+use Set::Associate::Utils qw( _warn_nonmethod );
+
+
+
+
+
+
+
+
+
+has name => (
+  isa      => Str =>,
+  is       => rwp =>,
+  required => 1,
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+has code => (
+  isa      => CodeRef =>,
+  is       => rwp     =>,
+  required => 1,
+  traits   => ['Code'],
+  handles  => {
+    get_all => execute_method =>,
+  },
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+has items => (
+  isa       => ArrayRef  =>,
+  is        => rwp       =>,
+  predicate => has_items =>,
+);
+
+with 'Set::Associate::Role::RefillItems' => { can_get_all => 1, };
+
+__PACKAGE__->meta->make_immutable;
+
+no Moose;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sub linear {
+  shift @_ unless _warn_nonmethod( $_[0], __PACKAGE__, 'linear' );
+  require Set::Associate::RefillItems::Linear;
+  return Set::Associate::RefillItems::Linear->new(@_);
 }
 
-{
-  $Set::Associate::RefillItems::VERSION = '0.003000';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sub shuffle {
+  shift @_ unless _warn_nonmethod( $_[0], __PACKAGE__, 'shuffle' );
+  require Set::Associate::RefillItems::Shuffle;
+  return Set::Associate::RefillItems::Shuffle->new(@_);
 }
-
-
-  # ABSTRACT: Pool re-population methods
-  use Moose;
-  use MooseX::AttributeShortcuts;
-
-  use Set::Associate::Utils;
-  *_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
-
-
-  has name => (
-    isa      => Str =>,
-    is       => rwp =>,
-    required => 1,
-  );
-
-
-  has code => (
-    isa      => CodeRef =>,
-    is       => rwp     =>,
-    required => 1,
-    traits   => ['Code'],
-    handles  => {
-      get_all => execute_method =>,
-    },
-  );
-
-
-  has items => (
-    isa       => ArrayRef  =>,
-    is        => rwp       =>,
-    predicate => has_items =>,
-  );
-
-  with 'Set::Associate::Role::RefillItems' => { can_get_all => 1, };
-
-  __PACKAGE__->meta->make_immutable;
-
-
-  sub linear {
-    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'linear' ) ) {
-      unshift @_, __PACKAGE__;
-    }
-    my ( $class, @args ) = @_;
-    require Set::Associate::RefillItems::Linear;
-    return Set::Associate::RefillItems::Linear->new(@args);
-  }
-
-
-  sub shuffle {
-    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'shuffle' ) ) {
-      unshift @_, __PACKAGE__;
-    }
-    my ( $class, @args ) = @_;
-    require Set::Associate::RefillItems::Shuffle;
-    return Set::Associate::RefillItems::Shuffle->new(@args);
-  }
-};
 
 1;
 
@@ -74,7 +136,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -82,7 +144,7 @@ Set::Associate::RefillItems - Pool re-population methods
 
 =head1 VERSION
 
-version 0.003000
+version 0.004000
 
 =head1 DESCRIPTION
 
@@ -180,11 +242,11 @@ Predicate method for L</items>
 
 =head1 AUTHOR
 
-Kent Fredric <kentfredric@gmail.com>
+Kent Fredric <kentnl@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Kent Fredric <kentfredric@gmail.com>.
+This software is copyright (c) 2015 by Kent Fredric <kentfredric@gmail.com>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

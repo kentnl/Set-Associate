@@ -1,164 +1,80 @@
-NAME
-    Set::Associate - Pick items from a data set associatively
+Set::Associate
 
-VERSION
-    version 0.003000
+Essentially, this is a simple toolkit to map an infinite-many items to a
+corresponding finite-many values, i.e: A nick coloring algorithm.
 
-DESCRIPTION
-    Essentially, this is a simple toolkit to map an infinite-many items to a
-    corresponding finite-many values, i.e: A nick coloring algorithm.
+The most simple usage of this code gives out values from "items"
+sequentially, and remembers seen values and persists them within the
+scope of the program, i.e:
 
-    The most simple usage of this code gives out values from "items"
-    sequentially, and remembers seen values and persists them within the
-    scope of the program, i.e:
+    my $set = Set::Associate->new(
+        on_items_empty => Set::Associate::RefillItems->linear(
+            items => [qw( red blue yellow )],
+        ),
+    );
+    sub color_nick {
+        my $nick = shift;
+        return colorize( $nick, $set->get_associated( $nick );
+    }
+    ...
+    printf '<< %s >> %s', color_nick( $nick ), $message;
 
-        my $set = Set::Associate->new(
-            on_items_empty => Set::Associate::RefillItems->linear(
-                items => [qw( red blue yellow )],
-            ),
-        );
-        sub color_nick {
-            my $nick = shift;
-            return colorize( $nick, $set->get_associated( $nick );
-        }
-        ...
-        printf '<< %s >> %s', color_nick( $nick ), $message;
+And this is extensible to use some sort of persisting allocation method
+such as a hash
 
-    And this is extensible to use some sort of persisting allocation method
-    such as a hash
+    my $set = Set::Associate->new(
+        on_items_empty => Set::Associate::RefillItems->linear(
+            items => [qw( red blue yellow )],
+        ),
+        on_new_key => Set::Associate::NewKey->hash_sha1,
+    );
+    sub color_nick {
+        my $nick = shift;
+        return colorize( $nick, $set->get_associated( $nick );
+    }
+    ...
+    printf '<< %s >> %s', color_nick( $nick ), $message;
 
-        my $set = Set::Associate->new(
-            on_items_empty => Set::Associate::RefillItems->linear(
-                items => [qw( red blue yellow )],
-            ),
-            on_new_key => Set::Associate::NewKey->hash_sha1,
-        );
-        sub color_nick {
-            my $nick = shift;
-            return colorize( $nick, $set->get_associated( $nick );
-        }
-        ...
-        printf '<< %s >> %s', color_nick( $nick ), $message;
+Alternatively, you could use 1 of 2 random forms:
 
-    Alternatively, you could use 1 of 2 random forms:
+    # Can produce colour runs if you're unlucky
 
-        # Can produce colour runs if you're unlucky
+    my $set = Set::Associate->new(
+        on_items_empty => Set::Associate::RefillItems->linear(
+            items => [qw( red blue yellow )],
+        ),
+        on_new_key => Set::Associate::NewKey->random_pick,
+    );
 
-        my $set = Set::Associate->new(
-            on_items_empty => Set::Associate::RefillItems->linear(
-                items => [qw( red blue yellow )],
-            ),
-            on_new_key => Set::Associate::NewKey->random_pick,
-        );
+    # Will exhaust the colour variation before giving out the same colour
+    # twice
+    my $set = Set::Associate->new(
+        on_items_empty => Set::Associate::RefillItems->shuffle(
+            items => [qw( red blue yellow )],
+        ),
+    );
 
-        # Will exhaust the colour variation before giving out the same colour twice
-        my $set = Set::Associate->new(
-            on_items_empty => Set::Associate::RefillItems->shuffle(
-                items => [qw( red blue yellow )],
-            ),
-        );
+INSTALLATION
 
-IMPLEMENTATION DETAILS
-    There are 2 Main phases that occur within this code
+This is a Perl module distribution. It should be installed with whichever
+tool you use to manage your installation of Perl, e.g. any of
 
-    *   pool population
+  cpanm .
+  cpan  .
+  cpanp -i .
 
-    *   pool selection
+Consult http://www.cpan.org/modules/INSTALL.html for further instruction.
+Should you wish to install this module manually, the procedure is
 
-  Pool Population
-    The pool of available options ( "_items_cache" ) is initialized as an
-    empty list, and every time the pool is being detected as empty (
-    "_items_cache_empty" ), the "on_items_empty" method is called (
-    "run_on_items_empty" ) and the results are pushed into the pool.
-
-  Pool Selection
-    Pool selection can either be cherry-pick based, where the pool doesn't
-    shrink, or can be destructive, so that the pool population phase is
-    triggered to replenish the supply of items only when all values have
-    been exhausted.
-
-    The default implementation "shift"'s the first item off the queue,
-    allowing the queue to be exhausted and requiring pool population to
-    occur periodically to regenerate the source list.
-
-CONSTRUCTOR ARGUMENTS
-  on_items_empty
-        required Set::Associate::RefillItems
-
-  on_new_key
-        lazy Set::Associate::NewKey = Set::Associate::NewKey::linear_wrap
-
-METHODS
-  run_on_items_empty
-        if( not @items ){
-            push @items, $sa->run_on_items_empty();
-        }
-
-  run_on_new_key
-        if ( not exists $cache{$key} ){
-            $cache{$key} = $sa->run_on_new_key( $key );
-        }
-
-  associate
-        if( $object->associate( $key ) ) {
-            say "already cached";
-        } else {
-            say "new value"
-        }
-
-  get_associated
-    Generates an association automatically.
-
-        my $result = $object->get_associated( $key );
-
-ATTRIBUTES
-  on_items_empty
-        my $object = $sa->on_items_empty();
-        say "Running empty items mechanism " . $object->name;
-        push @items, $object->run( $sa  );
-
-  on_new_key
-        my $object = $sa->on_new_key();
-        say "Running new key mechanism " . $object->name;
-        my $value = $object->run( $sa, $key );
-
-PRIVATE CONSTRUCTOR ARGUMENTS
-  _items_cache
-        lazy ArrayRef[ Any ] = [ ]
-
-  _association_cache
-        lazy HashRef[ Any ] = { }
-
-PRIVATE METHODS
-  _items_cache_empty
-  _items_cache_shift
-  _items_cache_push
-  _items_cache_count
-  _items_cache_get
-  _association_cache_has
-        if ( $sa->_assocition_cache_has( $key ) ){
-            return $sa->_association_cache_get( $key );
-        }
-
-  _association_cache_get
-        my $assocval = $sa->_association_cache_get( $key );
-
-  _association_cache_set
-        $sa->_association_cache_set( $key, $assocval );
-
-PRIVATE ATTRIBUTES
-  _items_cache
-  _association_cache
-        my $cache = $sa->_association_cache();
-        $cache->{ $key } = $value;
-
-AUTHOR
-    Kent Fredric <kentfredric@gmail.com>
+  perl Makefile.PL
+  make
+  make test
+  make install
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2013 by Kent Fredric
-    <kentfredric@gmail.com>.
 
-    This is free software; you can redistribute it and/or modify it under
-    the same terms as the Perl 5 programming language system itself.
+This software is copyright (c) 2015 by Kent Fredric
+<kentfredric@gmail.com>.
 
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.

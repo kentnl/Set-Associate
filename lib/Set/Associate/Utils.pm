@@ -1,42 +1,41 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::Utils {
-BEGIN {
-  $Set::Associate::Utils::AUTHORITY = 'cpan:KENTNL';
+package Set::Associate::Utils;
+
+# ABSTRACT: Shared Guts between Set::Associate modules
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
+
+require Exporter;
+*import = \&Exporter::import;    ## no critic (ProhibitCallsToUnexportedSubs)
+
+our @EXPORT_OK = qw( _warn_nonmethod );
+
+sub _carp {
+  require Carp;
+  goto \&Carp::carp;
 }
 
-{
-  $Set::Associate::Utils::VERSION = '0.003000';
+sub _blessed {
+  require Scalar::Util;
+  goto \&Scalar::Util::blessed;
 }
 
-
-  # ABSTRACT: Shared Guts between Set::Associate modules
-
-  use strict;
-
-  sub _carp {
-    require Carp;
-    goto \&Carp::carp;
+## no critic (RequireArgUnpacking)
+sub _warn_nonmethod {
+  if ( defined $_[0] and not ref $_[0] ) {
+    return if $_[0]->isa( $_[1] );
   }
-
-  sub _blessed {
-    require Scalar::Util;
-    goto \&Scalar::Util::blessed;
+  if ( defined $_[0] and _blessed( $_[0] ) ) {
+    return if $_[0]->isa( $_[1] );
   }
-
-  sub _warn_nonmethod {
-    if ( defined $_[0] and not ref $_[0] ) {
-      return if $_[0]->isa( $_[1] );
-    }
-    if ( defined $_[0] and _blessed( $_[0] ) ) {
-      return if $_[0]->isa( $_[1] );
-    }
-    _carp( $_[1] . '->' . $_[2] . ' should be called as a method' );
-    return 1;
-  }
-
-};
+  _carp( $_[1] . '->' . $_[2] . ' should be called as a method' );
+  return 1;
+}
 
 1;
 
@@ -44,7 +43,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -52,15 +51,15 @@ Set::Associate::Utils - Shared Guts between Set::Associate modules
 
 =head1 VERSION
 
-version 0.003000
+version 0.004000
 
 =head1 AUTHOR
 
-Kent Fredric <kentfredric@gmail.com>
+Kent Fredric <kentnl@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Kent Fredric <kentfredric@gmail.com>.
+This software is copyright (c) 2015 by Kent Fredric <kentfredric@gmail.com>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

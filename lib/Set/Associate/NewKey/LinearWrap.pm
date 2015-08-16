@@ -1,32 +1,44 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::NewKey::LinearWrap {
-BEGIN {
-  $Set::Associate::NewKey::LinearWrap::AUTHORITY = 'cpan:KENTNL';
+package Set::Associate::NewKey::LinearWrap;
+
+# ABSTRACT: destructively empty the supply pool from the left hand end to give associations.
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
+
+use Moose qw( with );
+
+with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
+
+__PACKAGE__->meta->make_immutable;
+
+no Moose;
+
+
+
+
+
+
+
+sub name { 'linear_wrap' }
+
+
+
+
+
+
+
+
+
+
+
+sub get_assoc {
+  return $_[1]->_items_cache_shift;
 }
-
-{
-  $Set::Associate::NewKey::LinearWrap::VERSION = '0.003000';
-}
-
-
-  # ABSTRACT: destructively empty the supply pool from the left hand end to give associations.
-  use Moose;
-
-  with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
-
-
-  sub name { 'linear_wrap' }
-
-
-  sub get_assoc {
-    my ( $self, $sa, $key ) = @_;
-    return $sa->_items_cache_shift;
-  }
-
-  __PACKAGE__->meta->make_immutable;
-};
 
 1;
 
@@ -34,7 +46,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -42,7 +54,7 @@ Set::Associate::NewKey::LinearWrap - destructively empty the supply pool from th
 
 =head1 VERSION
 
-version 0.003000
+version 0.004000
 
 =head1 METHODS
 
@@ -60,11 +72,11 @@ C<$new_key> is ignored with this method.
 
 =head1 AUTHOR
 
-Kent Fredric <kentfredric@gmail.com>
+Kent Fredric <kentnl@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Kent Fredric <kentfredric@gmail.com>.
+This software is copyright (c) 2015 by Kent Fredric <kentfredric@gmail.com>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

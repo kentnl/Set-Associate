@@ -1,34 +1,45 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::NewKey::PickOffset {
-BEGIN {
-  $Set::Associate::NewKey::PickOffset::AUTHORITY = 'cpan:KENTNL';
+package Set::Associate::NewKey::PickOffset;
+
+# ABSTRACT: Associate a key with a value from a pool based on the keys value as a numeric offset.
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
+
+use Moose qw( with );
+
+with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
+
+__PACKAGE__->meta->make_immutable;
+
+no Moose;
+
+
+
+
+
+
+
+sub name { 'pick_offset' }
+
+
+
+
+
+
+
+
+
+
+
+sub get_assoc {
+  use bigint;
+  return $_[1]->_items_cache_get( $_[2] % $_[1]->_items_cache_count );
 }
-
-{
-  $Set::Associate::NewKey::PickOffset::VERSION = '0.003000';
-}
-
-
-  # ABSTRACT: Associate a key with a value from a pool based on the keys value as a numeric offset.
-
-  use Moose;
-
-  with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
-
-
-  sub name { 'pick_offset' }
-
-
-  sub get_assoc {
-    my ( $self, $sa, $key ) = @_;
-    use bigint;
-    return $sa->_items_cache_get( $key % $sa->_items_cache_count );
-  }
-
-  __PACKAGE__->meta->make_immutable;
-};
 
 1;
 
@@ -36,7 +47,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -44,7 +55,7 @@ Set::Associate::NewKey::PickOffset - Associate a key with a value from a pool ba
 
 =head1 VERSION
 
-version 0.003000
+version 0.004000
 
 =head1 METHODS
 
@@ -62,11 +73,11 @@ B<Note:> C<$new_key> is automatically modulo  of the length of C<$set_assoc>, so
 
 =head1 AUTHOR
 
-Kent Fredric <kentfredric@gmail.com>
+Kent Fredric <kentnl@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Kent Fredric <kentfredric@gmail.com>.
+This software is copyright (c) 2015 by Kent Fredric <kentfredric@gmail.com>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

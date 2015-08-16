@@ -1,33 +1,36 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::NewKey::HashMD5 {
-BEGIN {
-  $Set::Associate::NewKey::HashMD5::AUTHORITY = 'cpan:KENTNL';
-}
+package Set::Associate::NewKey::HashMD5;
 
-{
-  $Set::Associate::NewKey::HashMD5::VERSION = '0.003000';
-}
+# ABSTRACT: Pick a value from the pool based on the MD5 value of the key
 
+our $VERSION = '0.004000';
 
-  # ABSTRACT: Pick a value from the pool based on the MD5 value of the key
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
-  use Moose;
-  use Digest::MD5;
-  extends 'Set::Associate::NewKey::PickOffset';
+use Moose qw( around extends );
+use Digest::MD5;
+use bigint 0.22 qw( hex );
+extends 'Set::Associate::NewKey::PickOffset';
 
 
-  sub name { 'hash_md5' }
 
-  around get_assoc => sub {
-    my ( $orig, $self, $sa, $key ) = @_;
-    use bigint;
-    return $self->$orig( $sa, hex Digest::MD5::md5_hex($key) );
-  };
 
-  __PACKAGE__->meta->make_immutable;
+
+
+
+sub name { 'hash_md5' }
+around get_assoc => sub {
+  my ( $orig, $self, $sa, $key ) = @_;
+
+  return $self->$orig( $sa, hex Digest::MD5::md5_hex($key) );
 };
+
+__PACKAGE__->meta->make_immutable;
+
+no Moose;
 
 1;
 
@@ -35,7 +38,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -43,7 +46,7 @@ Set::Associate::NewKey::HashMD5 - Pick a value from the pool based on the MD5 va
 
 =head1 VERSION
 
-version 0.003000
+version 0.004000
 
 =head1 METHODS
 
@@ -53,11 +56,11 @@ The name of this key assignment method ( C<hash_md5> )
 
 =head1 AUTHOR
 
-Kent Fredric <kentfredric@gmail.com>
+Kent Fredric <kentnl@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Kent Fredric <kentfredric@gmail.com>.
+This software is copyright (c) 2015 by Kent Fredric <kentfredric@gmail.com>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

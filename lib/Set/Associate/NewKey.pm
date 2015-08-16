@@ -1,99 +1,178 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::NewKey {
-BEGIN {
-  $Set::Associate::NewKey::AUTHORITY = 'cpan:KENTNL';
+package Set::Associate::NewKey;
+
+# ABSTRACT: New Key assignment methods
+
+our $VERSION = '0.004000';
+
+our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
+
+use Carp qw( croak );
+use Moose qw( has with );
+use MooseX::AttributeShortcuts;
+
+use Set::Associate::Utils qw( _warn_nonmethod );
+
+
+
+
+
+
+
+
+
+has name => (
+  isa      => Str =>,
+  is       => rwp =>,
+  required => 1,
+);
+
+
+
+
+
+
+
+
+
+has code => (
+  isa      => CodeRef =>,
+  is       => rwp     =>,
+  required => 1,
+  traits   => ['Code'],
+  handles  => {
+    get_assoc => execute_method =>,
+  },
+);
+
+with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
+
+__PACKAGE__->meta->make_immutable;
+no Moose;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sub linear_wrap {
+  shift @_ unless _warn_nonmethod( $_[0], __PACKAGE__, 'linear_wrap' );
+  require Set::Associate::NewKey::LinearWrap;
+  return Set::Associate::NewKey::LinearWrap->new(@_);
 }
 
-{
-  $Set::Associate::NewKey::VERSION = '0.003000';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sub random_pick {
+  shift @_ unless _warn_nonmethod( $_[0], __PACKAGE__, 'random_pick' );
+  require Set::Associate::NewKey::RandomPick;
+  return Set::Associate::NewKey::RandomPick->new(@_);
 }
 
 
-  # ABSTRACT: New Key assignment methods
 
 
-  use Carp qw( croak );
-  use Moose;
-  use MooseX::AttributeShortcuts;
-
-  use Set::Associate::Utils;
-
-  *_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
 
 
-  has name => (
-    isa      => Str =>,
-    is       => rwp =>,
-    required => 1,
-  );
 
 
-  has code => (
-    isa      => CodeRef =>,
-    is       => rwp     =>,
-    required => 1,
-    traits   => ['Code'],
-    handles  => {
-      get_assoc => execute_method =>,
-    },
-  );
-
-  with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
-  __PACKAGE__->meta->make_immutable;
 
 
-  sub linear_wrap {
-    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'linear_wrap' ) ) {
-      unshift @_, __PACKAGE__;
-    }
-    my ( $class, @args ) = @_;
-    require Set::Associate::NewKey::LinearWrap;
-
-    return Set::Associate::NewKey::LinearWrap->new(@args);
-  }
 
 
-  sub random_pick {
-    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'random_pick' ) ) {
-      unshift @_, __PACKAGE__;
-    }
-    my ( $class, @args ) = @_;
-    require Set::Associate::NewKey::RandomPick;
-    return Set::Associate::NewKey::RandomPick->new(@args);
-  }
 
 
-  sub pick_offset {
-    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'pick_offset' ) ) {
-      unshift @_, __PACKAGE__;
-    }
-    my ( $class, @args ) = @_;
-    require Set::Associate::NewKey::PickOffset;
-    return Set::Associate::NewKey::PickOffset->new(@args);
-  }
 
 
-  sub hash_sha1 {
-    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'hash_sha1' ) ) {
-      unshift @_, __PACKAGE__;
-    }
-    my ( $class, @args ) = @_;
-    require Set::Associate::NewKey::HashSHA1;
-    return Set::Associate::NewKey::HashSHA1->new(@args);
-  }
 
 
-  sub hash_md5 {
-    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'hash_md5' ) ) {
-      unshift @_, __PACKAGE__;
-    }
-    my ( $class, @args ) = @_;
-    require Set::Associate::NewKey::HashMD5;
-    return Set::Associate::NewKey::HashMD5->new(@args);
-  }
-};
+
+
+
+
+
+sub pick_offset {
+  shift @_ unless _warn_nonmethod( $_[0], __PACKAGE__, 'pick_offset' );
+  require Set::Associate::NewKey::PickOffset;
+  return Set::Associate::NewKey::PickOffset->new(@_);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sub hash_sha1 {
+  shift @_ unless _warn_nonmethod( $_[0], __PACKAGE__, 'hash_sha1' );
+  require Set::Associate::NewKey::HashSHA1;
+  return Set::Associate::NewKey::HashSHA1->new(@_);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sub hash_md5 {
+  shift @_ unless _warn_nonmethod( $_[0], __PACKAGE__, 'hash_md5' );
+  require Set::Associate::NewKey::HashMD5;
+  return Set::Associate::NewKey::HashMD5->new(@_);
+}
 
 1;
 
@@ -101,7 +180,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -109,7 +188,7 @@ Set::Associate::NewKey - New Key assignment methods
 
 =head1 VERSION
 
-version 0.003000
+version 0.004000
 
 =head1 DESCRIPTION
 
@@ -228,11 +307,11 @@ or alternatively
 
 =head1 AUTHOR
 
-Kent Fredric <kentfredric@gmail.com>
+Kent Fredric <kentnl@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Kent Fredric <kentfredric@gmail.com>.
+This software is copyright (c) 2015 by Kent Fredric <kentfredric@gmail.com>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
