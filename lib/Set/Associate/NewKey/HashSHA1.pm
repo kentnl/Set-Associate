@@ -1,30 +1,30 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::NewKey::HashSHA1 {
+package Set::Associate::NewKey::HashSHA1;
 $Set::Associate::NewKey::HashSHA1::VERSION = '0.003001';
-  # ABSTRACT: Pick a value from the pool based on the C<SHA1> value of the key
+# ABSTRACT: Pick a value from the pool based on the C<SHA1> value of the key
 
-  use Moose;
-  use Digest::SHA1;
-  extends 'Set::Associate::NewKey::PickOffset';
-
-
+use Moose;
+use Digest::SHA1;
+extends 'Set::Associate::NewKey::PickOffset';
 
 
 
 
 
-  sub name { 'hash_sha1' }
 
-  around get_assoc => sub {
-    my ( $orig, $self, $sa, $key ) = @_;
-    use bigint;
-    return $self->$orig( $sa, hex Digest::SHA1::sha1_hex($key) );
-  };
 
-  __PACKAGE__->meta->make_immutable;
+sub name { 'hash_sha1' }
+
+around get_assoc => sub {
+  my ( $orig, $self, $sa, $key ) = @_;
+  use bigint;
+  return $self->$orig( $sa, hex Digest::SHA1::sha1_hex($key) );
 };
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

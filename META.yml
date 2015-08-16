@@ -8,10 +8,10 @@ build_requires:
   Module::Build: '0.4214'
   Test::Fatal: '0'
   Test::More: '1.001014'
-  perl: v5.16.0
+  perl: '5.006'
 configure_requires:
   Module::Build: '0.4214'
-  perl: v5.16.0
+  perl: '5.006'
 dynamic_config: 0
 generated_by: 'Dist::Zilla version 5.037, CPAN::Meta::Converter version 2.150005'
 license: perl
@@ -71,7 +71,7 @@ requires:
   MooseX::Role::Parameterized: '0'
   Scalar::Util: '0'
   bigint: '0'
-  perl: v5.16.0
+  perl: '5.006'
   strict: '0'
   warnings: '0'
 resources:

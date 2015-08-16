@@ -1,9 +1,10 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::NewKey {
+package Set::Associate::NewKey;
 $Set::Associate::NewKey::VERSION = '0.003001';
-  # ABSTRACT: New Key assignment methods
+# ABSTRACT: New Key assignment methods
 
 
 
@@ -25,27 +26,13 @@ $Set::Associate::NewKey::VERSION = '0.003001';
 
 
 
-  use Carp qw( croak );
-  use Moose;
-  use MooseX::AttributeShortcuts;
+use Carp qw( croak );
+use Moose;
+use MooseX::AttributeShortcuts;
 
-  use Set::Associate::Utils;
+use Set::Associate::Utils;
 
-  *_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
-
-
-
-
-
-
-
-
-
-  has name => (
-    isa      => Str =>,
-    is       => rwp =>,
-    required => 1,
-  );
+*_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
 
 
 
@@ -55,20 +42,32 @@ $Set::Associate::NewKey::VERSION = '0.003001';
 
 
 
-  has code => (
-    isa      => CodeRef =>,
-    is       => rwp     =>,
-    required => 1,
-    traits   => ['Code'],
-    handles  => {
-      get_assoc => execute_method =>,
-    },
-  );
-
-  with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
-  __PACKAGE__->meta->make_immutable;
+has name => (
+  isa      => Str =>,
+  is       => rwp =>,
+  required => 1,
+);
 
 
+
+
+
+
+
+
+
+has code => (
+  isa      => CodeRef =>,
+  is       => rwp     =>,
+  required => 1,
+  traits   => ['Code'],
+  handles  => {
+    get_assoc => execute_method =>,
+  },
+);
+
+with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
+__PACKAGE__->meta->make_immutable;
 
 
 
@@ -85,15 +84,17 @@ $Set::Associate::NewKey::VERSION = '0.003001';
 
 
 
-  sub linear_wrap {
-    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'linear_wrap' ) ) {
-      unshift @_, __PACKAGE__;
-    }
-    my ( $class, @args ) = @_;
-    require Set::Associate::NewKey::LinearWrap;
 
-    return Set::Associate::NewKey::LinearWrap->new(@args);
+
+sub linear_wrap {
+  if ( _warn_nonmethod( $_[0], __PACKAGE__, 'linear_wrap' ) ) {
+    unshift @_, __PACKAGE__;
   }
+  my ( $class, @args ) = @_;
+  require Set::Associate::NewKey::LinearWrap;
+
+  return Set::Associate::NewKey::LinearWrap->new(@args);
+}
 
 
 
@@ -111,14 +112,14 @@ $Set::Associate::NewKey::VERSION = '0.003001';
 
 
 
-  sub random_pick {
-    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'random_pick' ) ) {
-      unshift @_, __PACKAGE__;
-    }
-    my ( $class, @args ) = @_;
-    require Set::Associate::NewKey::RandomPick;
-    return Set::Associate::NewKey::RandomPick->new(@args);
+sub random_pick {
+  if ( _warn_nonmethod( $_[0], __PACKAGE__, 'random_pick' ) ) {
+    unshift @_, __PACKAGE__;
   }
+  my ( $class, @args ) = @_;
+  require Set::Associate::NewKey::RandomPick;
+  return Set::Associate::NewKey::RandomPick->new(@args);
+}
 
 
 
@@ -142,14 +143,14 @@ $Set::Associate::NewKey::VERSION = '0.003001';
 
 
 
-  sub pick_offset {
-    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'pick_offset' ) ) {
-      unshift @_, __PACKAGE__;
-    }
-    my ( $class, @args ) = @_;
-    require Set::Associate::NewKey::PickOffset;
-    return Set::Associate::NewKey::PickOffset->new(@args);
+sub pick_offset {
+  if ( _warn_nonmethod( $_[0], __PACKAGE__, 'pick_offset' ) ) {
+    unshift @_, __PACKAGE__;
   }
+  my ( $class, @args ) = @_;
+  require Set::Associate::NewKey::PickOffset;
+  return Set::Associate::NewKey::PickOffset->new(@args);
+}
 
 
 
@@ -169,14 +170,14 @@ $Set::Associate::NewKey::VERSION = '0.003001';
 
 
 
-  sub hash_sha1 {
-    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'hash_sha1' ) ) {
-      unshift @_, __PACKAGE__;
-    }
-    my ( $class, @args ) = @_;
-    require Set::Associate::NewKey::HashSHA1;
-    return Set::Associate::NewKey::HashSHA1->new(@args);
+sub hash_sha1 {
+  if ( _warn_nonmethod( $_[0], __PACKAGE__, 'hash_sha1' ) ) {
+    unshift @_, __PACKAGE__;
   }
+  my ( $class, @args ) = @_;
+  require Set::Associate::NewKey::HashSHA1;
+  return Set::Associate::NewKey::HashSHA1->new(@args);
+}
 
 
 
@@ -196,15 +197,14 @@ $Set::Associate::NewKey::VERSION = '0.003001';
 
 
 
-  sub hash_md5 {
-    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'hash_md5' ) ) {
-      unshift @_, __PACKAGE__;
-    }
-    my ( $class, @args ) = @_;
-    require Set::Associate::NewKey::HashMD5;
-    return Set::Associate::NewKey::HashMD5->new(@args);
+sub hash_md5 {
+  if ( _warn_nonmethod( $_[0], __PACKAGE__, 'hash_md5' ) ) {
+    unshift @_, __PACKAGE__;
   }
-};
+  my ( $class, @args ) = @_;
+  require Set::Associate::NewKey::HashMD5;
+  return Set::Associate::NewKey::HashMD5->new(@args);
+}
 
 1;
 

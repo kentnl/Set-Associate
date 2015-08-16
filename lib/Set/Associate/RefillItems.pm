@@ -1,14 +1,15 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::RefillItems {
+package Set::Associate::RefillItems;
 $Set::Associate::RefillItems::VERSION = '0.003001';
-  # ABSTRACT: Pool re-population methods
-  use Moose;
-  use MooseX::AttributeShortcuts;
+# ABSTRACT: Pool re-population methods
+use Moose;
+use MooseX::AttributeShortcuts;
 
-  use Set::Associate::Utils;
-  *_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
+use Set::Associate::Utils;
+*_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
 
 
 
@@ -40,11 +41,11 @@ $Set::Associate::RefillItems::VERSION = '0.003001';
 
 
 
-  has name => (
-    isa      => Str =>,
-    is       => rwp =>,
-    required => 1,
-  );
+has name => (
+  isa      => Str =>,
+  is       => rwp =>,
+  required => 1,
+);
 
 
 
@@ -58,15 +59,15 @@ $Set::Associate::RefillItems::VERSION = '0.003001';
 
 
 
-  has code => (
-    isa      => CodeRef =>,
-    is       => rwp     =>,
-    required => 1,
-    traits   => ['Code'],
-    handles  => {
-      get_all => execute_method =>,
-    },
-  );
+has code => (
+  isa      => CodeRef =>,
+  is       => rwp     =>,
+  required => 1,
+  traits   => ['Code'],
+  handles  => {
+    get_all => execute_method =>,
+  },
+);
 
 
 
@@ -80,15 +81,15 @@ $Set::Associate::RefillItems::VERSION = '0.003001';
 
 
 
-  has items => (
-    isa       => ArrayRef  =>,
-    is        => rwp       =>,
-    predicate => has_items =>,
-  );
+has items => (
+  isa       => ArrayRef  =>,
+  is        => rwp       =>,
+  predicate => has_items =>,
+);
 
-  with 'Set::Associate::Role::RefillItems' => { can_get_all => 1, };
+with 'Set::Associate::Role::RefillItems' => { can_get_all => 1, };
 
-  __PACKAGE__->meta->make_immutable;
+__PACKAGE__->meta->make_immutable;
 
 
 
@@ -111,14 +112,14 @@ $Set::Associate::RefillItems::VERSION = '0.003001';
 
 
 
-  sub linear {
-    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'linear' ) ) {
-      unshift @_, __PACKAGE__;
-    }
-    my ( $class, @args ) = @_;
-    require Set::Associate::RefillItems::Linear;
-    return Set::Associate::RefillItems::Linear->new(@args);
+sub linear {
+  if ( _warn_nonmethod( $_[0], __PACKAGE__, 'linear' ) ) {
+    unshift @_, __PACKAGE__;
   }
+  my ( $class, @args ) = @_;
+  require Set::Associate::RefillItems::Linear;
+  return Set::Associate::RefillItems::Linear->new(@args);
+}
 
 
 
@@ -142,15 +143,14 @@ $Set::Associate::RefillItems::VERSION = '0.003001';
 
 
 
-  sub shuffle {
-    if ( _warn_nonmethod( $_[0], __PACKAGE__, 'shuffle' ) ) {
-      unshift @_, __PACKAGE__;
-    }
-    my ( $class, @args ) = @_;
-    require Set::Associate::RefillItems::Shuffle;
-    return Set::Associate::RefillItems::Shuffle->new(@args);
+sub shuffle {
+  if ( _warn_nonmethod( $_[0], __PACKAGE__, 'shuffle' ) ) {
+    unshift @_, __PACKAGE__;
   }
-};
+  my ( $class, @args ) = @_;
+  require Set::Associate::RefillItems::Shuffle;
+  return Set::Associate::RefillItems::Shuffle->new(@args);
+}
 
 1;
 

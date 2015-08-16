@@ -12,7 +12,7 @@ my %module_build_args = (
   },
   "configure_requires" => {
     "Module::Build" => "0.4214",
-    "perl" => "v5.16.0"
+    "perl" => "5.006"
   },
   "dist_abstract" => "Pick items from a data set associatively",
   "dist_author" => [
@@ -36,7 +36,7 @@ my %module_build_args = (
     "MooseX::Role::Parameterized" => 0,
     "Scalar::Util" => 0,
     "bigint" => 0,
-    "perl" => "v5.16.0",
+    "perl" => "5.006",
     "strict" => 0,
     "warnings" => 0
   },
@@ -46,7 +46,7 @@ my %module_build_args = (
     "File::Spec" => 0,
     "Test::Fatal" => 0,
     "Test::More" => "1.001014",
-    "perl" => "v5.16.0"
+    "perl" => "5.006"
   }
 );
 
@@ -57,7 +57,7 @@ my %fallback_build_requires = (
   "Module::Build" => "0.4214",
   "Test::Fatal" => 0,
   "Test::More" => "1.001014",
-  "perl" => "v5.16.0"
+  "perl" => "5.006"
 );
 
 

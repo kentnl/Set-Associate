@@ -1,23 +1,22 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::NewKey::PickOffset {
+package Set::Associate::NewKey::PickOffset;
 $Set::Associate::NewKey::PickOffset::VERSION = '0.003001';
-  # ABSTRACT: Associate a key with a value from a pool based on the keys value as a numeric offset.
+# ABSTRACT: Associate a key with a value from a pool based on the keys value as a numeric offset.
 
-  use Moose;
+use Moose;
 
-  with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
-
-
+with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
 
 
 
 
 
-  sub name { 'pick_offset' }
 
 
+sub name { 'pick_offset' }
 
 
 
@@ -27,14 +26,15 @@ $Set::Associate::NewKey::PickOffset::VERSION = '0.003001';
 
 
 
-  sub get_assoc {
-    my ( $self, $sa, $key ) = @_;
-    use bigint;
-    return $sa->_items_cache_get( $key % $sa->_items_cache_count );
-  }
 
-  __PACKAGE__->meta->make_immutable;
-};
+
+sub get_assoc {
+  my ( $self, $sa, $key ) = @_;
+  use bigint;
+  return $sa->_items_cache_get( $key % $sa->_items_cache_count );
+}
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

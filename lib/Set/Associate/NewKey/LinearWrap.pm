@@ -1,22 +1,21 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::NewKey::LinearWrap {
+package Set::Associate::NewKey::LinearWrap;
 $Set::Associate::NewKey::LinearWrap::VERSION = '0.003001';
-  # ABSTRACT: destructively empty the supply pool from the left hand end to give associations.
-  use Moose;
+# ABSTRACT: destructively empty the supply pool from the left hand end to give associations.
+use Moose;
 
-  with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
-
-
+with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
 
 
 
 
 
-  sub name { 'linear_wrap' }
 
 
+sub name { 'linear_wrap' }
 
 
 
@@ -26,13 +25,14 @@ $Set::Associate::NewKey::LinearWrap::VERSION = '0.003001';
 
 
 
-  sub get_assoc {
-    my ( $self, $sa, $key ) = @_;
-    return $sa->_items_cache_shift;
-  }
 
-  __PACKAGE__->meta->make_immutable;
-};
+
+sub get_assoc {
+  my ( $self, $sa, $key ) = @_;
+  return $sa->_items_cache_shift;
+}
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

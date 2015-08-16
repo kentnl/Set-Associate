@@ -1,4 +1,5 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
 use Test::More;
@@ -30,4 +31,3 @@ ok(
   'Legacy code unsupported'
 );
 done_testing;
-

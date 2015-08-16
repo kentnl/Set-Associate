@@ -1,9 +1,10 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate {
+package Set::Associate;
 $Set::Associate::VERSION = '0.003001';
-  # ABSTRACT: Pick items from a data set associatively
+# ABSTRACT: Pick items from a data set associatively
 
 
 
@@ -87,184 +88,182 @@ $Set::Associate::VERSION = '0.003001';
 
 
 
-  use Carp qw( croak );
-  use Moose;
-  use MooseX::AttributeShortcuts;
+use Carp qw( croak );
+use Moose;
+use MooseX::AttributeShortcuts;
 
-  around BUILDARGS => sub {
-    my ( $orig, $self, @args ) = @_;
-    my ($result) = $self->$orig(@args);
-    if ( exists $result->{items} ) {
-      croak('->new( items => ) was deprecated in v0.2.0');
-    }
-    return $result;
-  };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  has _items_cache => (
-    isa     => 'ArrayRef',
-    is      => rwp =>,
-    traits  => ['Array'],
-    lazy    => 1,
-    default => sub { [] },
-    handles => {
-      _items_cache_empty => is_empty =>,
-      _items_cache_shift => shift    =>,
-      _items_cache_push  => push     =>,
-      _items_cache_count => count    =>,
-      _items_cache_get   => get      =>,
-    },
-  );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  has _association_cache => (
-    isa     => 'HashRef',
-    is      => rwp =>,
-    traits  => ['Hash'],
-    default => sub { {} },
-    handles => {
-      _association_cache_has => exists =>,
-      _association_cache_get => get    =>,
-      _association_cache_set => set    =>,
-    },
-  );
-
-
-
-
-
-
-
-
-
-
-
-
-
-  has on_items_empty => (
-    does     => 'Set::Associate::Role::RefillItems',
-    is       => rwp =>,
-    required => 1,
-  );
-
-
-
-
-
-
-
-
-
-  sub run_on_items_empty { $_[0]->on_items_empty->get_all }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  has on_new_key => (
-    does    => 'Set::Associate::Role::NewKey',
-    is      => rwp =>,
-    lazy    => 1,
-    default => sub {
-      require Set::Associate::NewKey;
-      Set::Associate::NewKey->linear_wrap;
-    },
-  );
-
-  sub run_on_new_key { $_[0]->on_new_key->get_assoc(@_) }
-
-
-
-
-
-
-
-
-
-
-
-  sub associate {
-    my ( $self, $key ) = @_;
-    return if $self->_association_cache_has($key);
-    if ( $self->_items_cache_empty ) {
-      $self->_items_cache_push( $self->run_on_items_empty );
-    }
-    $self->_association_cache_set( $key, $self->run_on_new_key($key) );
-    return 1;
+around BUILDARGS => sub {
+  my ( $orig, $self, @args ) = @_;
+  my ($result) = $self->$orig(@args);
+  if ( exists $result->{items} ) {
+    croak('->new( items => ) was deprecated in v0.2.0');
   }
-
-
-
-
-
-
-
-
-
-  sub get_associated {
-    my ( $self, $key ) = @_;
-    $self->associate($key);
-    return $self->_association_cache_get($key);
-  }
-
-  __PACKAGE__->meta->make_immutable;
-
+  return $result;
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+has _items_cache => (
+  isa     => 'ArrayRef',
+  is      => rwp =>,
+  traits  => ['Array'],
+  lazy    => 1,
+  default => sub { [] },
+  handles => {
+    _items_cache_empty => is_empty =>,
+    _items_cache_shift => shift    =>,
+    _items_cache_push  => push     =>,
+    _items_cache_count => count    =>,
+    _items_cache_get   => get      =>,
+  },
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+has _association_cache => (
+  isa     => 'HashRef',
+  is      => rwp =>,
+  traits  => ['Hash'],
+  default => sub { {} },
+  handles => {
+    _association_cache_has => exists =>,
+    _association_cache_get => get    =>,
+    _association_cache_set => set    =>,
+  },
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+has on_items_empty => (
+  does     => 'Set::Associate::Role::RefillItems',
+  is       => rwp =>,
+  required => 1,
+);
+
+
+
+
+
+
+
+
+
+sub run_on_items_empty { $_[0]->on_items_empty->get_all }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+has on_new_key => (
+  does    => 'Set::Associate::Role::NewKey',
+  is      => rwp =>,
+  lazy    => 1,
+  default => sub {
+    require Set::Associate::NewKey;
+    Set::Associate::NewKey->linear_wrap;
+  },
+);
+
+sub run_on_new_key { $_[0]->on_new_key->get_assoc(@_) }
+
+
+
+
+
+
+
+
+
+
+
+sub associate {
+  my ( $self, $key ) = @_;
+  return if $self->_association_cache_has($key);
+  if ( $self->_items_cache_empty ) {
+    $self->_items_cache_push( $self->run_on_items_empty );
+  }
+  $self->_association_cache_set( $key, $self->run_on_new_key($key) );
+  return 1;
+}
+
+
+
+
+
+
+
+
+
+sub get_associated {
+  my ( $self, $key ) = @_;
+  $self->associate($key);
+  return $self->_association_cache_get($key);
+}
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

@@ -1,15 +1,14 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::RefillItems::Shuffle {
+package Set::Associate::RefillItems::Shuffle;
 $Set::Associate::RefillItems::Shuffle::VERSION = '0.003001';
-  # ABSTRACT: a refill method that replenishes the cache with a shuffled list
+# ABSTRACT: a refill method that replenishes the cache with a shuffled list
 
-  use Moose;
+use Moose;
 
-  with 'Set::Associate::Role::RefillItems' => { can_get_all => 1, };
-
-
+with 'Set::Associate::Role::RefillItems' => { can_get_all => 1, };
 
 
 
@@ -17,7 +16,9 @@ $Set::Associate::RefillItems::Shuffle::VERSION = '0.003001';
 
 
 
-  has items => ( isa => 'ArrayRef', is => 'rw', required => 1 );
+
+
+has items => ( isa => 'ArrayRef', is => 'rw', required => 1 );
 
 
 
@@ -25,20 +26,19 @@ $Set::Associate::RefillItems::Shuffle::VERSION = '0.003001';
 
 
 
-  sub name { 'shuffle' }
+sub name { 'shuffle' }
 
-  use List::Util qw( shuffle );
-
-
+use List::Util qw( shuffle );
 
 
 
 
 
-  sub get_all { return shuffle( @{ $_[0]->items } ) }
 
-  __PACKAGE__->meta->make_immutable;
-};
+
+sub get_all { return shuffle( @{ $_[0]->items } ) }
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

@@ -1,14 +1,13 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::RefillItems::Linear {
+package Set::Associate::RefillItems::Linear;
 $Set::Associate::RefillItems::Linear::VERSION = '0.003001';
-  # ABSTRACT: a refill method that replenishes the cache with a repeating set of items
-  use Moose;
+# ABSTRACT: a refill method that replenishes the cache with a repeating set of items
+use Moose;
 
-  with 'Set::Associate::Role::RefillItems' => { can_get_all => 1 };
-
-
+with 'Set::Associate::Role::RefillItems' => { can_get_all => 1 };
 
 
 
@@ -16,7 +15,9 @@ $Set::Associate::RefillItems::Linear::VERSION = '0.003001';
 
 
 
-  has items => ( isa => 'ArrayRef', is => 'rw', required => 1 );
+
+
+has items => ( isa => 'ArrayRef', is => 'rw', required => 1 );
 
 
 
@@ -24,7 +25,7 @@ $Set::Associate::RefillItems::Linear::VERSION = '0.003001';
 
 
 
-  sub name { 'linear' }
+sub name { 'linear' }
 
 
 
@@ -32,10 +33,9 @@ $Set::Associate::RefillItems::Linear::VERSION = '0.003001';
 
 
 
-  sub get_all { return @{ $_[0]->items } }
+sub get_all { return @{ $_[0]->items } }
 
-  __PACKAGE__->meta->make_immutable;
-};
+__PACKAGE__->meta->make_immutable;
 
 1;
 
