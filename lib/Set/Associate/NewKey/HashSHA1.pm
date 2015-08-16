@@ -12,6 +12,7 @@ our $VERSION = '0.004000';
 
 use Moose qw( around extends );
 use Digest::SHA1;
+use bigint 0.22 qw( hex );
 extends 'Set::Associate::NewKey::PickOffset';
 
 =method name
@@ -24,7 +25,6 @@ sub name { 'hash_sha1' }
 
 around get_assoc => sub {
   my ( $orig, $self, $sa, $key ) = @_;
-  use bigint;
   return $self->$orig( $sa, hex Digest::SHA1::sha1_hex($key) );
 };
 

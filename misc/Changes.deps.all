@@ -90,6 +90,7 @@ This file contains ALL changes in dependencies in both REQUIRED / OPTIONAL depen
  - Dist::Zilla::PluginBundle::Author::KENTNL v1.7.0 → 2.025002
 
  [Changed / runtime requires]
+ - bigint 0 → 0.22
  - perl v5.16.0 → 5.006
 
  [Changed / test requires]

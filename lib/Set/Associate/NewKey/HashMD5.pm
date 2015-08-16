@@ -12,6 +12,7 @@ our $VERSION = '0.004000';
 
 use Moose qw( around extends );
 use Digest::MD5;
+use bigint 0.22 qw( hex );
 extends 'Set::Associate::NewKey::PickOffset';
 
 =method name
@@ -21,10 +22,9 @@ The name of this key assignment method ( C<hash_md5> )
 =cut
 
 sub name { 'hash_md5' }
-
 around get_assoc => sub {
   my ( $orig, $self, $sa, $key ) = @_;
-  use bigint;
+
   return $self->$orig( $sa, hex Digest::MD5::md5_hex($key) );
 };
 

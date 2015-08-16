@@ -14,6 +14,7 @@ This file contains changes in REQUIRED dependencies for standard CPAN phases (co
  - perl 5.006
 
  [Changed / runtime requires]
+ - bigint 0 → 0.22
  - perl v5.16.0 → 5.006
 
  [Changed / test requires]
