@@ -6,6 +6,10 @@ package Set::Associate::NewKey;
 
 # ABSTRACT: New Key assignment methods
 
+our $VERSION = '0.004000';
+
+# AUTHORITY
+
 =head1 DESCRIPTION
 
 This class implements the mechanism which controls how the values are assigned to 'new' keys.

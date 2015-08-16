@@ -6,6 +6,10 @@ package Set::Associate::Utils;
 
 # ABSTRACT: Shared Guts between Set::Associate modules
 
+our $VERSION = '0.004000';
+
+# AUTHORITY
+
 sub _carp {
   require Carp;
   goto \&Carp::carp;

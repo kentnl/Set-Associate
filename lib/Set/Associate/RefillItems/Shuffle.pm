@@ -6,6 +6,10 @@ package Set::Associate::RefillItems::Shuffle;
 
 # ABSTRACT: a refill method that replenishes the cache with a shuffled list
 
+our $VERSION = '0.004000';
+
+# AUTHORITY
+
 use Moose;
 
 with 'Set::Associate::Role::RefillItems' => { can_get_all => 1, };

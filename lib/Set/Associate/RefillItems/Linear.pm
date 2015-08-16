@@ -5,6 +5,11 @@ use warnings;
 package Set::Associate::RefillItems::Linear;
 
 # ABSTRACT: a refill method that replenishes the cache with a repeating set of items
+
+our $VERSION = '0.004000';
+
+# AUTHORITY
+
 use Moose;
 
 with 'Set::Associate::Role::RefillItems' => { can_get_all => 1 };

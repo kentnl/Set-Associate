@@ -6,6 +6,10 @@ package Set::Associate;
 
 # ABSTRACT: Pick items from a data set associatively
 
+our $VERSION = '0.004000';
+
+# AUTHORITY
+
 =head1 DESCRIPTION
 
 Essentially, this is a simple toolkit to map an infinite-many items to a corresponding finite-many values,

@@ -5,6 +5,11 @@ use warnings;
 package Set::Associate::RefillItems;
 
 # ABSTRACT: Pool re-population methods
+
+our $VERSION = '0.004000';
+
+# AUTHORITY
+
 use Moose;
 use MooseX::AttributeShortcuts;
 

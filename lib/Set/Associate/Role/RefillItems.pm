@@ -6,6 +6,10 @@ package Set::Associate::Role::RefillItems;
 
 # ABSTRACT: A data provider for Set::Associate
 
+our $VERSION = '0.004000';
+
+# AUTHORITY
+
 use MooseX::Role::Parameterized;
 
 parameter can_get_next => (

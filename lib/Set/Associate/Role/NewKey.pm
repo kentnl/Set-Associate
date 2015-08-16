@@ -5,6 +5,11 @@ use warnings;
 package Set::Associate::Role::NewKey;
 
 # ABSTRACT: A Key Association methodology for Set::Associate
+
+our $VERSION = '0.004000';
+
+# AUTHORITY
+
 use MooseX::Role::Parameterized;
 
 parameter can_get_next => (

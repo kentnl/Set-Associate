@@ -6,6 +6,10 @@ package Set::Associate::NewKey::HashMD5;
 
 # ABSTRACT: Pick a value from the pool based on the MD5 value of the key
 
+our $VERSION = '0.004000';
+
+# AUTHORITY
+
 use Moose;
 use Digest::MD5;
 extends 'Set::Associate::NewKey::PickOffset';

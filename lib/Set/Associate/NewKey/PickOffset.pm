@@ -6,6 +6,10 @@ package Set::Associate::NewKey::PickOffset;
 
 # ABSTRACT: Associate a key with a value from a pool based on the keys value as a numeric offset.
 
+our $VERSION = '0.004000';
+
+# AUTHORITY
+
 use Moose;
 
 with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
