@@ -6,7 +6,7 @@ package Set::Associate::NewKey::HashSHA1;
 
 # ABSTRACT: Pick a value from the pool based on the SHA1 value of the key
 
-our $VERSION = '0.004000';
+our $VERSION = '0.004001';
 
 our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
@@ -46,7 +46,7 @@ Set::Associate::NewKey::HashSHA1 - Pick a value from the pool based on the SHA1 
 
 =head1 VERSION
 
-version 0.004000
+version 0.004001
 
 =head1 METHODS
 

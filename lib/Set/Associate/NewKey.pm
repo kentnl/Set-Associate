@@ -6,7 +6,7 @@ package Set::Associate::NewKey;
 
 # ABSTRACT: New Key assignment methods
 
-our $VERSION = '0.004000';
+our $VERSION = '0.004001';
 
 our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
@@ -188,7 +188,7 @@ Set::Associate::NewKey - New Key assignment methods
 
 =head1 VERSION
 
-version 0.004000
+version 0.004001
 
 =head1 DESCRIPTION
 

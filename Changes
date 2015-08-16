@@ -1,5 +1,7 @@
 Release history for Set-Associate
 
+0.004001 2015-08-16T11:19:55Z 14a3047
+
 0.004000 2015-08-16T11:08:56Z e423dea
  [01 - Installer Changed]
  - ExtUtils::MakeMaker is now the shipped install toolkit.

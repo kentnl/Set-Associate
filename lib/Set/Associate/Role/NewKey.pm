@@ -6,7 +6,7 @@ package Set::Associate::Role::NewKey;
 
 # ABSTRACT: A Key Association methodology for Set::Associate
 
-our $VERSION = '0.004000';
+our $VERSION = '0.004001';
 
 our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
@@ -54,7 +54,7 @@ Set::Associate::Role::NewKey - A Key Association methodology for Set::Associate
 
 =head1 VERSION
 
-version 0.004000
+version 0.004001
 
 =head1 AUTHOR
 

@@ -130,55 +130,55 @@
    "provides" : {
       "Set::Associate" : {
          "file" : "lib/Set/Associate.pm",
-         "version" : "0.004000"
+         "version" : "0.004001"
       },
       "Set::Associate::NewKey" : {
          "file" : "lib/Set/Associate/NewKey.pm",
-         "version" : "0.004000"
+         "version" : "0.004001"
       },
       "Set::Associate::NewKey::HashMD5" : {
          "file" : "lib/Set/Associate/NewKey/HashMD5.pm",
-         "version" : "0.004000"
+         "version" : "0.004001"
       },
       "Set::Associate::NewKey::HashSHA1" : {
          "file" : "lib/Set/Associate/NewKey/HashSHA1.pm",
-         "version" : "0.004000"
+         "version" : "0.004001"
       },
       "Set::Associate::NewKey::LinearWrap" : {
          "file" : "lib/Set/Associate/NewKey/LinearWrap.pm",
-         "version" : "0.004000"
+         "version" : "0.004001"
       },
       "Set::Associate::NewKey::PickOffset" : {
          "file" : "lib/Set/Associate/NewKey/PickOffset.pm",
-         "version" : "0.004000"
+         "version" : "0.004001"
       },
       "Set::Associate::NewKey::RandomPick" : {
          "file" : "lib/Set/Associate/NewKey/RandomPick.pm",
-         "version" : "0.004000"
+         "version" : "0.004001"
       },
       "Set::Associate::RefillItems" : {
          "file" : "lib/Set/Associate/RefillItems.pm",
-         "version" : "0.004000"
+         "version" : "0.004001"
       },
       "Set::Associate::RefillItems::Linear" : {
          "file" : "lib/Set/Associate/RefillItems/Linear.pm",
-         "version" : "0.004000"
+         "version" : "0.004001"
       },
       "Set::Associate::RefillItems::Shuffle" : {
          "file" : "lib/Set/Associate/RefillItems/Shuffle.pm",
-         "version" : "0.004000"
+         "version" : "0.004001"
       },
       "Set::Associate::Role::NewKey" : {
          "file" : "lib/Set/Associate/Role/NewKey.pm",
-         "version" : "0.004000"
+         "version" : "0.004001"
       },
       "Set::Associate::Role::RefillItems" : {
          "file" : "lib/Set/Associate/Role/RefillItems.pm",
-         "version" : "0.004000"
+         "version" : "0.004001"
       },
       "Set::Associate::Utils" : {
          "file" : "lib/Set/Associate/Utils.pm",
-         "version" : "0.004000"
+         "version" : "0.004001"
       }
    },
    "release_status" : "stable",
@@ -193,7 +193,7 @@
          "web" : "https://github.com/kentnl/Set-Associate"
       }
    },
-   "version" : "0.004000",
+   "version" : "0.004001",
    "x_BuiltWith" : {
       "external_file" : "misc/built_with.json"
    },
@@ -733,7 +733,7 @@
                "Dist::Zilla::Plugin::Git::Tag" : {
                   "branch" : null,
                   "signed" : 0,
-                  "tag" : "0.004000-source",
+                  "tag" : "0.004001-source",
                   "tag_format" : "%v-source",
                   "tag_message" : "v%v",
                   "time_zone" : "local"
@@ -809,7 +809,7 @@
                "Dist::Zilla::Plugin::Git::Tag" : {
                   "branch" : "releases",
                   "signed" : 0,
-                  "tag" : "0.004000",
+                  "tag" : "0.004001",
                   "tag_format" : "%v",
                   "tag_message" : "v%v",
                   "time_zone" : "local"
