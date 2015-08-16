@@ -6,7 +6,7 @@ package Set::Associate::RefillItems;
 
 # ABSTRACT: Pool re-population methods
 
-our $VERSION = '0.004000';
+our $VERSION = '0.004001';
 
 # AUTHORITY
 

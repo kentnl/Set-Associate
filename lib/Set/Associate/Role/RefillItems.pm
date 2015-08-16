@@ -6,7 +6,7 @@ package Set::Associate::Role::RefillItems;
 
 # ABSTRACT: A data provider for Set::Associate
 
-our $VERSION = '0.004000';
+our $VERSION = '0.004001';
 
 # AUTHORITY
 

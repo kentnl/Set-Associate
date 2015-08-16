@@ -6,7 +6,7 @@ package Set::Associate::RefillItems::Shuffle;
 
 # ABSTRACT: a refill method that replenishes the cache with a shuffled list
 
-our $VERSION = '0.004000';
+our $VERSION = '0.004001';
 
 # AUTHORITY
 

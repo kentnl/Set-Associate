@@ -6,7 +6,7 @@ package Set::Associate::RefillItems::Linear;
 
 # ABSTRACT: a refill method that replenishes the cache with a repeating set of items
 
-our $VERSION = '0.004000';
+our $VERSION = '0.004001';
 
 # AUTHORITY
 
