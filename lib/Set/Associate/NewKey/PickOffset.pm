@@ -2,8 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::NewKey::PickOffset {
-our $AUTHORITY = 'cpan:KENTNL';
-
 $Set::Associate::NewKey::PickOffset::VERSION = '0.003001';
   # ABSTRACT: Associate a key with a value from a pool based on the keys value as a numeric offset.
 
@@ -12,7 +10,21 @@ $Set::Associate::NewKey::PickOffset::VERSION = '0.003001';
   with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
 
 
+
+
+
+
+
   sub name { 'pick_offset' }
+
+
+
+
+
+
+
+
+
 
 
   sub get_assoc {

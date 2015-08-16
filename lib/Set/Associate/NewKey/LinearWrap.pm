@@ -2,8 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::NewKey::LinearWrap {
-our $AUTHORITY = 'cpan:KENTNL';
-
 $Set::Associate::NewKey::LinearWrap::VERSION = '0.003001';
   # ABSTRACT: destructively empty the supply pool from the left hand end to give associations.
   use Moose;
@@ -11,7 +9,21 @@ $Set::Associate::NewKey::LinearWrap::VERSION = '0.003001';
   with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
 
 
+
+
+
+
+
   sub name { 'linear_wrap' }
+
+
+
+
+
+
+
+
+
 
 
   sub get_assoc {

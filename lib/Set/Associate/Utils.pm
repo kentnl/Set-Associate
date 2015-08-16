@@ -2,8 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::Utils {
-our $AUTHORITY = 'cpan:KENTNL';
-
 $Set::Associate::Utils::VERSION = '0.003001';
   # ABSTRACT: Shared Guts between Set::Associate modules
 

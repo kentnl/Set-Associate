@@ -2,8 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::RefillItems::Shuffle {
-our $AUTHORITY = 'cpan:KENTNL';
-
 $Set::Associate::RefillItems::Shuffle::VERSION = '0.003001';
   # ABSTRACT: a refill method that replenishes the cache with a shuffled list
 
@@ -12,12 +10,29 @@ $Set::Associate::RefillItems::Shuffle::VERSION = '0.003001';
   with 'Set::Associate::Role::RefillItems' => { can_get_all => 1, };
 
 
+
+
+
+
+
+
+
   has items => ( isa => 'ArrayRef', is => 'rw', required => 1 );
+
+
+
+
+
 
 
   sub name { 'shuffle' }
 
   use List::Util qw( shuffle );
+
+
+
+
+
 
 
   sub get_all { return shuffle( @{ $_[0]->items } ) }

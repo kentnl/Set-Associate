@@ -2,8 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::Role::NewKey {
-our $AUTHORITY = 'cpan:KENTNL';
-
 $Set::Associate::Role::NewKey::VERSION = '0.003001';
   # ABSTRACT: A Key Association methodology for Set::Associate
   use strict;

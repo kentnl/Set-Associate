@@ -2,14 +2,17 @@ use v5.16;
 use warnings;
 
 package Set::Associate::NewKey::HashSHA1 {
-our $AUTHORITY = 'cpan:KENTNL';
-
 $Set::Associate::NewKey::HashSHA1::VERSION = '0.003001';
   # ABSTRACT: Pick a value from the pool based on the C<SHA1> value of the key
 
   use Moose;
   use Digest::SHA1;
   extends 'Set::Associate::NewKey::PickOffset';
+
+
+
+
+
 
 
   sub name { 'hash_sha1' }

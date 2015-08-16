@@ -2,8 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::RefillItems {
-our $AUTHORITY = 'cpan:KENTNL';
-
 $Set::Associate::RefillItems::VERSION = '0.003001';
   # ABSTRACT: Pool re-population methods
   use Moose;
@@ -13,11 +11,51 @@ $Set::Associate::RefillItems::VERSION = '0.003001';
   *_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   has name => (
     isa      => Str =>,
     is       => rwp =>,
     required => 1,
   );
+
+
+
+
+
+
+
+
+
+
+
 
 
   has code => (
@@ -31,6 +69,17 @@ $Set::Associate::RefillItems::VERSION = '0.003001';
   );
 
 
+
+
+
+
+
+
+
+
+
+
+
   has items => (
     isa       => ArrayRef  =>,
     is        => rwp       =>,
@@ -42,6 +91,26 @@ $Set::Associate::RefillItems::VERSION = '0.003001';
   __PACKAGE__->meta->make_immutable;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   sub linear {
     if ( _warn_nonmethod( $_[0], __PACKAGE__, 'linear' ) ) {
       unshift @_, __PACKAGE__;
@@ -50,6 +119,27 @@ $Set::Associate::RefillItems::VERSION = '0.003001';
     require Set::Associate::RefillItems::Linear;
     return Set::Associate::RefillItems::Linear->new(@args);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   sub shuffle {

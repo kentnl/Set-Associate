@@ -8,10 +8,11 @@ use Module::Build 0.28;
 
 my %module_build_args = (
   "build_requires" => {
-    "Module::Build" => "0.28"
+    "Module::Build" => "0.4214"
   },
   "configure_requires" => {
-    "Module::Build" => "0.28"
+    "Module::Build" => "0.4214",
+    "perl" => "v5.16.0"
   },
   "dist_abstract" => "Pick items from a data set associatively",
   "dist_author" => [
@@ -21,7 +22,9 @@ my %module_build_args = (
   "dist_version" => "0.003001",
   "license" => "perl",
   "module_name" => "Set::Associate",
-  "recommends" => {},
+  "recommends" => {
+    "Moose" => "2.000"
+  },
   "recursive_test_files" => 1,
   "requires" => {
     "Carp" => 0,
@@ -39,22 +42,22 @@ my %module_build_args = (
   },
   "script_files" => [],
   "test_requires" => {
+    "ExtUtils::MakeMaker" => 0,
     "File::Spec" => 0,
-    "IO::Handle" => 0,
-    "IPC::Open3" => 0,
     "Test::Fatal" => 0,
-    "Test::More" => "1.001014"
+    "Test::More" => "1.001014",
+    "perl" => "v5.16.0"
   }
 );
 
 
 my %fallback_build_requires = (
+  "ExtUtils::MakeMaker" => 0,
   "File::Spec" => 0,
-  "IO::Handle" => 0,
-  "IPC::Open3" => 0,
-  "Module::Build" => "0.28",
+  "Module::Build" => "0.4214",
   "Test::Fatal" => 0,
-  "Test::More" => "1.001014"
+  "Test::More" => "1.001014",
+  "perl" => "v5.16.0"
 );
 
 

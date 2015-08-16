@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-# this test was generated with Dist::Zilla::Plugin::EOLTests 0.18
+# this test was generated with Dist::Zilla::Plugin::Test::EOL 0.18
 
 use Test::More 0.88;
 use Test::EOL;
@@ -20,8 +20,21 @@ my @files = (
     'lib/Set/Associate/Role/NewKey.pm',
     'lib/Set/Associate/Role/RefillItems.pm',
     'lib/Set/Associate/Utils.pm',
-    't/00-compile.t',
-    't/000-report-versions-tiny.t',
+    't/00-compile/lib_Set_Associate_NewKey_HashMD5_pm.t',
+    't/00-compile/lib_Set_Associate_NewKey_HashSHA1_pm.t',
+    't/00-compile/lib_Set_Associate_NewKey_LinearWrap_pm.t',
+    't/00-compile/lib_Set_Associate_NewKey_PickOffset_pm.t',
+    't/00-compile/lib_Set_Associate_NewKey_RandomPick_pm.t',
+    't/00-compile/lib_Set_Associate_NewKey_pm.t',
+    't/00-compile/lib_Set_Associate_RefillItems_Linear_pm.t',
+    't/00-compile/lib_Set_Associate_RefillItems_Shuffle_pm.t',
+    't/00-compile/lib_Set_Associate_RefillItems_pm.t',
+    't/00-compile/lib_Set_Associate_Role_NewKey_pm.t',
+    't/00-compile/lib_Set_Associate_Role_RefillItems_pm.t',
+    't/00-compile/lib_Set_Associate_Utils_pm.t',
+    't/00-compile/lib_Set_Associate_pm.t',
+    't/00-report-prereqs.dd',
+    't/00-report-prereqs.t',
     't/01_assoc/01_linear.t',
     't/01_assoc/02_random_shuffle.t',
     't/01_assoc/03_random_pick.t',

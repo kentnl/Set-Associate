@@ -2,10 +2,27 @@ use v5.16;
 use warnings;
 
 package Set::Associate::NewKey {
-our $AUTHORITY = 'cpan:KENTNL';
-
 $Set::Associate::NewKey::VERSION = '0.003001';
   # ABSTRACT: New Key assignment methods
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   use Carp qw( croak );
@@ -17,11 +34,25 @@ $Set::Associate::NewKey::VERSION = '0.003001';
   *_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
 
 
+
+
+
+
+
+
+
   has name => (
     isa      => Str =>,
     is       => rwp =>,
     required => 1,
   );
+
+
+
+
+
+
+
 
 
   has code => (
@@ -38,6 +69,22 @@ $Set::Associate::NewKey::VERSION = '0.003001';
   __PACKAGE__->meta->make_immutable;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   sub linear_wrap {
     if ( _warn_nonmethod( $_[0], __PACKAGE__, 'linear_wrap' ) ) {
       unshift @_, __PACKAGE__;
@@ -47,6 +94,21 @@ $Set::Associate::NewKey::VERSION = '0.003001';
 
     return Set::Associate::NewKey::LinearWrap->new(@args);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   sub random_pick {
@@ -59,6 +121,27 @@ $Set::Associate::NewKey::VERSION = '0.003001';
   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   sub pick_offset {
     if ( _warn_nonmethod( $_[0], __PACKAGE__, 'pick_offset' ) ) {
       unshift @_, __PACKAGE__;
@@ -69,6 +152,23 @@ $Set::Associate::NewKey::VERSION = '0.003001';
   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   sub hash_sha1 {
     if ( _warn_nonmethod( $_[0], __PACKAGE__, 'hash_sha1' ) ) {
       unshift @_, __PACKAGE__;
@@ -77,6 +177,23 @@ $Set::Associate::NewKey::VERSION = '0.003001';
     require Set::Associate::NewKey::HashSHA1;
     return Set::Associate::NewKey::HashSHA1->new(@args);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   sub hash_md5 {

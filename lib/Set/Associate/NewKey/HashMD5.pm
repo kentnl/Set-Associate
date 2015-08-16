@@ -2,14 +2,17 @@ use v5.16;
 use warnings;
 
 package Set::Associate::NewKey::HashMD5 {
-our $AUTHORITY = 'cpan:KENTNL';
-
 $Set::Associate::NewKey::HashMD5::VERSION = '0.003001';
   # ABSTRACT: Pick a value from the pool based on the MD5 value of the key
 
   use Moose;
   use Digest::MD5;
   extends 'Set::Associate::NewKey::PickOffset';
+
+
+
+
+
 
 
   sub name { 'hash_md5' }

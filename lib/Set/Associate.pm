@@ -2,10 +2,88 @@ use v5.16;
 use warnings;
 
 package Set::Associate {
-our $AUTHORITY = 'cpan:KENTNL';
-
 $Set::Associate::VERSION = '0.003001';
   # ABSTRACT: Pick items from a data set associatively
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -21,6 +99,23 @@ $Set::Associate::VERSION = '0.003001';
     }
     return $result;
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   has _items_cache => (
@@ -39,6 +134,30 @@ $Set::Associate::VERSION = '0.003001';
   );
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   has _association_cache => (
     isa     => 'HashRef',
     is      => rwp =>,
@@ -52,6 +171,17 @@ $Set::Associate::VERSION = '0.003001';
   );
 
 
+
+
+
+
+
+
+
+
+
+
+
   has on_items_empty => (
     does     => 'Set::Associate::Role::RefillItems',
     is       => rwp =>,
@@ -59,7 +189,31 @@ $Set::Associate::VERSION = '0.003001';
   );
 
 
+
+
+
+
+
+
+
   sub run_on_items_empty { $_[0]->on_items_empty->get_all }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   has on_new_key => (
@@ -75,6 +229,15 @@ $Set::Associate::VERSION = '0.003001';
   sub run_on_new_key { $_[0]->on_new_key->get_assoc(@_) }
 
 
+
+
+
+
+
+
+
+
+
   sub associate {
     my ( $self, $key ) = @_;
     return if $self->_association_cache_has($key);
@@ -84,6 +247,13 @@ $Set::Associate::VERSION = '0.003001';
     $self->_association_cache_set( $key, $self->run_on_new_key($key) );
     return 1;
   }
+
+
+
+
+
+
+
 
 
   sub get_associated {

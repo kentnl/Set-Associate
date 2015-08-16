@@ -2,8 +2,6 @@ use v5.16;
 use warnings;
 
 package Set::Associate::NewKey::RandomPick {
-our $AUTHORITY = 'cpan:KENTNL';
-
 $Set::Associate::NewKey::RandomPick::VERSION = '0.003001';
   # ABSTRACT: Associate a key by randomly picking from a pool
 
@@ -12,7 +10,21 @@ $Set::Associate::NewKey::RandomPick::VERSION = '0.003001';
   with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
 
 
+
+
+
+
+
   sub name { 'random_pick' }
+
+
+
+
+
+
+
+
+
 
 
   sub get_assoc {
