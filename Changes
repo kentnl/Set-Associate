@@ -5,6 +5,10 @@ Release history for Set-Associate
  - ExtUtils::MakeMaker is now the shipped install toolkit.
  - https://questhub.io/realm/perl/quest/5388cc12bbd0be5b2500011f
 
+ [02 - 5.16 shenaningans removed]
+ - I figured I'm not really getting a lot of value out of PN BLOCK, so I nuked it.
+ - The indentation level is enough on its own to be annoying.
+
  [Dependencies::Stats]
  - Dependencies changed since 0.003000, see misc/*.deps* for details
  - build: -1
