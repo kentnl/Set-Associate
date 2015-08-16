@@ -16,28 +16,6 @@ use MooseX::AttributeShortcuts;
 use Set::Associate::Utils;
 *_warn_nonmethod = *Set::Associate::Utils::_warn_nonmethod;
 
-=head1 DESCRIPTION
-
-This class implements a generalized interface for creating objects which populate pools.
-
-What you're mostly interested in are L</CLASS METHODS>, which are shorthand (somewhat) for loading and constructing
-many of the C<Set::Associate::RefillItems::*> family.
-
-However, if your code needs to design its own version on the fly, this interface should work:
-
-    my $populator = Set::Associate::RefillItems->new(
-        name => 'foo',
-        items => [  .... ],
-        code => sub {
-            my ( $self, $sa ) = @_;
-            ....
-        },
-    );
-    my $sa = Set::Associate->new(
-        on_item_empty => $populator ,
-        ...
-    );
-
 =carg name
 
     required Str
@@ -158,3 +136,27 @@ sub shuffle {
 }
 
 1;
+
+=head1 DESCRIPTION
+
+This class implements a generalized interface for creating objects which populate pools.
+
+What you're mostly interested in are L</CLASS METHODS>, which are shorthand (somewhat) for loading and constructing
+many of the C<Set::Associate::RefillItems::*> family.
+
+However, if your code needs to design its own version on the fly, this interface should work:
+
+    my $populator = Set::Associate::RefillItems->new(
+        name => 'foo',
+        items => [  .... ],
+        code => sub {
+            my ( $self, $sa ) = @_;
+            ....
+        },
+    );
+    my $sa = Set::Associate->new(
+        on_item_empty => $populator ,
+        ...
+    );
+
+=cut

@@ -10,26 +10,6 @@ our $VERSION = '0.004000';
 
 # AUTHORITY
 
-=head1 DESCRIPTION
-
-This class implements the mechanism which controls how the values are assigned to 'new' keys.
-
-The part you're mostly interested in are the L</CLASS METHODS>, which return the right assignment method.
-
-This is more or less a wrapper for passing around subs with an implicit interface.
-
-    my $assigner = Set::Associate::NewKey->new(
-        name => 'linear_wrap',
-        code => sub {
-            my ( $self, $sa , $key ) = @_;
-            ....
-        },
-    );
-
-    my $value = $assigner->run( $set_associate_object, $key );
-
-=cut
-
 use Carp qw( croak );
 use Moose;
 use MooseX::AttributeShortcuts;
@@ -211,3 +191,23 @@ sub hash_md5 {
 }
 
 1;
+
+=head1 DESCRIPTION
+
+This class implements the mechanism which controls how the values are assigned to 'new' keys.
+
+The part you're mostly interested in are the L</CLASS METHODS>, which return the right assignment method.
+
+This is more or less a wrapper for passing around subs with an implicit interface.
+
+    my $assigner = Set::Associate::NewKey->new(
+        name => 'linear_wrap',
+        code => sub {
+            my ( $self, $sa , $key ) = @_;
+            ....
+        },
+    );
+
+    my $value = $assigner->run( $set_associate_object, $key );
+
+=cut

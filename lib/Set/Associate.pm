@@ -10,61 +10,6 @@ our $VERSION = '0.004000';
 
 # AUTHORITY
 
-=head1 DESCRIPTION
-
-Essentially, this is a simple toolkit to map an infinite-many items to a corresponding finite-many values,
-i.e: A nick coloring algorithm.
-
-The most simple usage of this code gives out values from C<items> sequentially, and remembers seen values
-and persists them within the scope of the program, i.e:
-
-    my $set = Set::Associate->new(
-        on_items_empty => Set::Associate::RefillItems->linear(
-            items => [qw( red blue yellow )],
-        ),
-    );
-    sub color_nick {
-        my $nick = shift;
-        return colorize( $nick, $set->get_associated( $nick );
-    }
-    ...
-    printf '<< %s >> %s', color_nick( $nick ), $message;
-
-And this is extensible to use some sort of persisting allocation method such as a hash
-
-    my $set = Set::Associate->new(
-        on_items_empty => Set::Associate::RefillItems->linear(
-            items => [qw( red blue yellow )],
-        ),
-        on_new_key => Set::Associate::NewKey->hash_sha1,
-    );
-    sub color_nick {
-        my $nick = shift;
-        return colorize( $nick, $set->get_associated( $nick );
-    }
-    ...
-    printf '<< %s >> %s', color_nick( $nick ), $message;
-
-Alternatively, you could use 1 of 2 random forms:
-
-
-    # Can produce colour runs if you're unlucky
-
-    my $set = Set::Associate->new(
-        on_items_empty => Set::Associate::RefillItems->linear(
-            items => [qw( red blue yellow )],
-        ),
-        on_new_key => Set::Associate::NewKey->random_pick,
-    );
-
-    # Will exhaust the colour variation before giving out the same colour twice
-    my $set = Set::Associate->new(
-        on_items_empty => Set::Associate::RefillItems->shuffle(
-            items => [qw( red blue yellow )],
-        ),
-    );
-
-
 =head1 IMPLEMENTATION DETAILS
 
 There are 2 Main phases that occur within this code
@@ -270,3 +215,57 @@ sub get_associated {
 __PACKAGE__->meta->make_immutable;
 
 1;
+
+=head1 DESCRIPTION
+
+Essentially, this is a simple toolkit to map an infinite-many items to a corresponding finite-many values,
+i.e: A nick coloring algorithm.
+
+The most simple usage of this code gives out values from C<items> sequentially, and remembers seen values
+and persists them within the scope of the program, i.e:
+
+    my $set = Set::Associate->new(
+        on_items_empty => Set::Associate::RefillItems->linear(
+            items => [qw( red blue yellow )],
+        ),
+    );
+    sub color_nick {
+        my $nick = shift;
+        return colorize( $nick, $set->get_associated( $nick );
+    }
+    ...
+    printf '<< %s >> %s', color_nick( $nick ), $message;
+
+And this is extensible to use some sort of persisting allocation method such as a hash
+
+    my $set = Set::Associate->new(
+        on_items_empty => Set::Associate::RefillItems->linear(
+            items => [qw( red blue yellow )],
+        ),
+        on_new_key => Set::Associate::NewKey->hash_sha1,
+    );
+    sub color_nick {
+        my $nick = shift;
+        return colorize( $nick, $set->get_associated( $nick );
+    }
+    ...
+    printf '<< %s >> %s', color_nick( $nick ), $message;
+
+Alternatively, you could use 1 of 2 random forms:
+
+
+    # Can produce colour runs if you're unlucky
+
+    my $set = Set::Associate->new(
+        on_items_empty => Set::Associate::RefillItems->linear(
+            items => [qw( red blue yellow )],
+        ),
+        on_new_key => Set::Associate::NewKey->random_pick,
+    );
+
+    # Will exhaust the colour variation before giving out the same colour twice
+    my $set = Set::Associate->new(
+        on_items_empty => Set::Associate::RefillItems->shuffle(
+            items => [qw( red blue yellow )],
+        ),
+    );
