@@ -1,2 +1,3 @@
-.build
-Set-Associate-*
+/.build
+/Set-Associate-*
+/tmp/
