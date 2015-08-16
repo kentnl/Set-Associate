@@ -1,6 +1,8 @@
 This file contains changes to DEVELOPMENT dependencies only ( both REQUIRED and OPTIONAL )
 
-0.004000
+0.004001
+
+0.004000 2015-08-16T11:08:56Z
  [Added / develop recommends]
  - Test::More 0.99
 

@@ -1,6 +1,8 @@
 This file contains ALL changes in dependencies in both REQUIRED / OPTIONAL dependencies for all phases (configure/build/runtime/test/develop)
 
-0.004000
+0.004001
+
+0.004000 2015-08-16T11:08:56Z
  [Added / configure recommends]
  - ExtUtils::MakeMaker 7.00
 
