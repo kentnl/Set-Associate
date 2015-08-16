@@ -72,9 +72,9 @@ requires:
   strict: '0'
   warnings: '0'
 resources:
-  bugtracker: https://github.com/kentfredric/Set-Associate/issues
-  homepage: https://github.com/kentfredric/Set-Associate
-  repository: https://github.com/kentfredric/Set-Associate.git
+  bugtracker: https://github.com/kentnl/Set-Associate/issues
+  homepage: https://github.com/kentnl/Set-Associate
+  repository: https://github.com/kentnl/Set-Associate.git
 version: '0.003001'
 x_BuiltWith:
   modules:

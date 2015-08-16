@@ -1,0 +1,41 @@
+This file contains changes in REQUIRED dependencies for standard CPAN phases (configure/build/runtime/test)
+
+0.003001
+ [Added / test requires]
+ - File::Spec
+ - IO::Handle
+ - IPC::Open3
+
+ [Changed / build requires]
+ - Module::Build 0.4003 → 0.28
+
+ [Changed / configure requires]
+ - Module::Build 0.4003 → 0.28
+
+ [Changed / test requires]
+ - Test::More 0.98 → 1.001014
+
+ [Removed / test requires]
+ - File::Find
+ - File::Temp
+
+0.003000 2013-03-09T18:56:28Z
+ [Added / runtime requires]
+ - Moose
+ - MooseX::AttributeShortcuts
+ - MooseX::Role::Parameterized
+
+ [Added / test requires]
+ - Test::Fatal
+
+ [Removed / runtime requires]
+ - Moo
+
+0.002000 2013-02-27T17:35:56Z
+ [Added / runtime requires]
+ - strict
+
+ [Removed / test requires]
+ - strict
+
+0.001001 2013-02-25T15:23:51Z

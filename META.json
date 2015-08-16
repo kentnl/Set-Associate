@@ -127,13 +127,13 @@
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/kentfredric/Set-Associate/issues"
+         "web" : "https://github.com/kentnl/Set-Associate/issues"
       },
-      "homepage" : "https://github.com/kentfredric/Set-Associate",
+      "homepage" : "https://github.com/kentnl/Set-Associate",
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/kentfredric/Set-Associate.git",
-         "web" : "https://github.com/kentfredric/Set-Associate"
+         "url" : "https://github.com/kentnl/Set-Associate.git",
+         "web" : "https://github.com/kentnl/Set-Associate"
       }
    },
    "version" : "0.003001",
