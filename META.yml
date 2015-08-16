@@ -70,7 +70,7 @@ requires:
   MooseX::AttributeShortcuts: '0'
   MooseX::Role::Parameterized: '0'
   Scalar::Util: '0'
-  bigint: '0'
+  bigint: '0.22'
   perl: '5.006'
   strict: '0'
   warnings: '0'

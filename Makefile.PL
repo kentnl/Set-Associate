@@ -27,7 +27,7 @@ my %WriteMakefileArgs = (
     "MooseX::AttributeShortcuts" => 0,
     "MooseX::Role::Parameterized" => 0,
     "Scalar::Util" => 0,
-    "bigint" => 0,
+    "bigint" => "0.22",
     "strict" => 0,
     "warnings" => 0
   },
@@ -58,7 +58,7 @@ my %FallbackPrereqs = (
   "Scalar::Util" => 0,
   "Test::Fatal" => 0,
   "Test::More" => "0.89",
-  "bigint" => 0,
+  "bigint" => "0.22",
   "strict" => 0,
   "warnings" => 0
 );
