@@ -37,8 +37,7 @@ sub name { 'linear_wrap' }
 
 
 sub get_assoc {
-  my ( $self, $sa, $key ) = @_;
-  return $sa->_items_cache_shift;
+  return $_[1]->_items_cache_shift;
 }
 
 1;

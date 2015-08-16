@@ -97,12 +97,9 @@ no Moose;
 
 
 sub linear {
-  if ( _warn_nonmethod( $_[0], __PACKAGE__, 'linear' ) ) {
-    unshift @_, __PACKAGE__;
-  }
-  my ( $class, @args ) = @_;
+  shift @_ unless _warn_nonmethod( $_[0], __PACKAGE__, 'linear' );
   require Set::Associate::RefillItems::Linear;
-  return Set::Associate::RefillItems::Linear->new(@args);
+  return Set::Associate::RefillItems::Linear->new(@_);
 }
 
 
@@ -128,12 +125,9 @@ sub linear {
 
 
 sub shuffle {
-  if ( _warn_nonmethod( $_[0], __PACKAGE__, 'shuffle' ) ) {
-    unshift @_, __PACKAGE__;
-  }
-  my ( $class, @args ) = @_;
+  shift @_ unless _warn_nonmethod( $_[0], __PACKAGE__, 'shuffle' );
   require Set::Associate::RefillItems::Shuffle;
-  return Set::Associate::RefillItems::Shuffle->new(@args);
+  return Set::Associate::RefillItems::Shuffle->new(@_);
 }
 
 1;
