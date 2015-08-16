@@ -7,6 +7,7 @@ MANIFEST
 META.json
 META.yml
 dist.ini
+dist.ini.meta
 lib/Set/Associate.pm
 lib/Set/Associate/NewKey.pm
 lib/Set/Associate/NewKey/HashMD5.pm
