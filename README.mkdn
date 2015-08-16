@@ -4,7 +4,7 @@ Set::Associate - Pick items from a data set associatively
 
 # VERSION
 
-version 0.003000
+version 0.003001
 
 # DESCRIPTION
 
@@ -74,7 +74,7 @@ The pool of available options ( `_items_cache` ) is initialized as an empty list
 
 Pool selection can either be cherry-pick based, where the pool doesn't shrink, or can be destructive, so that the pool population phase is triggered to replenish the supply of items only when all values have been exhausted.
 
-The [default implementation](http://search.cpan.org/perldoc?Set::Associate::NewKey#linear\_wrap) `shift`'s the first item off the queue, allowing the queue to be exhausted and requiring pool population to occur periodically to regenerate the source list.
+The [default implementation](https://metacpan.org/pod/Set::Associate::NewKey#linear_wrap) `shift`'s the first item off the queue, allowing the queue to be exhausted and requiring pool population to occur periodically to regenerate the source list.
 
 # CONSTRUCTOR ARGUMENTS
 
@@ -179,7 +179,7 @@ Kent Fredric <kentfredric@gmail.com>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Kent Fredric <kentfredric@gmail.com>.
+This software is copyright (c) 2015 by Kent Fredric <kentfredric@gmail.com>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
