@@ -1,12 +1,13 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::NewKey::LinearWrap {
+package Set::Associate::NewKey::LinearWrap;
 
-  # ABSTRACT: destructively empty the supply pool from the left hand end to give associations.
-  use Moose;
+# ABSTRACT: destructively empty the supply pool from the left hand end to give associations.
+use Moose;
 
-  with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
+with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
 
 =method name
 
@@ -14,7 +15,7 @@ The name of this key assignment method ( C<linear_wrap> )
 
 =cut
 
-  sub name { 'linear_wrap' }
+sub name { 'linear_wrap' }
 
 =method get_assoc
 
@@ -26,13 +27,12 @@ C<$new_key> is ignored with this method.
 
 =cut
 
-  sub get_assoc {
-    my ( $self, $sa, $key ) = @_;
-    return $sa->_items_cache_shift;
-  }
+sub get_assoc {
+  my ( $self, $sa, $key ) = @_;
+  return $sa->_items_cache_shift;
+}
 
-  __PACKAGE__->meta->make_immutable;
-};
+__PACKAGE__->meta->make_immutable;
 
 1;
 

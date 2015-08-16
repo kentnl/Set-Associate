@@ -1,9 +1,10 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate {
+package Set::Associate;
 
-  # ABSTRACT: Pick items from a data set associatively
+# ABSTRACT: Pick items from a data set associatively
 
 =head1 DESCRIPTION
 
@@ -87,18 +88,18 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
-  use Carp qw( croak );
-  use Moose;
-  use MooseX::AttributeShortcuts;
+use Carp qw( croak );
+use Moose;
+use MooseX::AttributeShortcuts;
 
-  around BUILDARGS => sub {
-    my ( $orig, $self, @args ) = @_;
-    my ($result) = $self->$orig(@args);
-    if ( exists $result->{items} ) {
-      croak('->new( items => ) was deprecated in v0.2.0');
-    }
-    return $result;
-  };
+around BUILDARGS => sub {
+  my ( $orig, $self, @args ) = @_;
+  my ($result) = $self->$orig(@args);
+  if ( exists $result->{items} ) {
+    croak('->new( items => ) was deprecated in v0.2.0');
+  }
+  return $result;
+};
 
 =pcarg _items_cache
 
@@ -118,20 +119,20 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
-  has _items_cache => (
-    isa     => 'ArrayRef',
-    is      => rwp =>,
-    traits  => ['Array'],
-    lazy    => 1,
-    default => sub { [] },
-    handles => {
-      _items_cache_empty => is_empty =>,
-      _items_cache_shift => shift    =>,
-      _items_cache_push  => push     =>,
-      _items_cache_count => count    =>,
-      _items_cache_get   => get      =>,
-    },
-  );
+has _items_cache => (
+  isa     => 'ArrayRef',
+  is      => rwp =>,
+  traits  => ['Array'],
+  lazy    => 1,
+  default => sub { [] },
+  handles => {
+    _items_cache_empty => is_empty =>,
+    _items_cache_shift => shift    =>,
+    _items_cache_push  => push     =>,
+    _items_cache_count => count    =>,
+    _items_cache_get   => get      =>,
+  },
+);
 
 =pcarg _association_cache
 
@@ -158,17 +159,17 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
-  has _association_cache => (
-    isa     => 'HashRef',
-    is      => rwp =>,
-    traits  => ['Hash'],
-    default => sub { {} },
-    handles => {
-      _association_cache_has => exists =>,
-      _association_cache_get => get    =>,
-      _association_cache_set => set    =>,
-    },
-  );
+has _association_cache => (
+  isa     => 'HashRef',
+  is      => rwp =>,
+  traits  => ['Hash'],
+  default => sub { {} },
+  handles => {
+    _association_cache_has => exists =>,
+    _association_cache_get => get    =>,
+    _association_cache_set => set    =>,
+  },
+);
 
 =carg on_items_empty
 
@@ -182,11 +183,11 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
-  has on_items_empty => (
-    does     => 'Set::Associate::Role::RefillItems',
-    is       => rwp =>,
-    required => 1,
-  );
+has on_items_empty => (
+  does     => 'Set::Associate::Role::RefillItems',
+  is       => rwp =>,
+  required => 1,
+);
 
 =method run_on_items_empty
 
@@ -196,7 +197,7 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
-  sub run_on_items_empty { $_[0]->on_items_empty->get_all }
+sub run_on_items_empty { $_[0]->on_items_empty->get_all }
 
 =carg on_new_key
 
@@ -216,17 +217,17 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
-  has on_new_key => (
-    does    => 'Set::Associate::Role::NewKey',
-    is      => rwp =>,
-    lazy    => 1,
-    default => sub {
-      require Set::Associate::NewKey;
-      Set::Associate::NewKey->linear_wrap;
-    },
-  );
+has on_new_key => (
+  does    => 'Set::Associate::Role::NewKey',
+  is      => rwp =>,
+  lazy    => 1,
+  default => sub {
+    require Set::Associate::NewKey;
+    Set::Associate::NewKey->linear_wrap;
+  },
+);
 
-  sub run_on_new_key { $_[0]->on_new_key->get_assoc(@_) }
+sub run_on_new_key { $_[0]->on_new_key->get_assoc(@_) }
 
 =method associate
 
@@ -238,15 +239,15 @@ The L<< default implementation|Set::Associate::NewKey/linear_wrap >> C<shift>'s 
 
 =cut
 
-  sub associate {
-    my ( $self, $key ) = @_;
-    return if $self->_association_cache_has($key);
-    if ( $self->_items_cache_empty ) {
-      $self->_items_cache_push( $self->run_on_items_empty );
-    }
-    $self->_association_cache_set( $key, $self->run_on_new_key($key) );
-    return 1;
+sub associate {
+  my ( $self, $key ) = @_;
+  return if $self->_association_cache_has($key);
+  if ( $self->_items_cache_empty ) {
+    $self->_items_cache_push( $self->run_on_items_empty );
   }
+  $self->_association_cache_set( $key, $self->run_on_new_key($key) );
+  return 1;
+}
 
 =method get_associated
 
@@ -256,14 +257,12 @@ Generates an association automatically.
 
 =cut
 
-  sub get_associated {
-    my ( $self, $key ) = @_;
-    $self->associate($key);
-    return $self->_association_cache_get($key);
-  }
+sub get_associated {
+  my ( $self, $key ) = @_;
+  $self->associate($key);
+  return $self->_association_cache_get($key);
+}
 
-  __PACKAGE__->meta->make_immutable;
-
-};
+__PACKAGE__->meta->make_immutable;
 
 1;

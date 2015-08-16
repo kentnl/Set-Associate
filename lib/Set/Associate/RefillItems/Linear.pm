@@ -1,12 +1,13 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::RefillItems::Linear {
+package Set::Associate::RefillItems::Linear;
 
-  # ABSTRACT: a refill method that replenishes the cache with a repeating set of items
-  use Moose;
+# ABSTRACT: a refill method that replenishes the cache with a repeating set of items
+use Moose;
 
-  with 'Set::Associate::Role::RefillItems' => { can_get_all => 1 };
+with 'Set::Associate::Role::RefillItems' => { can_get_all => 1 };
 
 =carg items
 
@@ -16,7 +17,7 @@ package Set::Associate::RefillItems::Linear {
 
 =cut
 
-  has items => ( isa => 'ArrayRef', is => 'rw', required => 1 );
+has items => ( isa => 'ArrayRef', is => 'rw', required => 1 );
 
 =method name
 
@@ -24,7 +25,7 @@ The name of this refill method ( C<linear> )
 
 =cut
 
-  sub name { 'linear' }
+sub name { 'linear' }
 
 =method get_all
 
@@ -32,10 +33,9 @@ Get a new copy of L</items>.
 
 =cut
 
-  sub get_all { return @{ $_[0]->items } }
+sub get_all { return @{ $_[0]->items } }
 
-  __PACKAGE__->meta->make_immutable;
-};
+__PACKAGE__->meta->make_immutable;
 
 1;
 

@@ -1,13 +1,14 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::NewKey::HashMD5 {
+package Set::Associate::NewKey::HashMD5;
 
-  # ABSTRACT: Pick a value from the pool based on the MD5 value of the key
+# ABSTRACT: Pick a value from the pool based on the MD5 value of the key
 
-  use Moose;
-  use Digest::MD5;
-  extends 'Set::Associate::NewKey::PickOffset';
+use Moose;
+use Digest::MD5;
+extends 'Set::Associate::NewKey::PickOffset';
 
 =method name
 
@@ -15,16 +16,15 @@ The name of this key assignment method ( C<hash_md5> )
 
 =cut
 
-  sub name { 'hash_md5' }
+sub name { 'hash_md5' }
 
-  around get_assoc => sub {
-    my ( $orig, $self, $sa, $key ) = @_;
-    use bigint;
-    return $self->$orig( $sa, hex Digest::MD5::md5_hex($key) );
-  };
-
-  __PACKAGE__->meta->make_immutable;
+around get_assoc => sub {
+  my ( $orig, $self, $sa, $key ) = @_;
+  use bigint;
+  return $self->$orig( $sa, hex Digest::MD5::md5_hex($key) );
 };
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

@@ -1,13 +1,14 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::NewKey::PickOffset {
+package Set::Associate::NewKey::PickOffset;
 
-  # ABSTRACT: Associate a key with a value from a pool based on the keys value as a numeric offset.
+# ABSTRACT: Associate a key with a value from a pool based on the keys value as a numeric offset.
 
-  use Moose;
+use Moose;
 
-  with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
+with 'Set::Associate::Role::NewKey' => { can_get_assoc => 1, };
 
 =method name
 
@@ -15,7 +16,7 @@ The name of this key assignment method ( C<pick_offset> )
 
 =cut
 
-  sub name { 'pick_offset' }
+sub name { 'pick_offset' }
 
 =method get_assoc
 
@@ -27,14 +28,13 @@ B<Note:> C<$new_key> is automatically modulo  of the length of C<$set_assoc>, so
 
 =cut
 
-  sub get_assoc {
-    my ( $self, $sa, $key ) = @_;
-    use bigint;
-    return $sa->_items_cache_get( $key % $sa->_items_cache_count );
-  }
+sub get_assoc {
+  my ( $self, $sa, $key ) = @_;
+  use bigint;
+  return $sa->_items_cache_get( $key % $sa->_items_cache_count );
+}
 
-  __PACKAGE__->meta->make_immutable;
-};
+__PACKAGE__->meta->make_immutable;
 
 1;
 

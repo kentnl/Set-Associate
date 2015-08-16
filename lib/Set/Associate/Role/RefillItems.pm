@@ -1,47 +1,47 @@
-use v5.16;
+use 5.006;
+use strict;
 use warnings;
 
-package Set::Associate::Role::RefillItems {
+package Set::Associate::Role::RefillItems;
 
-  # ABSTRACT: A data provider for Set::Associate
-  use strict;
-  use MooseX::Role::Parameterized;
+# ABSTRACT: A data provider for Set::Associate
 
-  parameter can_get_next => (
-    isa     => Bool =>,
-    is      => rw   =>,
-    default => sub  { undef },
-  );
+use MooseX::Role::Parameterized;
 
-  parameter can_get_all => (
-    isa     => Bool =>,
-    is      => rw   =>,
-    default => sub  { undef },
-  );
+parameter can_get_next => (
+  isa     => Bool =>,
+  is      => rw   =>,
+  default => sub  { undef },
+);
 
-  parameter can_get_nth => (
-    isa => Bool =>,
-    ,
-    is      => rw  =>,
-    default => sub { undef },
-  );
+parameter can_get_all => (
+  isa     => Bool =>,
+  is      => rw   =>,
+  default => sub  { undef },
+);
 
-  role {
-    my $p = shift;
+parameter can_get_nth => (
+  isa => Bool =>,
+  ,
+  is      => rw  =>,
+  default => sub { undef },
+);
 
-    requires name =>;
+role {
+  my $p = shift;
 
-    if ( $p->can_get_next ) {
-      requires get_next =>;
-    }
-    if ( $p->can_get_all ) {
-      requires get_all =>;
-    }
-    if ( $p->can_get_nth ) {
-      requires get_nth =>;
-    }
+  requires name =>;
 
+  if ( $p->can_get_next ) {
+    requires get_next =>;
   }
+  if ( $p->can_get_all ) {
+    requires get_all =>;
+  }
+  if ( $p->can_get_nth ) {
+    requires get_nth =>;
+  }
+
 };
 
 1;
