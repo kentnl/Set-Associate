@@ -6,7 +6,7 @@ package Set::Associate::Utils;
 
 # ABSTRACT: Shared Guts between Set::Associate modules
 
-our $VERSION = '0.004001';
+our $VERSION = '0.004002';
 
 # AUTHORITY
 

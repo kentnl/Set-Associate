@@ -6,7 +6,7 @@ package Set::Associate;
 
 # ABSTRACT: Pick items from a data set associatively
 
-our $VERSION = '0.004001';
+our $VERSION = '0.004002';
 
 # AUTHORITY
 

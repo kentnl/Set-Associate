@@ -6,7 +6,7 @@ package Set::Associate::NewKey;
 
 # ABSTRACT: New Key assignment methods
 
-our $VERSION = '0.004001';
+our $VERSION = '0.004002';
 
 # AUTHORITY
 

@@ -6,7 +6,7 @@ package Set::Associate::Role::NewKey;
 
 # ABSTRACT: A Key Association methodology for Set::Associate
 
-our $VERSION = '0.004001';
+our $VERSION = '0.004002';
 
 # AUTHORITY
 

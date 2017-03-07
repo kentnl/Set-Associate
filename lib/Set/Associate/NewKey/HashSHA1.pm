@@ -6,7 +6,7 @@ package Set::Associate::NewKey::HashSHA1;
 
 # ABSTRACT: Pick a value from the pool based on the SHA1 value of the key
 
-our $VERSION = '0.004001';
+our $VERSION = '0.004002';
 
 # AUTHORITY
 
