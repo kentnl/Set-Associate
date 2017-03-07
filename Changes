@@ -2,6 +2,7 @@ Release history for Set-Associate
 
 {{$NEXT}}
  - Bugfix: Avoid test failures with -Ddefault_inc_excludes_dot
+ - Tests re-engineered for older Test::More support
 
  [Dependencies::Stats]
  - Dependencies changed since 0.004000, see misc/*.deps* for details
