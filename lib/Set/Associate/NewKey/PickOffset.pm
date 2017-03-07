@@ -6,7 +6,7 @@ package Set::Associate::NewKey::PickOffset;
 
 # ABSTRACT: Associate a key with a value from a pool based on the keys value as a numeric offset.
 
-our $VERSION = '0.004001';
+our $VERSION = '0.004002';
 
 our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
@@ -55,7 +55,7 @@ Set::Associate::NewKey::PickOffset - Associate a key with a value from a pool ba
 
 =head1 VERSION
 
-version 0.004001
+version 0.004002
 
 =head1 METHODS
 

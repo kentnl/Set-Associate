@@ -6,7 +6,7 @@ package Set::Associate::Utils;
 
 # ABSTRACT: Shared Guts between Set::Associate modules
 
-our $VERSION = '0.004001';
+our $VERSION = '0.004002';
 
 our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
@@ -51,7 +51,7 @@ Set::Associate::Utils - Shared Guts between Set::Associate modules
 
 =head1 VERSION
 
-version 0.004001
+version 0.004002
 
 =head1 AUTHOR
 

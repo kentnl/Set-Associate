@@ -6,7 +6,7 @@ package Set::Associate::RefillItems;
 
 # ABSTRACT: Pool re-population methods
 
-our $VERSION = '0.004001';
+our $VERSION = '0.004002';
 
 our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
@@ -144,7 +144,7 @@ Set::Associate::RefillItems - Pool re-population methods
 
 =head1 VERSION
 
-version 0.004001
+version 0.004002
 
 =head1 DESCRIPTION
 

@@ -6,7 +6,7 @@ package Set::Associate::NewKey::LinearWrap;
 
 # ABSTRACT: destructively empty the supply pool from the left hand end to give associations.
 
-our $VERSION = '0.004001';
+our $VERSION = '0.004002';
 
 our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
@@ -54,7 +54,7 @@ Set::Associate::NewKey::LinearWrap - destructively empty the supply pool from th
 
 =head1 VERSION
 
-version 0.004001
+version 0.004002
 
 =head1 METHODS
 

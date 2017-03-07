@@ -6,7 +6,7 @@ package Set::Associate::NewKey::HashMD5;
 
 # ABSTRACT: Pick a value from the pool based on the MD5 value of the key
 
-our $VERSION = '0.004001';
+our $VERSION = '0.004002';
 
 our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
@@ -46,7 +46,7 @@ Set::Associate::NewKey::HashMD5 - Pick a value from the pool based on the MD5 va
 
 =head1 VERSION
 
-version 0.004001
+version 0.004002
 
 =head1 METHODS
 

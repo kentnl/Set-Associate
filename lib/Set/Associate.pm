@@ -6,7 +6,7 @@ package Set::Associate;
 
 # ABSTRACT: Pick items from a data set associatively
 
-our $VERSION = '0.004001';
+our $VERSION = '0.004002';
 
 our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
@@ -159,7 +159,7 @@ Set::Associate - Pick items from a data set associatively
 
 =head1 VERSION
 
-version 0.004001
+version 0.004002
 
 =head1 DESCRIPTION
 

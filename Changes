@@ -1,5 +1,7 @@
 Release history for Set-Associate
 
+0.004002 2017-03-07T10:05:48Z f3615f3
+
 0.004001 2017-03-07T10:02:53Z f284e7e
  - Bugfix: Avoid test failures with -Ddefault_inc_excludes_dot
  - Tests re-engineered for older Test::More support

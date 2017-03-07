@@ -6,7 +6,7 @@ package Set::Associate::NewKey::RandomPick;
 
 # ABSTRACT: Associate a key by randomly picking from a pool
 
-our $VERSION = '0.004001';
+our $VERSION = '0.004002';
 
 our $AUTHORITY = 'cpan:KENTNL'; # AUTHORITY
 
@@ -54,7 +54,7 @@ Set::Associate::NewKey::RandomPick - Associate a key by randomly picking from a 
 
 =head1 VERSION
 
-version 0.004001
+version 0.004002
 
 =head1 METHODS
 
