@@ -2,7 +2,7 @@ use 5.006;
 use strict;
 use warnings;
 
-use Test::More;
+use Test::More tests => 2 * 7;
 use Set::Associate;
 use Set::Associate::NewKey;
 use Set::Associate::RefillItems;
@@ -24,6 +24,3 @@ for my $item (qw( a b c d e f g )) {
 for my $item (qw( a b c d e f g )) {
   is( $got->{$item}, $et->get_associated($item), "Second pass is the same" );
 }
-
-done_testing;
-
