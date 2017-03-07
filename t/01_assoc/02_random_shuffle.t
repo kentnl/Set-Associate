@@ -2,7 +2,7 @@ use 5.006;
 use strict;
 use warnings;
 
-use Test::More;
+use Test::More tests => 1;
 use Test::Fatal qw( exception );
 use Set::Associate;
 use Set::Associate::NewKey;
@@ -31,5 +31,3 @@ ok(
   },
   'Legacy code unsupported'
 );
-done_testing;
-
